@@ -1,0 +1,2 @@
+class SubcommunitiesController < ApplicationController
+end
