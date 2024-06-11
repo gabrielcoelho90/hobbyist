@@ -3,7 +3,10 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_many :interests
+  has_many :interests, dependent: :destroy
   has_many :communities, through: :interests, source: :interestable, source_type: "Community"
   has_many :subcommunities, through: :interests, source: :interestable, source_type: "Subcommunity"
+
+  geocoded_by :address
+  after_validation :geocode, if: :will_save_change_to_address?
 end
