@@ -20,18 +20,33 @@ class InterestsController < ApplicationController
           subcommunity = Subcommunity.find(interestable_id)
           interest = Interest.new user: current_user
           interest.interestable = subcommunity
+          interest.save
+          @creation << subcommunity.name
 
-          if interest.save
-            @creation << subcommunity.name
-            redirect_to new_interest_path
-          # else
-          #   render :new, status: :unprocessable_entity
-          end
         end
       }
 
       format.html {
-        redirect_to new_interest_path
+        @interests_arr = interest_params[:interestable_id].compact_blank
+
+        if @interests_arr.empty?
+          @interest = Interest.new
+          @interest.user = current_user
+
+          @communities = Community.all
+
+          redirect_to new_interest_path, alert: 'Please select at least one interest!'
+        else
+          @interests_arr.each do |interestable_id|
+            subcommunity = Subcommunity.find(interestable_id)
+            interest = Interest.new user: current_user
+            interest.interestable = subcommunity
+
+            interest.save
+          end
+
+          redirect_to new_interest_path, notice: 'Interests succesfully saved!'
+        end
       }
     end
   end
