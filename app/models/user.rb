@@ -6,4 +6,7 @@ class User < ApplicationRecord
   has_many :interests
   has_many :communities, through: :interests, source: :interestable, source_type: "Community"
   has_many :subcommunities, through: :interests, source: :interestable, source_type: "Subcommunity"
+  has_many :messages_as_sender, class_name: "Message", foreign_key: :sender_id
+  has_many :messages_as_receiver, class_name: "Message", foreign_key: :receiver_id
+  has_many :private_chatrooms
 end

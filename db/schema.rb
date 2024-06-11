@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_10_201320) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_11_174327) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,6 +28,27 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_10_201320) do
     t.datetime "updated_at", null: false
     t.index ["interestable_type", "interestable_id"], name: "index_interests_on_interestable"
     t.index ["user_id"], name: "index_interests_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.string "messageable_type", null: false
+    t.bigint "messageable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "private_chatrooms", force: :cascade do |t|
+    t.string "name"
+    t.bigint "sender_id", null: false
+    t.bigint "receiver_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiver_id"], name: "index_private_chatrooms_on_receiver_id"
+    t.index ["sender_id"], name: "index_private_chatrooms_on_sender_id"
   end
 
   create_table "subcommunities", force: :cascade do |t|
@@ -56,5 +77,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_10_201320) do
   end
 
   add_foreign_key "interests", "users"
+  add_foreign_key "messages", "users"
+  add_foreign_key "private_chatrooms", "users", column: "receiver_id"
+  add_foreign_key "private_chatrooms", "users", column: "sender_id"
   add_foreign_key "subcommunities", "communities"
 end
