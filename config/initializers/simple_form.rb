@@ -118,7 +118,6 @@ SimpleForm.setup do |config|
 
   # You can define which elements should obtain additional classes
   # config.generate_additional_classes_for = [:wrapper, :label, :input]
-  # config.generate_additional_classes_for = [:label]
 
   # Whether attributes are required by default (or not). Default is true.
   # config.required_by_default = true
@@ -174,13 +173,4 @@ SimpleForm.setup do |config|
   # Defines validation classes to the input_field. By default it's nil.
   # config.input_field_valid_class = 'is-valid'
   # config.input_field_error_class = 'is-invalid'
-  config.wrappers :accordion_checkbox_button, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
-    b.use :html5
-    b.wrapper tag: 'div', class: 'btn-group', data: { toggle: 'buttons' } do |ba|
-      ba.use :input, class: 'btn-check', error_class: 'is-invalid'
-      ba.use :label, class: 'btn btn-outline-primary'
-    end
-    b.use :error, wrap_with: { tag: 'span', class: 'help-block' }
-    b.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
-  end
 end
