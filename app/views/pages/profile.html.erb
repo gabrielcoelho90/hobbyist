@@ -1,0 +1,7 @@
+<h1>Profile for <%= current_user.username %></h1>
+
+<ul>
+  <% @user_subcommunities.each do |subcommunity| %>
+    <li><%= subcommunity.community.name %> - <%= subcommunity.name %></li>
+  <% end %>
+</ul>

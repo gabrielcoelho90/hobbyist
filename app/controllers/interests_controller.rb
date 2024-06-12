@@ -44,8 +44,13 @@ class InterestsController < ApplicationController
 
             interest.save
           end
+          @interest = Interest.new
+          @interest.user = current_user
 
-          redirect_to new_interest_path, notice: 'Interests succesfully saved!'
+          @communities = Community.all
+
+          render :new, status: :unprocessable_entity
+          # redirect_to profile_path, notice: 'Interests succesfully saved!'
         end
       }
     end
