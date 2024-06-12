@@ -1,21 +1,41 @@
-<% comm = Community.first %>
-<% subcomm_arr = Subcommunity.all.where(community: comm)%>
-
 <div class="container mt-3">
-  <div class="accordion" id="accordionExample">
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          <%= comm.name %>
-        </button>
-      </h2>
-      <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-          <%= simple_form_for @interest do |f| %>
-            <%= f.input :interestable_type, collection: subcomm_arr,
-                         input_html: { class: 'btn-check' }, label_html: { :class => 'btn' }, as: :check_boxes %>
-          <% end %>
+
+<div id="interests-form" data-controller="create-interests">
+  <%= simple_form_for @interest, html: {data: {create_interests_target: "form"}} do |f| %>
+<% @communities.each do |community| %>
+  <% accordion_id = "accordion#{community.name}" %>
+  <% collapse_id = "collapse#{community.name}" %>
+  <% subcommunity_arr = Subcommunity.all.where(community: community)%>
+    <div class="accordion my-3" id="<%= accordion_id %>">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#<%= collapse_id %>" aria-expanded="false" aria-controls="<%= collapse_id %>">
+            <%= community.name %>
+          </button>
+        </h2>
+        <div id="<%= collapse_id %>" class="accordion-collapse collapse" data-bs-parent="#<%= accordion_id %>">
+          <div class="accordion-body">
+            <div>
+
+                <%= f.collection_check_boxes :interestable_id, subcommunity_arr, :id, :name do |b|  %>
+                  <%= b.check_box(class: 'btn-check', autocomplete: 'off') %>
+                  <%= b.label(class: 'btn m-1 rounded-pill') %>
+                <% end %>
+
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  <% end %>
+  <%= f.button :submit, class: 'btn btn-primary' %>
+  <% end %>
+
+  <%# <form data-action="click->create-interests#setInterests">
+    <input type="button" value="Set Interests" class="btn btn-primary">
+  </form> %>
 </div>
+
+</div>
+
+<%# form-check-label collection_check_boxes %>
