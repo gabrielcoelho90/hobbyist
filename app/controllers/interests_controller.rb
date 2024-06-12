@@ -27,6 +27,7 @@ class InterestsController < ApplicationController
       }
 
       format.html {
+
         @interests_arr = interest_params[:interestable_id].compact_blank
 
         if @interests_arr.empty?
@@ -44,13 +45,13 @@ class InterestsController < ApplicationController
 
             interest.save
           end
-          @interest = Interest.new
-          @interest.user = current_user
+          # @interest = Interest.new
+          # @interest.user = current_user
 
-          @communities = Community.all
+          # @communities = Community.all
 
-          render :new, status: :unprocessable_entity
-          # redirect_to profile_path, notice: 'Interests succesfully saved!'
+          # render :new, status: :unprocessable_entity
+          redirect_to profile_path, notice: 'Interests succesfully saved!'
         end
       }
     end
