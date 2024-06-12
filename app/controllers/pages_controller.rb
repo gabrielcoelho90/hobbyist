@@ -3,4 +3,8 @@ class PagesController < ApplicationController
 
   def home
   end
+
+  def profile
+    @user_subcommunities = current_user.subcommunities
+  end
 end
