@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :interests, only: %i[new create]
+
+  get "profile", to: "pages#profile"
 end
