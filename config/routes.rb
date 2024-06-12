@@ -16,4 +16,8 @@ Rails.application.routes.draw do
   resources :groupchats, only: :show do
     resources :messages, only: :create
   end
+
+  get "search", to: "pages#search", as: :search_page
+
+  get "profile", to: "pages#profile"
 end
