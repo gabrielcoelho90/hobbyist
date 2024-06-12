@@ -1,0 +1,17 @@
+<div class="container chatroom"
+  data-controller="groupchat-subscription"
+  data-groupchat-subscription-groupchat-id-value="<%= @groupchat.id %>">
+
+  <h1>#<%= @groupchat.name %></h1>
+  <div class="messages" data-groupchat-subscription-target="messages">
+    <% @groupchat.messages.each do |message| %>
+      <%= render 'messages/message', message: message %>
+    <% end %>
+  </div>
+    <div class="input">
+    <%= simple_form_for [@groupchat, @message], html: { data: { action: "turbo:submit-end->groupchat-subscription#resetForm" }, class: "d-flex"} do |f|%>
+      <%= f.input :content, label: false, placeholder: "Message ##{@groupchat.name}", wrapper_html: {class: "flex-grow-1"} %>
+      <%= f.submit "Send", class: "btn btn-primary mb-3" %>
+    <% end %>
+  </div>
+</div>

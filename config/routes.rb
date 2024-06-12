@@ -13,4 +13,7 @@ Rails.application.routes.draw do
   resources :private_chatrooms, only: %i[index show] do
     resources :messages, only: :create
   end
+  resources :groupchats, only: :show do
+    resources :messages, only: :create
+  end
 end

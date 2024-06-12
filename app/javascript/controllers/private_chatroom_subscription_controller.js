@@ -30,4 +30,9 @@ export default class extends Controller {
       this.messagesTarget.insertAdjacentHTML("beforeend", data)
       this.messagesTarget.scrollTo(0, this.messagesTarget.scrollHeight)
     }
+
+    disconnect() {
+      console.log("Unsubscribed from the private chat")
+      this.subscription.unsubscribe()
+    }
 }
