@@ -10,5 +10,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :interests, only: %i[new create]
-  get "pages/search", to: "pages#search", as: :search_page
+  get "search", to: "pages#search", as: :search_page
 end

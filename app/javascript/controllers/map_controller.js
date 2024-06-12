@@ -18,7 +18,7 @@ export default class extends Controller {
       container: this.mapContainerTarget,
       style: "mapbox://styles/mapbox/dark-v11"
     })
-
+    console.log(this.map)
     this.addMarkersToMap()
     this.fitMapToMarkers()
 
@@ -26,9 +26,22 @@ export default class extends Controller {
       mapboxgl: mapboxgl,
       types: "country,region,place,postcode,locality,neighborhood,address"
     })
-
+    console.log(this.geocoder);
     this.map.addControl(this.geocoder)
     this.geocoder.addTo(this.mainSearchTarget)
+
+    this.geocoder.on("result", (event) => {
+      const lat = event.result.center[1]
+      const lng = event.result.center[0]
+
+      fetch(`/search?lat=${lat}&lng=${lng}`, {
+        headers: { "Accept": "application/json" }
+      }).then(response => response.json())
+      .then((data) => {
+        console.log(data);
+        // this.carListTarget.innerHTML = data.car_list_html
+      })
+    })
   }
 
   addMarkersToMap() {
