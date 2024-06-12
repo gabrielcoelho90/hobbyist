@@ -1,0 +1,36 @@
+<h1>Search for people with the same interest</h1>
+
+<div class="container"
+    data-controller="map"
+    data-map-markers-value="<%= @markers.to_json %>"
+    data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>" >
+  <div class = "main-search-bar" data-map-target = "mainSearch"></div>
+  <div class="row">
+    <div class="col-3">
+      <% @users.each do |user| %>
+      <p><%= user.username %></p>
+      <% end %>
+    </div>
+    <div class="col-9">
+    <div style="width: 100%; height: 600px;" data-map-target = "mapContainer"></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div>
+  <ul>
+    <li> <%= link_to "Sports", search_page_path(query: "Sports")%> Sports</li>
+    <li>Arts</li>
+    <li>Games</li>
+    <li>Music</li>
+  </ul>
+</div>
+
+<#% @communities.each do |community| %>
+<#%= community.interests %>
+<#% end %>

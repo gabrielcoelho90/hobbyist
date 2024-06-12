@@ -1,0 +1,19 @@
+.mapboxgl-ctrl-top-right {
+  display: none;
+}
+
+.main-search-bar {
+  max-width: none;
+  margin-bottom: 15px;
+  width: 100%;
+  border: 1px solid lightgrey;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
+  max-width: none;
+  width: 100%;
+  box-shadow: none;
+  background-color: transparent;
+}

@@ -11,5 +11,7 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :interests, only: %i[new create]
 
+  get "search", to: "pages#search", as: :search_page
+
   get "profile", to: "pages#profile"
 end
