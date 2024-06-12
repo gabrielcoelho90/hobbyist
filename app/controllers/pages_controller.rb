@@ -7,9 +7,11 @@ class PagesController < ApplicationController
   def search
     respond_to do |format|
       format.html {
-        # @user = User.find(sports.interests[0].user_id)
-        # @communities = Community.global_search("soccer")
         @users = User.all
+        if params[:query].present?
+          @subcommunity = Subcommunity.find_by(name: params[:query])
+          @users = User.joins(:interests).where(interests: {interestable: @subcommunity})
+        end
         @markers = @users.geocoded.map do |user|
           {
             lat: user.latitude,
