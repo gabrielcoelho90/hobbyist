@@ -4,6 +4,10 @@ class PagesController < ApplicationController
   def home
   end
 
+  def profile
+    @user_subcommunities = current_user.subcommunities
+  end
+
   def search
     respond_to do |format|
       format.html {
@@ -32,7 +36,4 @@ class PagesController < ApplicationController
     params.permit(:lat, :lng)
   end
 
-  def profile
-    @user_subcommunities = current_user.subcommunities
-  end
 end
