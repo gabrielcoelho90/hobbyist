@@ -6,6 +6,7 @@ class MessagesController < ApplicationController
     # @message.messageable_id = @privateChatroom.id
     @message.user = current_user
     # raise
+    authorize @message
     if @message.save
       PrivateChatroomChannel.broadcast_to(
         @private_chatroom,
