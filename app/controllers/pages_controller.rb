@@ -31,4 +31,8 @@ class PagesController < ApplicationController
   def map_params
     params.permit(:lat, :lng)
   end
+
+  def profile
+    @user_subcommunities = current_user.subcommunities
+  end
 end
