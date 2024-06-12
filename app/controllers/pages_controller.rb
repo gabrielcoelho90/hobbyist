@@ -10,7 +10,7 @@ class PagesController < ApplicationController
         @users = User.all
         if params[:query].present?
           @subcommunity = Subcommunity.find_by(name: params[:query])
-          @users = User.joins(:interests).where(interests: {interestable: @subcommunity})
+          @users = User.joins(:interests).where(interests: { interestable: @subcommunity })
         end
         @markers = @users.geocoded.map do |user|
           {
