@@ -11,24 +11,9 @@ body {
   color: map-get($theme-colors, "light");
 }
 
-.sticky-container {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background-color: map-get($theme-colors, "light");
-  padding: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.map-container {
-  width: 100%;
-  height: 600px;
-}
-
 .profile-placeholder {
-  width: 100px;
-  height: 100px;
+  width: 10vh;
+  height: 10vh;
   border-radius: 50%;
   display: inline-block;
   font-size: 14px;
@@ -36,25 +21,28 @@ body {
   background-color: map-get($theme-colors, "secondary");
 }
 
-.card {
-  background-color: $white;
+.user-card {
+  background-color: map-get($theme-colors, "light");
   border: 1px solid map-get($theme-colors, "accent2");
-  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
 }
 
-.card-title {
+.user-card-title {
   color: map-get($theme-colors, "dark");
 }
 
-.card-text {
+.user-card-text {
   color: map-get($theme-colors, "dark");
 }
 
-.card-footer {
+.user-card-footer {
   background-color: map-get($theme-colors, "dark");
   color: map-get($theme-colors, "light");
   padding: 0.5rem;
-  border-top: 1px solid map-get($theme-colors, "accent2");
+  // border-color: 1px solid map-get($theme-colors, "accent2");
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
 
 .badge-primary {
