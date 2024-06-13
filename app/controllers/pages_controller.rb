@@ -11,6 +11,8 @@ class PagesController < ApplicationController
   def search
     respond_to do |format|
       format.html {
+        @blank_interest = Interest.new
+        @communities = Community.all
         @users = User.all
         if params[:query].present?
           @subcommunity = Subcommunity.find_by(name: params[:query])
