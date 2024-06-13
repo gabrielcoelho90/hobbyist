@@ -16,7 +16,7 @@ class PagesController < ApplicationController
         @users = User.all
         if params[:query].present?
           # @subcommunity = Subcommunity.find_by(name: params[:query])
-          @array_of_interests = ["painting"]
+          @array_of_interests = ["Tennis"]
           @array_of_interestables = []
           @array_of_interests.each do |array_of_interest|
             if Subcommunity.find_by(name: array_of_interest).nil?
