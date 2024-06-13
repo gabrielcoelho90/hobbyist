@@ -1,5 +1,12 @@
 <h1>Search for people with the same interest</h1>
 
+<h2>Hi <%= current_user.username %>, your interests are...</h2>
+<% @current_user_interests.each do |current_user_interest| %>
+  <ul>
+    <li><%= current_user_interest.interestable.name %></li>
+  </ul>
+<% end %>
+
 <div class="container"
     data-controller="map"
     data-map-markers-value="<%= @markers.to_json %>"

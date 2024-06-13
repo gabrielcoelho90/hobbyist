@@ -1,6 +1,7 @@
 class InterestsController < ApplicationController
   def new
     @interest = Interest.new
+    authorize @interest
     @interest.user = current_user
 
     @communities = Community.all
@@ -42,7 +43,6 @@ class InterestsController < ApplicationController
             subcommunity = Subcommunity.find(interestable_id)
             interest = Interest.new user: current_user
             interest.interestable = subcommunity
-
             interest.save
           end
           # @interest = Interest.new
