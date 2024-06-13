@@ -1,0 +1,40 @@
+@import "../config/colors"; // Adjust the import path if necessary
+
+body {
+  background-color: map-get($theme-colors, "light"); /* Same background color as the navbar */
+}
+
+.profile-placeholder {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  font-size: 14px;
+  text-align: center;
+  background-color: map-get($theme-colors, "secondary");
+}
+
+.card {
+  background-color: $white;
+  border: 1px solid map-get($theme-colors, "accent2");
+}
+
+.card-title {
+  color: map-get($theme-colors, "dark");
+}
+
+.card-text {
+  color: map-get($theme-colors, "dark");
+}
+
+.badge-primary {
+  background-color: map-get($theme-colors, "primary");
+}
+
+.badge-success {
+  background-color: map-get($theme-colors, "success");
+}
+
+.btn-primary {
+  background-color: map-get($theme-colors, "primary");
+  border-color: map-get($theme-colors, "primary");
+}
