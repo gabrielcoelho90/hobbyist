@@ -16,7 +16,8 @@ export default class extends Controller {
 
     this.map = new mapboxgl.Map({
       container: this.mapContainerTarget,
-      style: "mapbox://styles/mapbox/dark-v11"
+      style: "mapbox://styles/mapbox/dark-v11",
+      language: 'pt-BR'
     })
     console.log(this.map)
     this.addMarkersToMap()
@@ -24,7 +25,8 @@ export default class extends Controller {
 
     this.geocoder = new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
       mapboxgl: mapboxgl,
-      types: "country,region,place,postcode,locality,neighborhood,address"
+      types: "country,region,place,postcode,locality,neighborhood,address",
+      language: 'pt-BR'
     })
     console.log(this.geocoder);
     this.map.addControl(this.geocoder)
