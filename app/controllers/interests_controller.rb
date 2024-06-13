@@ -29,7 +29,7 @@ class InterestsController < ApplicationController
       }
 
       format.html {
-
+        raise
         @interests_arr = interest_params[:interestable_id].compact_blank
 
         if @interests_arr.empty?
