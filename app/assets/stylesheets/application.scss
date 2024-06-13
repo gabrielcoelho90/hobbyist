@@ -13,3 +13,10 @@
 @import "components/index";
 @import "pages/index";
 @import "components/chatroom";
+@import "pages/search";
+@import "components/interests_form";
+@import "components/map_section";
+
+body {
+  background-color: map-get($theme-colors, "light");
+}

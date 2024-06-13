@@ -1,5 +1,5 @@
 class Community < ApplicationRecord
-  has_many :subcommunities
+  has_many :subcommunities, dependent: :destroy
   has_many :interests, as: :interestable
 
   # include PgSearch::Model

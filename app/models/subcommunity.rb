@@ -1,6 +1,6 @@
 class Subcommunity < ApplicationRecord
   belongs_to :community
-  has_many :interests, as: :interestable
+  has_many :interests, as: :interestable, dependent: :destroy
 
   # include PgSearch::Model
   # pg_search_scope :global_search,

@@ -2,9 +2,8 @@ class InterestsController < ApplicationController
   def new
     @interest = Interest.new
     authorize @interest
-    @interest.user = current_user
-
     @communities = Community.all
+    authorize @communities
   end
 
   def create
@@ -21,6 +20,7 @@ class InterestsController < ApplicationController
           subcommunity = Subcommunity.find(interestable_id)
           interest = Interest.new user: current_user
           interest.interestable = subcommunity
+          authorize interest
           interest.save
           @creation << subcommunity.name
 
@@ -28,7 +28,6 @@ class InterestsController < ApplicationController
       }
 
       format.html {
-
         @interests_arr = interest_params[:interestable_id].compact_blank
 
         if @interests_arr.empty?
@@ -43,6 +42,8 @@ class InterestsController < ApplicationController
             subcommunity = Subcommunity.find(interestable_id)
             interest = Interest.new user: current_user
             interest.interestable = subcommunity
+
+            authorize interest
             interest.save
           end
           # @interest = Interest.new

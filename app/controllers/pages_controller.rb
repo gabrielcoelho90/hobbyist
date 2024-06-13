@@ -9,11 +9,10 @@ class PagesController < ApplicationController
   end
 
   def search
-    # current_user_position
-    # display all communities and subcommunities
-    @current_user_interests = current_user.interests
     respond_to do |format|
       format.html {
+        @blank_interest = Interest.new
+        @communities = Community.all
         @users = User.all
         if params[:query].present?
           # @subcommunity = Subcommunity.find_by(name: params[:query])

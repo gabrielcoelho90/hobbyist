@@ -1,10 +1,16 @@
-// Define variables for your color scheme
+// Colors
+$white: #FFFFFD;
 
-// For example:
-$red: #FD1015;
-$blue: #0D6EFD;
-$yellow: #FFC65A;
-$orange: #E67E22;
-$green: #1EDD88;
-$gray: #0E0000;
-$light-gray: #F4F4F4;
+$theme-colors: (
+    "light":      #FFFFFD,
+    "dark":       #264b3b,
+    "primary":    #2c924c,
+    "secondary":  #3d664a,
+    "info":       #fde258,
+    "accent1":    #5dd0a4,
+    "accent2":    #63915f,
+    "accent3":    #272b5d,
+    "success":    #19b428,
+    "warning":    #fac718,
+    "danger":     #f80b4b,
+);

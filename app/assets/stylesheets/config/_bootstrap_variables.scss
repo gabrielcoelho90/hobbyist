@@ -4,19 +4,35 @@
 // 2. These variables are defined with default value (see https://robots.thoughtbot.com/sass-default)
 // 3. You can override them below!
 
+@import "colors";
+
+$body-bg: map-get($theme-colors, "light");
+
 // General style
 $font-family-sans-serif: $body-font;
 $headings-font-family:   $headers-font;
-$body-bg:                $light-gray;
 $font-size-base:         1rem;
 
 // Colors
-$body-color: $gray;
-$primary:    $blue;
-$success:    $green;
-$info:       $yellow;
-$danger:     $red;
-$warning:    $orange;
+// Ensure $white is defined once in _colors.scss and not redefined here
+//$white: #ffffff;
+
+// Reference theme colors using map-get
+/*
+$theme-colors: (
+    "light":      #FFFCE9,
+    "dark":       #264b3b,
+    "primary":    #2c924c,
+    "secondary":  #3d664a,
+    "info":       #fde258,
+    "accent1":    #5dd0a4,
+    "accent2":    #63915f,
+    "accent3":    #272b5d,
+    "success":    #19b428,
+    "warning":    #fac718,
+    "danger":     #f80b4b,
+);
+*/
 
 // Buttons & inputs' radius
 $border-radius-sm:            .0625rem;
