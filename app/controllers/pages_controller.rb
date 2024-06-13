@@ -28,14 +28,14 @@ class PagesController < ApplicationController
             end
           end
           @users = User.joins(:interests).where(interests: { interestable: @array_of_interestables })
-          @near_users = @users.near([current_user.latitude, current_user.longitude], 5)
-          @markers = @users.geocoded.uniq.map do |user|
-            {
-              lat: user.latitude,
-              lng: user.longitude,
-              info_window_html: render_to_string(partial: "info_window", locals: { user: })
-            }
-          end
+        end
+        @near_users = @users.near([current_user.latitude, current_user.longitude], 5)
+        @markers = @users.geocoded.uniq.map do |user|
+          {
+            lat: user.latitude,
+            lng: user.longitude,
+            info_window_html: render_to_string(partial: "info_window", locals: { user: })
+          }
         end
       }
 
