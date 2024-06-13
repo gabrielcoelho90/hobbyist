@@ -9,6 +9,8 @@ class PagesController < ApplicationController
   end
 
   def search
+
+
     respond_to do |format|
       format.html {
         # @user = User.find(sports.interests[0].user_id)
