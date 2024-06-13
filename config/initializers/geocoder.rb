@@ -16,9 +16,9 @@ Geocoder.configure(
   # always_raise: [],
 
   # Calculation options
-  units: :km
+  units: :km,
   # distances: :linear          # :spherical or :linear
-
+  http_headers: { 'Accept-Encoding' => 'json' }
   # Cache configuration
   # cache_options: {
   #   expiration: 2.days,
