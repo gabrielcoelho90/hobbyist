@@ -19,7 +19,6 @@ export default class extends Controller {
       style: "mapbox://styles/mapbox/outdoors-v12",
       language: 'pt-BR'
     })
-
     this.addMarkersToMap()
     this.fitMapToMarkers()
 
