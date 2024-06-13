@@ -13,3 +13,8 @@
 @import "components/index";
 @import "pages/index";
 @import "components/chatroom";
+@import "pages/search";
+
+body {
+  background-color: map-get($theme-colors, "light");
+}
