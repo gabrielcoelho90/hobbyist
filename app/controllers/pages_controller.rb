@@ -9,6 +9,8 @@ class PagesController < ApplicationController
   end
 
   def search
+
+
     respond_to do |format|
       format.html {
         @blank_interest = Interest.new

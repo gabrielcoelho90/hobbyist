@@ -33,7 +33,11 @@ class ApplicationPolicy
   end
 
   def destroy?
-    true
+    false
+  end
+
+  def search?
+    false
   end
 
   class Scope
