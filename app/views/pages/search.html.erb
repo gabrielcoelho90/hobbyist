@@ -1,22 +1,19 @@
 <div class="container-fluid">
-  <div class="row mb-4">
-    <div class="col-12">
-      <%# Interests as pills for the current user %>
-      <div class="d-flex flex-wrap">
-        <% current_user.interests.each do |interest| %>
-          <span class="badge rounded-pill bg-primary m-1"><%= interest.interestable.name %></span>
-        <% end %>
+  <div class="header mb-4">
+    <div class="row">
+      <div class="col-12">
+        <h3 class="text-primary">Find Hobbyists near you</h3>
       </div>
     </div>
-    <div class="col-12">
-      <%# Existing working search bar %>
-      <div class="main-search-bar" data-map-target="mainSearch"></div>
-    </div>
-  </div>
-
-  <div class="row mb-4">
-    <div class="col-12">
-      <h1>Find Hobbyists near you</h1>
+    <div class="row">
+      <div class="col-12">
+        <ul class="list-unstyled d-flex flex-wrap">
+          <li class="m-2"> <%= link_to "Sports", search_page_path(query: "Sports"), class: "btn btn-dark" %> </li>
+          <li class="m-2"> <%= link_to "Arts", search_page_path(query: "Arts"), class: "btn btn-dark" %> </li>
+          <li class="m-2"> <%= link_to "Games", search_page_path(query: "Games"), class: "btn btn-dark" %> </li>
+          <li class="m-2"> <%= link_to "Music", search_page_path(query: "Music"), class: "btn btn-dark" %> </li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -37,13 +34,36 @@
                 <% end %>
               </div>
             </div>
-            <button class="btn btn-primary ms-auto" disabled>Message</button>
+            <button class="btn btn-primary ms-auto" >Message</button>
+          </div>
+          <div class="card-footer">
+            <div class="d-flex flex-wrap">
+              <% user.interests.each do |interest| %>
+                <span class="badge rounded-pill bg-success m-1"><%= interest.interestable.name %></span>
+              <% end %>
+            </div>
           </div>
         </div>
       <% end %>
     </div>
+
     <div class="col-7">
-      <div style="width: 100%; height: 600px;" data-map-target="mapContainer"></div>
+      <div class="sticky-container"
+          data-controller="map"
+          data-map-markers-value="<%= @markers.to_json %>"
+          data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+        <div class="row mb-4">
+          <div class="col-12">
+            <%# Existing working search bar %>
+            <div class="main-search-bar" data-map-target="mainSearch"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="map-container" style="width: 100%; height: 600px;" data-map-target="mapContainer"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
