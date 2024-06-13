@@ -7,12 +7,61 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <ul class="list-unstyled d-flex flex-wrap">
-          <li class="m-2"> <%= link_to "Sports", search_page_path(query: "Sports"), class: "btn btn-dark" %> </li>
-          <li class="m-2"> <%= link_to "Arts", search_page_path(query: "Arts"), class: "btn btn-dark" %> </li>
-          <li class="m-2"> <%= link_to "Games", search_page_path(query: "Games"), class: "btn btn-dark" %> </li>
-          <li class="m-2"> <%= link_to "Music", search_page_path(query: "Music"), class: "btn btn-dark" %> </li>
-        </ul>
+        <%= simple_form_for @blank_interest, html: { class: 'border my-3' } do |f| %>
+          <%# <h2>Your interests</h2> %>
+          <%= f.collection_check_boxes :interestable_id, current_user.subcommunities, :id, :name do |b|  %>
+            <%= b.check_box(class: 'btn-check', autocomplete: 'off') %>
+            <%= b.label(class: 'btn m-1 rounded-pill') %>
+          <% end %>
+
+          <%# <h2>All Interests</h2> %>
+              <div class="accordion my-3" id="filtersAccordion">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse" aria-expanded="false" aria-controls="filtersCollapse">
+                      Filter All Communities
+                    </button>
+                  </h2>
+                  <div id="filtersCollapse" class="accordion-collapse collapse" data-bs-parent="#filtersAccordion">
+                    <div class="accordion-body">
+                      <div>
+
+                        <% @communities.each do |community| %>
+                          <% accordion_id = "accordion#{community.name}" %>
+                          <% collapse_id = "collapse#{community.name}" %>
+                          <% subcommunity_arr = Subcommunity.all.where(community: community)%>
+                          <% filter_arr = subcommunity_arr.reject { |sub| current_user.subcommunities.include?(sub) } %>
+                          <div class="accordion my-3" id="<%= accordion_id %>">
+                            <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#<%= collapse_id %>" aria-expanded="false" aria-controls="<%= collapse_id %>">
+                                  <%= community.name %>
+                                </button>
+                              </h2>
+                              <div id="<%= collapse_id %>" class="accordion-collapse collapse" data-bs-parent="#<%= accordion_id %>">
+                                <div class="accordion-body">
+                                  <div>
+                                    <%= f.collection_check_boxes :interestable_id, filter_arr, :id, :name do |b|  %>
+                                      <%= b.check_box(class: 'btn-check', autocomplete: 'off') %>
+                                      <%= b.label(class: 'btn m-1 rounded-pill') %>
+                                    <% end %>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <% end %>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+            <%= f.button :submit, class: 'btn btn-primary m-2' %>
+        <% end %>
       </div>
     </div>
   </div>
