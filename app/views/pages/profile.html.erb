@@ -4,10 +4,16 @@
       <h1>Welcome, <%= current_user.username %>!</h1>
     </div>
   </div>
+
+  <div>
+
+  </div>
   <div class="row justify-content-center">
     <div class="col-12 text-center">
-      <div class="profile-page-photo d-flex align-items-center justify-content-center mx-auto">
-        Placeholder
+      <div class="d-flex align-items-center justify-content-center mx-auto">
+        <%#= cl_image_tag("ssr3iw6xtbojbs10cn9r", width: 400, height: 300, crop: :fill) %>
+        <%= cl_image_tag @user.photo.key, height: 300, width: 300, crop: :fill, class: 'profile-page-photo' %>
+        <%#= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
       </div>
     </div>
   </div>
@@ -50,4 +56,12 @@
       <%= link_to 'Edit', '#', class: 'btn btn-primary', disabled: true %>
     </div>
   </div>
+</div>
+
+<div>
+  <%= link_to 'Add photo', 'profile/edit', class: 'btn btn-primary'%>
+  <%= simple_form_for (current_user) do |f| %>
+    <%= f.input :photo, as: :file %>
+    <%= f.submit %>
+  <% end %>
 </div>
