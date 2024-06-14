@@ -1,13 +1,29 @@
-<div class="container profile-page-container">
+<div class="container profile-page-container height-100">
   <div class="row">
     <div class="col-12 text-center">
       <h1>Welcome, <%= current_user.username %>!</h1>
     </div>
   </div>
+
+  <div>
+
+  </div>
   <div class="row justify-content-center">
     <div class="col-12 text-center">
-      <div class="profile-page-photo d-flex align-items-center justify-content-center mx-auto">
-        Placeholder
+      <div class="d-flex align-items-center justify-content-center mx-auto">
+        <%#= cl_image_tag("ssr3iw6xtbojbs10cn9r", width: 400, height: 300, crop: :fill) %>
+        <% if current_user.photo.attached? %>
+          <%= cl_image_tag current_user.photo.key, height: 300, width: 300, crop: :fill, class: 'profile-page-photo' %>
+          <%#= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
+        <% else %>
+          <div class='profile-page-photo'>
+            Profile Photo
+          </div>
+        <% end %>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Update Profile Photo
+        </button>
+        <%#= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
       </div>
     </div>
   </div>
@@ -21,14 +37,16 @@
   </div>
   <div class="row justify-content-center mb-4">
     <div class="col-6">
-      <div class="profile-page-card card">
+      <div class="profile-page-card card position-relative">
         <div class="card-body">
           <h3>Your Interests</h3>
           <div class="d-flex flex-wrap">
             <% current_user.interests.each do |interest| %>
               <span class="badge rounded-pill bg-success m-1"><%= interest.interestable.name %></span>
             <% end %>
+            <%= link_to '+Interests', new_interest_path, class: 'badge rounded-pill bg-new-interest m-1 border' %>
           </div>
+          <%= link_to 'Find Hobbyists', search_page_path, class: 'btn btn-primary find-hobbyists-btn' %>
         </div>
       </div>
     </div>
@@ -43,9 +61,26 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-12 text-left">
-      <%= link_to 'Edit', '#', class: 'btn btn-primary', disabled: true %>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Update your profile photo</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <%= simple_form_for (current_user) do |f| %>
+            <%= f.input :photo, as: :file %>
+        </div>
+      </div>
+      <div class="modal-footer">
+            <%= f.button :submit, class: "btn btn-primary" %>
+          <% end %>
+      </div>
     </div>
   </div>
 </div>
