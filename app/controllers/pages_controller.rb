@@ -16,7 +16,7 @@ class PagesController < ApplicationController
 
         filter_users
         create_markers
-        @near_users = @near_users.uniq
+        @near_users = @near_users.uniq.reject { |user| user == current_user }
       }
 
       format.json {
@@ -24,7 +24,7 @@ class PagesController < ApplicationController
 
         filter_users
         create_markers
-        @near_users = @near_users.uniq
+        @near_users = @near_users.uniq.reject { |user| user == current_user }
       }
     end
   end

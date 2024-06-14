@@ -8,6 +8,10 @@ class PrivateChatroomPolicy < ApplicationPolicy
     user_is_participant?
   end
 
+  def create?
+    true
+  end
+
   class Scope < ApplicationPolicy::Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve
