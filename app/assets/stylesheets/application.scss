@@ -16,6 +16,8 @@
 @import "pages/search";
 @import "components/interests_form";
 @import "components/map_section";
+@import "components/footer";
+@import "pages/user_profile";
 
 body {
   background-color: map-get($theme-colors, "light");

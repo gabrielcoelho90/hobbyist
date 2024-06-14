@@ -7,11 +7,6 @@
       <div class="flex-grow-1 ms-3">
         <h5 class="user-card-title"><strong><%= user.username %></strong></h5>
         <p class="user-card-text">Distance: 1km</p>
-        <div class="d-flex flex-wrap">
-          <% user.interests.each do |interest| %>
-            <span class="badge rounded-pill bg-success m-1"><%= interest.interestable.name %></span>
-          <% end %>
-        </div>
       </div>
       <button class="btn btn-primary ms-auto" >Message</button>
     </div>

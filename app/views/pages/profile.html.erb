@@ -1,7 +1,51 @@
-<h1>Profile for <%= current_user.username %></h1>
-
-<ul>
-  <% @user_subcommunities.each do |subcommunity| %>
-    <li><%= subcommunity.community.name %> - <%= subcommunity.name %></li>
-  <% end %>
-</ul>
+<div class="container profile-page-container">
+  <div class="row">
+    <div class="col-12 text-center">
+      <h1>Welcome, <%= current_user.username %>!</h1>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-12 text-center">
+      <div class="profile-page-photo d-flex align-items-center justify-content-center mx-auto">
+        Placeholder
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center mb-4">
+    <div class="col-auto">
+      <%= link_to 'Private Messages', '#', class: 'btn btn-dark rounded-pill', disabled: true %>
+    </div>
+    <div class="col-auto">
+      <%= link_to 'Group Chats', '#', class: 'btn btn-dark rounded-pill', disabled: true %>
+    </div>
+  </div>
+  <div class="row justify-content-center mb-4">
+    <div class="col-6">
+      <div class="profile-page-card card">
+        <div class="card-body">
+          <h3>Your Interests</h3>
+          <div class="d-flex flex-wrap">
+            <% current_user.interests.each do |interest| %>
+              <span class="badge rounded-pill bg-success m-1"><%= interest.interestable.name %></span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center mb-4">
+    <div class="col-6">
+      <div class="profile-page-card card">
+        <div class="card-body">
+          <h3>Your Address</h3>
+          <p><%= current_user.address %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 text-left">
+      <%= link_to 'Edit', '#', class: 'btn btn-primary', disabled: true %>
+    </div>
+  </div>
+</div>

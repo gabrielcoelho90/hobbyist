@@ -8,12 +8,13 @@
         <h3 class="text-light mb-3"><strong>Find Hobbyists near you!</strong></h3>
       </div>
     </div>
+
     <div class="row">
       <div class="col-12 interests-form-container">
         <%= simple_form_for @form_interest, method: :get, url: search_page_path, html: { class: 'border my-3' } do |f| %>
           <div class="mb-3">
             <h5 class="text-secondary mt-3 ms-3"><strong>Your interests</strong></h5>
-            <div class="d-flex flex-wrap">
+            <div class="d-flex flex-wrap p-3">
               <%= f.collection_check_boxes :interestable_id, current_user.subcommunities, :id, :name do |b| %>
                 <%= b.check_box(class: 'btn-check', autocomplete: 'off') %>
                 <%= b.label(class: 'btn btn-outline-primary m-1 rounded-pill') %>
@@ -50,6 +51,7 @@
                                 <%= b.label(class: 'btn btn-outline-secondary m-1 rounded-pill') %>
                               <% end %>
                             </div>
+
                           </div>
                         </div>
                       </div>
@@ -59,7 +61,7 @@
               </div>
             </div>
           </div>
-          <div class="d-flex justify-content-end">
+          <div class="d-flex justify-content-end p-3">
             <%= f.button :submit, "Apply Filters", class: 'btn btn-primary m-2' %>
             <%= link_to "Reset Filters", search_page_path, class: 'btn btn-primary m-2 d-flex align-items-center' %>
           </div>
