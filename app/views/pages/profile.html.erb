@@ -24,7 +24,7 @@
 
   <div class="row justify-content-center mb-4">
     <div class="col-auto">
-      <%= link_to 'Private Messages', '#', class: 'btn btn-dark rounded-pill', disabled: true %>
+      <%= link_to 'Private Messages', private_chatrooms_path, class: 'btn btn-dark rounded-pill' %>
     </div>
   </div>
 
@@ -76,8 +76,8 @@
           <%= f.input :photo, as: :file %>
       </div>
       <div class="modal-footer">
-          <%= f.button :submit, class: "btn btn-primary" %>
-        <% end %>
+            <%= f.button :submit, "Change photo", class: "btn btn-primary" %>
+          <% end %>
       </div>
     </div>
   </div>
