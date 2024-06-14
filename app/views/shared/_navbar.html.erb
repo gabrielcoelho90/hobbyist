@@ -16,14 +16,21 @@
 
     <div class="d-flex justify-content-end align-items-center navbar-right-content">
       <%= link_to "Find Hobbyists", search_page_path, class: "btn btn-primary me-3" %>
-      <div class="dropdown">
-        <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
-        </a>
-        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-          <%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
+      <% unless current_user.nil?  %>
+        <div class="dropdown">
+          <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <% if current_user.photo.attached? %>
+              <%= cl_image_tag(current_user.photo.key, height: 300, width: 300, crop: :fill, class: 'avatar') %>
+            <% else %>
+              <div class="avatar bg-success"></div>
+            <% end %>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <%= link_to "My Profile", profile_path, class: "dropdown-item" %>
+            <%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>

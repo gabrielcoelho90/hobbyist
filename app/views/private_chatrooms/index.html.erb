@@ -1,1 +1,5 @@
-<h1>teste</h1>
+<div>
+  <% @private_chatrooms.each do |private_chatroom| %>
+    <li><%=link_to "#{private_chatroom.name}", private_chatroom_path(private_chatroom) %></li>
+  <% end %>
+</div>

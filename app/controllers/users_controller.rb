@@ -7,6 +7,7 @@ class UsersController < ApplicationController
     current_user.photo.attach(photo_params[:photo])
     authorize current_user
     current_user.save
+    redirect_to profile_path
   end
 
   private

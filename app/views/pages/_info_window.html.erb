@@ -3,15 +3,15 @@
     <div class="profile-placeholder d-flex align-items-center justify-content-center mb-3">
       Placeholder
     </div>
-    <h5 class="info-window-title"><strong><%= current_user.username %></strong></h5>
+    <h5 class="info-window-title"><strong><%= user.username %></strong></h5>
     <div class="address-card mt-3">
       <h6 class="address-title"><strong>Address</strong></h6>
-      <p class="info-window-text"><small><%= current_user.address %></small></p>
+      <p class="info-window-text"><small><%= user.address %></small></p>
     </div>
     <button class="btn btn-primary mt-3 w-100">Message</button>
     <div class="info-window-footer mt-3">
       <div class="d-flex flex-wrap justify-content-center">
-        <% current_user.interests.each do |interest| %>
+        <% user.interests.each do |interest| %>
           <span class="badge rounded-pill bg-success m-1"><%= interest.interestable.name %></span>
         <% end %>
       </div>
