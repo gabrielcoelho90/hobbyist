@@ -11,37 +11,20 @@ class PagesController < ApplicationController
   def search
     respond_to do |format|
       format.html {
-        @blank_interest = Interest.new
+        @form_interest = Interest.new
         @communities = Community.all
-        @users = User.all
-        if params[:query].present?
-          # @subcommunity = Subcommunity.find_by(name: params[:query])
-          @array_of_interests = ["Tennis"]
-          @array_of_interestables = []
-          @array_of_interests.each do |array_of_interest|
-            if Subcommunity.find_by(name: array_of_interest).nil?
-              @community = Community.find_by(name: array_of_interest)
-              @array_of_interestables << @community
-            else
-              @subcommunity = Subcommunity.find_by(name: array_of_interest)
-              @array_of_interestables << @subcommunity
-            end
-          end
-          @users = User.joins(:interests).where(interests: { interestable: @array_of_interestables })
-        end
-        @near_users = @users.near([current_user.latitude, current_user.longitude], 5)
-        @markers = @users.geocoded.uniq.map do |user|
-          {
-            lat: user.latitude,
-            lng: user.longitude,
-            info_window_html: render_to_string(partial: "info_window", locals: { user: })
-          }
-        end
+
+        filter_users
+        create_markers
+        @near_users = @near_users.uniq
       }
 
       format.json {
         @map_json = map_params
-        @near_users = User.near([@map_json['lat'], @map_json['lng']], 5)
+
+        filter_users
+        create_markers
+        @near_users = @near_users.uniq
       }
     end
   end
@@ -49,6 +32,43 @@ class PagesController < ApplicationController
   private
 
   def map_params
-    params.permit(:lat, :lng)
+    params.permit(:lat, :lng, :range)
+  end
+
+  def interest_params
+    params.require(:interest).permit(interestable_id: [])
+  end
+
+  def filter_users
+    @users = User.all
+    filter_users_by_interests
+    filter_users_by_distance
+  end
+
+  def filter_users_by_interests
+    @interest_id_arr = interest_params[:interestable_id].compact_blank if params[:interest].present?
+
+    unless @interest_id_arr.nil? || @interest_id_arr.empty?
+      @array_of_interestables =  @interest_id_arr.map { |interest_id| Subcommunity.find(interest_id) }
+      @users = User.joins(:interests).where(interests: { interestable: @array_of_interestables })
+    end
+  end
+
+  def filter_users_by_distance
+    if @map_json.nil?
+      @near_users = @users.near([current_user.latitude, current_user.longitude], 5)
+    else
+      @near_users = @users.near([@map_json['lat'], @map_json['lng']], @map_json['range'])
+    end
+  end
+
+  def create_markers
+    @markers = @near_users.geocoded.uniq.map do |user|
+      {
+        lat: user.latitude,
+        lng: user.longitude,
+        info_window_html: render_to_string(partial: "pages/info_window", formats: :html, locals: { user: })
+      }
+    end
   end
 end
