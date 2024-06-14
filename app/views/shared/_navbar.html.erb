@@ -22,10 +22,7 @@
             <% if current_user.photo.attached? %>
               <%= cl_image_tag(current_user.photo.key, height: 300, width: 300, crop: :fill, class: 'avatar') %>
             <% else %>
-              <div class="avatar">
-                pic
-              </div>
-              <%#= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
+              <div class="avatar bg-success"></div>
             <% end %>
           </a>
           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
