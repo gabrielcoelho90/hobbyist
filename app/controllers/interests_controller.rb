@@ -1,7 +1,6 @@
 class InterestsController < ApplicationController
   def new
     @interest = Interest.new
-    # @interest.user = current_user
     authorize @interest
     @communities = Community.all
     authorize @communities
@@ -29,7 +28,6 @@ class InterestsController < ApplicationController
       }
 
       format.html {
-        raise
         @interests_arr = interest_params[:interestable_id].compact_blank
 
         if @interests_arr.empty?
