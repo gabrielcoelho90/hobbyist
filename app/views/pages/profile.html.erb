@@ -21,14 +21,16 @@
   </div>
   <div class="row justify-content-center mb-4">
     <div class="col-6">
-      <div class="profile-page-card card">
+      <div class="profile-page-card card position-relative">
         <div class="card-body">
           <h3>Your Interests</h3>
           <div class="d-flex flex-wrap">
             <% current_user.interests.each do |interest| %>
               <span class="badge rounded-pill bg-success m-1"><%= interest.interestable.name %></span>
             <% end %>
+            <%= link_to '+Interests', new_interest_path, class: 'badge rounded-pill bg-new-interest m-1 border' %>
           </div>
+          <%= link_to 'Find Hobbyists', search_page_path, class: 'btn btn-primary find-hobbyists-btn' %>
         </div>
       </div>
     </div>
@@ -44,7 +46,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-12 text-left">
+    <div class="col-12 text-left mb-3">
       <%= link_to 'Edit', '#', class: 'btn btn-primary', disabled: true %>
     </div>
   </div>
