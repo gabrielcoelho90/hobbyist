@@ -1,4 +1,4 @@
-<div class="container profile-page-container">
+<div class="container profile-page-container height-100">
   <div class="row">
     <div class="col-12 text-center">
       <h1>Welcome, <%= current_user.username %>!</h1>
@@ -12,7 +12,17 @@
     <div class="col-12 text-center">
       <div class="d-flex align-items-center justify-content-center mx-auto">
         <%#= cl_image_tag("ssr3iw6xtbojbs10cn9r", width: 400, height: 300, crop: :fill) %>
-        <%= cl_image_tag @user.photo.key, height: 300, width: 300, crop: :fill, class: 'profile-page-photo' %>
+        <% if current_user.photo.attached? %>
+          <%= cl_image_tag current_user.photo.key, height: 300, width: 300, crop: :fill, class: 'profile-page-photo' %>
+          <%#= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
+        <% else %>
+          <div class='profile-page-photo'>
+            Profile Photo
+          </div>
+        <% end %>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Update Profile Photo
+        </button>
         <%#= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
       </div>
     </div>
@@ -51,17 +61,26 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-12 text-left mb-3">
-      <%= link_to 'Edit', '#', class: 'btn btn-primary', disabled: true %>
-    </div>
-  </div>
 </div>
 
-<div>
-  <%= link_to 'Add photo', 'profile/edit', class: 'btn btn-primary'%>
-  <%= simple_form_for (current_user) do |f| %>
-    <%= f.input :photo, as: :file %>
-    <%= f.submit %>
-  <% end %>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Update your profile photo</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <%= simple_form_for (current_user) do |f| %>
+            <%= f.input :photo, as: :file %>
+        </div>
+      </div>
+      <div class="modal-footer">
+            <%= f.button :submit, class: "btn btn-primary" %>
+          <% end %>
+      </div>
+    </div>
+  </div>
 </div>
