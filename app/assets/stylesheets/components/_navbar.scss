@@ -1,20 +1,48 @@
 .navbar-lewagon {
   justify-content: space-between;
-  background: #fffefa;
-}
+  background: #FFFFFD;
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
-}
+  .navbar-collapse {
+    flex-grow: 0;
+  }
 
-.navbar-lewagon .navbar-brand img {
-  width: 100px;
-}
+  .navbar-brand img {
+    width: 100px;
+  }
 
-.navbar-lewagon .navbar-center-logo {
-  height: 30px;
-}
+  .navbar-center-logo {
+    height: 30px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
-.navbar-lewagon .navbar-center-logo img {
-  height: 100%; /* image fills the container height */
+  .navbar-center-logo img {
+    height: 100%;
+  }
+
+  .navbar-right-content {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .btn-primary {
+    white-space: nowrap;
+    padding: 0.25rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 15px;
+    line-height: 2.5;
+  }
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

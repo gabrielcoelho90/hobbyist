@@ -1,0 +1,17 @@
+@import "../config/colors";
+
+.footer {
+  background-color: map-get($theme-colors, "dark");
+  color: map-get($theme-colors, "light");
+  padding: 1rem 0;
+  text-align: center;
+
+  .footer-logo {
+    max-width: 30px;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    margin: 0;
+  }
+}
