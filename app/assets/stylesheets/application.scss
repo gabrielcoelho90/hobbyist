@@ -18,7 +18,12 @@
 @import "components/map_section";
 @import "components/footer";
 @import "pages/user_profile";
+@import "components/info_window";
 
 body {
   background-color: map-get($theme-colors, "light");
+}
+
+.height-100 {
+  height: 90vh;
 }
