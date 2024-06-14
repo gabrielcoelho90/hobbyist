@@ -12,6 +12,10 @@ class GroupchatPolicy < ApplicationPolicy
     # end
   end
 
+  def index?
+    true
+  end
+
   def show?
     user.interests.any? do |interest|
       interest.interestable.name == record.name

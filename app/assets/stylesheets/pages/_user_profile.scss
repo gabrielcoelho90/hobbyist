@@ -34,12 +34,6 @@
     font-size: 1.2rem;
   }
 
-  .btn-dark {
-    margin: 0.5rem;
-    opacity: 0.65; /* Makes it look disabled */
-    pointer-events: none; /* Disabled button */
-  }
-
   .profile-page-card {
     background-color: $white;
     border: 1px solid map-get($theme-colors, "accent2");
