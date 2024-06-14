@@ -10,7 +10,7 @@
       <%= simple_form_for @blank_interest, html: { class: 'border my-3' } do |f| %>
         <div class="mb-3">
           <h5 class="text-secondary mt-3 ms-3"><strong>Your interests</strong></h5>
-          <div class="d-flex flex-wrap">
+          <div class="d-flex flex-wrap p-3">
             <%= f.collection_check_boxes :interestable_id, current_user.subcommunities, :id, :name do |b| %>
               <%= b.check_box(class: 'btn-check', autocomplete: 'off') %>
               <%= b.label(class: 'btn btn-outline-primary m-1 rounded-pill') %>
@@ -41,7 +41,7 @@
                       </h2>
                       <div id="<%= collapse_id %>" class="accordion-collapse collapse" data-bs-parent="#<%= accordion_id %>">
                         <div class="accordion-body">
-                          <div class="d-flex flex-wrap">
+                          <div class="d-flex flex-wrap p-3">
                             <%= f.collection_check_boxes :interestable_id, filter_arr, :id, :name do |b| %>
                               <%= b.check_box(class: 'btn-check', autocomplete: 'off') %>
                               <%= b.label(class: 'btn btn-outline-secondary m-1 rounded-pill') %>
@@ -56,7 +56,7 @@
             </div>
           </div>
         </div>
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end p-3">
           <%= f.button :submit, class: 'btn btn-primary m-2' %>
         </div>
       <% end %>
@@ -76,11 +76,6 @@
             <div class="flex-grow-1 ms-3">
               <h5 class="user-card-title"><strong><%= user.username %></strong></h5>
               <p class="user-card-text">Distance: 1km</p>
-              <div class="d-flex flex-wrap">
-                <% user.interests.each do |interest| %>
-                  <span class="badge rounded-pill bg-success m-1"><%= interest.interestable.name %></span>
-                <% end %>
-              </div>
             </div>
             <button class="btn btn-primary ms-auto" >Message</button>
           </div>
