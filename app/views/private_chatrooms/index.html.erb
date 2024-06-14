@@ -1,5 +1,21 @@
-<div>
-  <% @private_chatrooms.each do |private_chatroom| %>
-    <li><%=link_to "#{private_chatroom.name}", private_chatroom_path(private_chatroom) %></li>
-  <% end %>
+<div class="container private-chatrooms-index-container">
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <h2 class="text-primary"><strong>Private Chatrooms</strong></h2>
+      <ul class="list-group">
+        <% @private_chatrooms.each do |private_chatroom| %>
+          <li class="list-group-item">
+            <%= link_to private_chatroom_path(private_chatroom), class: "d-flex align-items-center chatroom-link" do %>
+              <div class="chatroom-avatar">
+                <div class="avatar-img"></div>
+              </div>
+              <div class="flex-grow-1 ms-2">
+                <strong><%= private_chatroom.name %></strong>
+              </div>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 </div>
