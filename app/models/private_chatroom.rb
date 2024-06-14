@@ -5,5 +5,5 @@ class PrivateChatroom < ApplicationRecord
 
   validates :sender, uniqueness: { scope: :receiver, message: "already has this Private Chatroom" }
   validates :receiver, uniqueness: { scope: :sender, message: "already has this Private Chatroom" }
-  validates :sender, comparison: { other_than: :sender, message: "cannot create chat with self" }
+  #validates :sender, comparison: { other_than: :sender, message: "cannot create chat with self" }
 end
