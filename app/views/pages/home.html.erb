@@ -1,2 +1,22 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="container home-page-container p-3 mb-3 height-100">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-6 text-center text-md-start">
+      <h1 class="display-4">Now all you need is to <span class="text-want">want</span> to pick up a hobby</h1>
+      <p class="lead">We've got you covered with the hardest part of having a hobby; finding like-minded people to do it with you.</p>
+      <div class="btn-group mt-4">
+        <%= link_to 'create your profile', new_user_registration_path, class: 'btn btn-primary btn-lg rounded-pill me-3' %>
+        <%= link_to 'search your area', search_page_path, class: 'btn btn-outline-primary btn-lg rounded-pill' %>
+      </div>
+      <p class="trusted-by mt-4">Trusted by 1,000+ hobbyists</p>
+      <div class="avatar-group mt-2">
+        <%= image_tag 'avatar1.jpg', class: 'avatar' %>
+        <%= image_tag 'avatar2.jpg', class: 'avatar' %>
+        <%= image_tag 'avatar3.jpg', class: 'avatar' %>
+        <%= image_tag 'avatar4.jpg', class: 'avatar' %>
+      </div>
+    </div>
+    <div class="col-md-6 text-center">
+      <%= image_tag 'hobbyists.png', class: 'img-fluid' %>
+    </div>
+  </div>
+</div>

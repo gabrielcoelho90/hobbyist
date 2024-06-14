@@ -1,4 +1,4 @@
-<div class="container mt-3">
+<div class="container mt-3 height-100">
 
 <div id="interests-form" data-controller="create-interests">
   <%= simple_form_for @interest, html: {data: {create_interests_target: "form"}} do |f| %>
@@ -26,7 +26,7 @@
         </div>
       </div>
     <% end %>
-    <%= f.button :submit, class: 'btn btn-primary' %>
+    <%= f.button :submit, class: 'btn btn-primary mb-3' %>
   <% end %>
 
   <%# <form data-action="click->create-interests#setInterests">
