@@ -19,18 +19,4 @@ class GroupchatPolicy < ApplicationPolicy
   def show?
     true
   end
-
-  def create?
-    true
-  end
-
-  private
-
-  def user_is_participant?
-    user.interests.any? do |interest|
-      interest.interestable.name == record.name
-    end
-  end
 end
-
-# user.interests ==
