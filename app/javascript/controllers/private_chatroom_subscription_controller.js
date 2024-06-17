@@ -3,7 +3,7 @@ import { createConsumer } from "@rails/actioncable"
 
 export default class extends Controller {
   static values = { privateChatroomId: Number }
-  static targets = ["messages"]
+  static targets = ["messages", "form", "input"]
 
   connect() {
     this.subscription = createConsumer().subscriptions.create(
@@ -11,6 +11,8 @@ export default class extends Controller {
       { received: data => this.#insertMessageAndScrollDown(data) }
     )
     console.log(`Subscribed to the chatroom with the id ${this.privateChatroomIdValue}.`)
+
+    this.inputTarget.addEventListener("keydown", this.#submitOnEnter.bind(this))
   }
 
   resetForm(event) {
@@ -20,6 +22,7 @@ export default class extends Controller {
   disconnect() {
     console.log("Unsubscribed from the chatroom")
     this.subscription.unsubscribe()
+    this.inputTarget.removeEventListener("keydown", this.#submitOnEnter.bind(this))
   }
 
   #insertMessageAndScrollDown(data) {
@@ -39,5 +42,12 @@ export default class extends Controller {
     `;
     this.messagesTarget.appendChild(messageElement);
     this.messagesTarget.scrollTo(0, this.messagesTarget.scrollHeight);
+  }
+
+  #submitOnEnter(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      this.formTarget.requestSubmit();
+    }
   }
 }
