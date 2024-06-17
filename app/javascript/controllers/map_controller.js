@@ -15,6 +15,7 @@ export default class extends Controller {
     this.insertMap()
     this.addMarkersToMap()
     this.addGeocoder()
+    this.addHeatMap()
   }
 
   insertMap() {
@@ -71,6 +72,7 @@ export default class extends Controller {
     this.geocoder.on("result", (event) => {
       this.cleanupMarkers()
       this.setQueryString()
+
 
       const lat = event.result.center[1]
       const lng = event.result.center[0]
@@ -143,5 +145,121 @@ export default class extends Controller {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     return R * c;
+  }
+
+  addHeatMap() {
+    this.map.on('load', () => {
+      this.map.addSource('users', {
+        type: 'geojson',
+        data: this.geoJsonFormat()
+      });
+      console.log(this.geoJsonFormat());
+      this.addHeatMapLayer();
+      this.addCircleHeatMap();
+      this.cleanupMarkers();
+    });
+  }
+
+  geoJsonFormat() {
+    const arrayOfPoints = [];
+    this.markerArray.forEach((marker) => {
+      arrayOfPoints.push({ "type": "Feature","properties":{"dbh":5}, "geometry": { "type": "Point", "coordinates": [marker.lng, marker.lat] }, "properties": {}});
+    })
+    const geoUserJson = {"type":"FeatureCollection","features": arrayOfPoints}
+    return geoUserJson;
+  }
+
+  addHeatMapLayer() {
+    this.map.addLayer(
+      {
+        id: 'users-point',
+        type: 'heatmap',
+        source: 'users',
+        maxzoom: 15,
+        paint: {
+          // increase weight as diameter breast height increases
+          'heatmap-weight': 1,
+          // increase intensity as zoom level increases
+          'heatmap-intensity': {
+            stops: [
+              [11, 1],
+              [15, 3]
+            ]
+          },
+          // assign color values be applied to points depending on their density
+          'heatmap-color': [
+            'interpolate',
+            ['linear'],
+            ['heatmap-density'],
+            0,
+            'rgba(236,222,239,0)',
+            0.2,
+            'rgb(208,209,230)',
+            0.4,
+            'rgb(166,189,219)',
+            0.6,
+            'rgb(103,169,207)',
+            0.8,
+            'rgb(28,144,153)'
+          ],
+          // increase radius as zoom increases
+          'heatmap-radius': 50,
+          // decrease opacity to transition into the circle layer
+          'heatmap-opacity': {
+            default: 1,
+            stops: [
+              [14, 1],
+              [15, 0]
+            ]
+          }
+        }
+      }
+    );
+  }
+
+  addCircleHeatMap() {
+    this.map.addLayer(
+      {
+        id: 'users-circle',
+        type: 'circle',
+        source: 'users',
+        minzoom: 14,
+        paint: {
+          // increase the radius of the circle as the zoom level and dbh value increases
+          'circle-radius': {
+            property: 'dbh',
+            type: 'exponential',
+            stops: [
+              [{ zoom: 15, value: 1 }, 5],
+              [{ zoom: 15, value: 62 }, 10],
+              [{ zoom: 22, value: 1 }, 20],
+              [{ zoom: 22, value: 62 }, 50]
+            ]
+          },
+          'circle-color': {
+            property: 'dbh',
+            type: 'exponential',
+            stops: [
+              [0, 'rgba(236,222,239,0)'],
+              [10, 'rgb(236,222,239)'],
+              [20, 'rgb(208,209,230)'],
+              [30, 'rgb(166,189,219)'],
+              [40, 'rgb(103,169,207)'],
+              [50, 'rgb(28,144,153)'],
+              [60, 'rgb(1,108,89)']
+            ]
+          },
+          'circle-stroke-color': 'white',
+          'circle-stroke-width': 1,
+          'circle-opacity': {
+            stops: [
+              [14, 0],
+              [15, 1]
+            ]
+          }
+        }
+      },
+      'waterway-label'
+    );
   }
 }
