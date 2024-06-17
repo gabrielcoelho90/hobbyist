@@ -7,20 +7,25 @@ class MessagesController < ApplicationController
     end
     @message = Message.new(message_params)
     @message.messageable = @chatroom
-    # @message.messageable_id = @privateChatroom.id
     @message.user = current_user
-    # raise
     authorize @message
     if @message.save
+      message_data = {
+        id: @message.id,
+        content: @message.content,
+        created_at: @message.created_at.strftime("%a %b %e at %l:%M %p"),
+        username: @message.user.username,
+        user_id: @message.user.id
+      }
       if params[:private_chatroom_id]
         PrivateChatroomChannel.broadcast_to(
           @chatroom,
-          render_to_string(partial: "message", locals: { message: @message })
+          message_data
         )
       else
         GroupchatChannel.broadcast_to(
           @chatroom,
-          render_to_string(partial: "message", locals: { message: @message })
+          message_data
         )
       end
       head :ok

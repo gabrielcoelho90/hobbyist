@@ -9,30 +9,35 @@ export default class extends Controller {
     this.subscription = createConsumer().subscriptions.create(
       { channel: "PrivateChatroomChannel", id: this.privateChatroomIdValue },
       { received: data => this.#insertMessageAndScrollDown(data) }
-
-
-
     )
     console.log(`Subscribed to the chatroom with the id ${this.privateChatroomIdValue}.`)
-    }
+  }
 
-    resetForm(event) {
-      event.target.reset()
-    }
+  resetForm(event) {
+    event.target.reset()
+  }
 
-    disconnect() {
-      console.log("Unsubscribed from the chatroom")
-      this.subscription.unsubscribe()
-    }
+  disconnect() {
+    console.log("Unsubscribed from the chatroom")
+    this.subscription.unsubscribe()
+  }
 
+  #insertMessageAndScrollDown(data) {
+    const currentUserId = document.querySelector('meta[name="current-user-id"]').content;
+    const messageElement = document.createElement("div");
 
-    #insertMessageAndScrollDown(data) {
-      this.messagesTarget.insertAdjacentHTML("beforeend", data)
-      this.messagesTarget.scrollTo(0, this.messagesTarget.scrollHeight)
-    }
-
-    disconnect() {
-      console.log("Unsubscribed from the private chat")
-      this.subscription.unsubscribe()
-    }
+    messageElement.setAttribute("id", `message-${data.id}`);
+    messageElement.setAttribute("class", `message ${data.user_id == currentUserId ? 'user' : 'other'}`);
+    messageElement.innerHTML = `
+      <div class="bubble">
+        <small>
+          <strong>${data.username}</strong>
+          <i>${data.created_at}</i>
+        </small>
+        <p>${data.content}</p>
+      </div>
+    `;
+    this.messagesTarget.appendChild(messageElement);
+    this.messagesTarget.scrollTo(0, this.messagesTarget.scrollHeight);
+  }
 }

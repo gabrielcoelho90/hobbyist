@@ -1,30 +1,81 @@
-.chatroom {
-  background: white;
-  margin-top: 9px;
-  height: calc(100vh - 75px);
+@import "config/colors";
+
+.container.chatroom {
+  padding: 20px;
+  background-color: map-get($theme-colors, "light");
+  border-radius: 10px;
+  max-width: 800px;
+  margin: 0 auto;
+  color: map-get($theme-colors, "dark");
+}
+
+.container.chatroom h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: map-get($theme-colors, "dark");
+}
+
+.messages {
+  border: 1px solid map-get($theme-colors, "secondary");
+  border-radius: 5px;
+  padding: 10px;
+  height: 400px;
+  overflow-y: scroll;
+  background-color: map-get($theme-colors, "light");
+  margin-bottom: 20px;
+}
+
+.message {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex-grow: 1;
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  clear: both;
+}
 
-  h1 {
-    border-bottom: 1px solid $gray-200;
-    margin-bottom: 0;
-    padding: 1rem;
-  }
+.message.user {
+  justify-content: flex-end;
+}
 
-  .messages {
-    height: 100%;
-    overflow: scroll;
-    padding: 1rem;
-  }
+.message.user .bubble {
+  background-color: map-get($theme-colors, "primary");
+  color: map-get($theme-colors, "light");
+  max-width: 70%;
+}
 
-  #new_message {
-    border-top: 1px solid $gray-200;
-    padding: 1rem;
+.message.other {
+  justify-content: flex-start;
+}
 
-    .form-group {
-      margin-bottom: 0;
-    }
-  }
+.message.other .bubble {
+  background-color: map-get($theme-colors, "dark");
+  color: map-get($theme-colors, "light");
+  max-width: 70%;
+}
+
+.bubble {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+}
+
+.input form {
+  display: flex;
+  width: 100%;
+}
+
+.input .flex-grow-1 {
+  margin-right: 10px;
+}
+
+.input .btn {
+  white-space: nowrap;
+  background-color: map-get($theme-colors, "primary");
+  border-color: map-get($theme-colors, "primary");
+  color: map-get($theme-colors, "light");
 }
