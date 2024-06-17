@@ -1,6 +1,7 @@
-<div class="container private-chatrooms-index-container">
-  <div class="row justify-content-center">
-    <div class="col-8">
+<div class="container-fluid chatroom-container">
+  <div class="row height-100">
+    <!-- Private Chatrooms Index -->
+    <div class="col-4 private-chatrooms-index-container">
       <h2 class="text-primary"><strong>Private Chatrooms</strong></h2>
       <ul class="list-group">
         <% @private_chatrooms.each do |private_chatroom| %>
@@ -16,6 +17,16 @@
           </li>
         <% end %>
       </ul>
+    </div>
+
+    <!-- Placeholder -->
+    <div class="col-8 chatroom height-100 d-flex align-items-center justify-content-center">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Select a private chat</h5>
+          <p class="card-text">to open a chatroom with a hobbyist.</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
