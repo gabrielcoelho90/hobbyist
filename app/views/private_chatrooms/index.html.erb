@@ -2,8 +2,12 @@
   <div class="row height-100">
     <!-- Private Chatrooms Index -->
     <div class="col-4 private-chatrooms-index-container">
-      <h2 class="text-primary"><strong>Private Chatrooms</strong></h2>
-      <ul class="list-group">
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <%= link_to "Groupchats", groupchats_path, class:"nav-link", id:"nav-home-tab", type:"button", role:"tab" %>
+          <%= link_to "Private Chatrooms", private_chatrooms_path, class:"nav-link active", id:"nav-home-tab", type:"button", role:"tab" %>
+        </div>
+      </nav>      <ul class="list-group">
         <% @private_chatrooms.each do |private_chatroom| %>
           <li class="list-group-item">
             <%= link_to private_chatroom_path(private_chatroom), class: "d-flex align-items-center chatroom-link" do %>
