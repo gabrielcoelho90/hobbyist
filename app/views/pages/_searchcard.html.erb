@@ -6,7 +6,9 @@
       </div>
       <div class="flex-grow-1 ms-3">
         <h5 class="user-card-title"><strong><%= user.username %></strong></h5>
-        <p class="user-card-text">Distance: 1km</p>
+        <% distance_between_user = Geocoder::Calculations.distance_between([current_user.latitude, current_user.longitude],
+                                                         [user.latitude, user.longitude]).round(2) %>
+        <p class="user-card-text">Distance: <%= distance_between_user %>Km</p>
       </div>
       <%# <button class="btn btn-primary ms-auto" >Message</button> %>
       <%= link_to "Message", private_chatrooms_path(receiver_id: user.id), class: 'btn btn-primary m-2 d-flex align-items-center',
