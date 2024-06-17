@@ -26,9 +26,30 @@ class PrivateChatroomsController < ApplicationController
     redirect_to @chat
   end
 
+  def update
+    @private_chatroom = PrivateChatroom.find(params[:id])
+
+    if params[:private_chatroom][:status] == 'active'
+      @private_chatroom.status = 1
+    elsif params[:private_chatroom][:status] == 'archived'
+      @private_chatroom.status = 2
+    else
+      @private_chatroom.status
+    end
+
+    authorize @private_chatroom
+
+    @private_chatroom.update(private_chatroom_params)
+    redirect_to profile_path
+  end
+
   private
 
   def receiver_params
     params.permit(:receiver_id)
+  end
+
+  def private_chatroom_params
+    params.require(:private_chatroom).permit(:status)
   end
 end

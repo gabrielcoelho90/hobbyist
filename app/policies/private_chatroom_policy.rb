@@ -24,6 +24,10 @@ class PrivateChatroomPolicy < ApplicationPolicy
     true
   end
 
+  def update?
+    true
+  end
+
   private
 
   def user_is_participant?
