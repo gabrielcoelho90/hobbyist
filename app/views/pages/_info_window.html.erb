@@ -8,7 +8,9 @@
       <h6 class="address-title"><strong>Address</strong></h6>
       <p class="info-window-text"><small><%= user.address %></small></p>
     </div>
-    <button class="btn btn-primary mt-3 w-100">Message</button>
+     <%= link_to "Message", private_chatrooms_path(receiver_id: user.id),
+          class: "btn btn-primary mt-3 w-100 text-white",
+          data: { turbo_method: :post } %>
     <div class="info-window-footer mt-3">
       <div class="d-flex flex-wrap justify-content-center">
         <% user.interests.each do |interest| %>
