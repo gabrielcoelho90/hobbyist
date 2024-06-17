@@ -6,7 +6,10 @@ class MessagePolicy < ApplicationPolicy
   # https://gist.github.com/Burgestrand/4b4bc22f31c8a95c425fc0e30d7ef1f5
 
   def create?
-    true if record.messageable_type == "PrivateChatroom" || record.messageable_type == "Groupchat"
+
+    record.messageable_type == "PrivateChatroom" ||
+      (record.messageable_type == "Groupchat" && user.all_interestables.include?(record.messageable.groupchatable))
+
   end
 
   class Scope < ApplicationPolicy::Scope
