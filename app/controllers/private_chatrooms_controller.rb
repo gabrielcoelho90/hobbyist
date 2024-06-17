@@ -1,5 +1,4 @@
 class PrivateChatroomsController < ApplicationController
-  before_action :authenticate_user!
 
   def index
     @private_chatrooms = PrivateChatroom.where(sender: current_user).or(PrivateChatroom.where(receiver: current_user))
