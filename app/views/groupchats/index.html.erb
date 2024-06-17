@@ -1,0 +1,33 @@
+<!-- app/views/groupchats/index.html.erb -->
+<div class="container-fluid chatroom-container">
+  <div class="row height-100">
+    <!-- Groupchats Index -->
+    <div class="col-4 private-chatrooms-index-container">
+      <h2 class="text-primary"><strong>Groupchats</strong></h2>
+      <ul class="list-group">
+        <% @group_chats_arr.each do |groupchat| %>
+          <li class="list-group-item">
+            <%= link_to groupchat_path(groupchat), class: "d-flex align-items-center chatroom-link" do %>
+              <div class="chatroom-avatar">
+                <div class="avatar-img"></div>
+              </div>
+              <div class="flex-grow-1 ms-2">
+                <strong><%= groupchat.name %></strong>
+              </div>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <!-- Placeholder for Chatroom -->
+    <div class="col-8 chatroom height-100 d-flex align-items-center justify-content-center">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Select a groupchat</h5>
+          <p class="card-text">to open a chatroom with a group of hobbyists.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
