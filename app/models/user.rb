@@ -16,4 +16,8 @@ class User < ApplicationRecord
   after_validation :geocode, if: :will_save_change_to_address?
 
   has_one_attached :photo
+
+  def all_interestables
+    communities | subcommunities
+  end
 end
