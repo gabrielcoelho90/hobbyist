@@ -17,7 +17,7 @@ class GroupchatPolicy < ApplicationPolicy
   end
 
   def show?
-    user_is_participant?
+    true
   end
 
   def create?
