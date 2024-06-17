@@ -7,25 +7,13 @@ class GroupchatPolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    #   scope.all
-    # end
-  end
-
-  def index?
-    true
-  end
-
-  def show?
-    user.interests.any? do |interest|
-      interest.interestable.name == record.name
+    def resolve
+      scope.all
     end
   end
 
-def create?
-  true
-end
 
+  def show?
+    true
+  end
 end
-
-# user.interests ==

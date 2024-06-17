@@ -115,6 +115,8 @@ interests.each do |hash|
   hash[:subcommunities].each do |subcommunity|
     sub = Subcommunity.new name: subcommunity, community: community
     sub.save!
+    groupchat = Groupchat.new(name: subcommunity, groupchatable: sub)
+    groupchat.save!
   end
 end
 
