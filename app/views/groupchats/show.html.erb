@@ -9,7 +9,7 @@
           <%= link_to "Private Chatrooms", private_chatrooms_path, class:"nav-link", id:"nav-home-tab", type:"button", role:"tab" %>
         </div>
       </nav>
-      <ul class="list-group">
+      <ul class="list-group my-3">
         <% @groupchats.each do |groupchat| %>
           <li class="list-group-item">
             <%= link_to groupchat_path(groupchat), class: "d-flex align-items-center chatroom-link" do %>
