@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :users, only: %i[show update]
   resources :interests, only: %i[new create destroy]
-  resources :private_chatrooms, only: %i[index show create] do
+  resources :private_chatrooms, only: %i[index show create update] do
     resources :messages, only: :create
   end
   resources :groupchats, only: %i[index show] do

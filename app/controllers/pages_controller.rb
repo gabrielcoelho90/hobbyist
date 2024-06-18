@@ -81,7 +81,8 @@ class PagesController < ApplicationController
       {
         lat: user.latitude,
         lng: user.longitude,
-        info_window_html: render_to_string(partial: "pages/info_window", formats: :html, locals: { user: })
+        info_window_html: render_to_string(partial: "pages/info_window", formats: :html, locals: { user: }),
+        user_marker_html: render_to_string(partial: "pages/user_marker", formats: :html)
       }
     end
   end
