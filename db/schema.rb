@@ -93,6 +93,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_18_145246) do
     t.bigint "receiver_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status", default: 0
     t.index ["receiver_id"], name: "index_private_chatrooms_on_receiver_id"
     t.index ["sender_id"], name: "index_private_chatrooms_on_sender_id"
   end
