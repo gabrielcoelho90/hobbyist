@@ -79,3 +79,111 @@
     height: auto;
   }
 }
+
+.testimonials-section {
+  background-color: map-get($theme-colors, "secondary");
+  padding: 3rem 0;
+  color: map-get($theme-colors, "light");
+
+  h2 {
+    color: map-get($theme-colors, "light");
+    font-weight: bold;
+  }
+
+  .card {
+    background-color: map-get($theme-colors, "light");
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    .card-title {
+      color: map-get($theme-colors, "dark");
+    }
+
+    .card-text {
+      color: map-get($theme-colors, "secondary");
+    }
+  }
+
+  .testimonial-card {
+    transition: transform 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.features-section {
+  background-color: map-get($theme-colors, "light");
+  padding: 3rem 0;
+
+  h2 {
+    color: map-get($theme-colors, "dark");
+    font-weight: bold;
+  }
+
+  .feature-card {
+    background: map-get($theme-colors, "primary");
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h4 {
+      color: map-get($theme-colors, "light");
+      font-weight: bold;
+    }
+
+    p {
+      color: map-get($theme-colors, "light");
+    }
+
+    .image-container {
+      background: map-get($theme-colors, "light");
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+      .screenshot {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
+}
+
+.about-section {
+  padding: 3rem 0;
+
+  h2 {
+    color: map-get($theme-colors, "dark");
+    font-weight: bold;
+  }
+
+  h4 {
+    color: map-get($theme-colors, "dark");
+  }
+
+  p {
+    color: map-get($theme-colors, "secondary");
+  }
+
+  &.dark-background {
+    background-color: map-get($theme-colors, "secondary");
+    color: map-get($theme-colors, "light");
+
+    h4, p {
+      color: map-get($theme-colors, "light");
+    }
+  }
+}
