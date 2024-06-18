@@ -64,6 +64,73 @@
   </div>
 </div>
 
+
+  <h6 class="m-3"><strong>Active Chats</strong></h6>
+
+  <div class="card mb-3">
+    <% active_bookings = current_user.all_private_chats.select { |private_chatrooms| private_chatrooms.status == 'active' } %>
+    <% active_bookings.each do |chat| %>
+      <div class="card m-3">
+        <% if current_user == chat.receiver %>
+          <p>Sender: <%= chat.sender.name %></p>
+        <% else %>
+          <p>Receiver: <%= chat.receiver.name %></p>
+        <% end %>
+        <div class="d-flex">
+          <%= link_to 'Chat', private_chatroom_path(chat), class: 'btn btn-dark rounded-pill' %>
+          <%= simple_form_for chat do |f| %>
+              <%= f.input :status, as: :hidden, input_html: { value: 'archived'} %>
+              <%= f.submit 'Block', class: 'btn btn-light' %>
+            <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+
+  <h6 class="m-3"><strong>Pending Chats</strong></h6>
+
+  <div class="card">
+    <% pending_chats = current_user.all_private_chats.select { |private_chatrooms| private_chatrooms.status == 'pending' } %>
+    <% pending_chats.each do |chat| %>
+      <div class="card m-3">
+        <% if policy(chat).update? %>
+          <p>Sender: <%= chat.sender.name %></p>
+          <div class="d-flex">
+            <%= simple_form_for chat do |f| %>
+              <%= f.input :status, as: :hidden, input_html: { value: 'active'} %>
+              <%= f.submit 'Accept', class: 'btn btn-info' %>
+            <% end %>
+
+            <%= simple_form_for chat do |f| %>
+              <%= f.input :status, as: :hidden, input_html: { value: 'archived'} %>
+              <%= f.submit 'Reject', class: 'btn btn-light' %>
+            <% end %>
+          </div>
+        <% else %>
+          <p>Receiver: <%= chat.receiver.name %></p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <h6 class="m-3"><strong>Blocked Chats</strong></h6>
+
+  <div class="card mb-3">
+    <% blocked_chats = current_user.private_chatrooms_as_receiver.select { |private_chatrooms| private_chatrooms.status == 'archived' } %>
+    <% blocked_chats.each do |chat| %>
+      <div class="card m-3">
+        <p>Sender: <%= chat.sender.name %></p>
+        <div class="d-flex">
+          <%= simple_form_for chat do |f| %>
+            <%= f.input :status, as: :hidden, input_html: { value: 'active'} %>
+            <%= f.submit 'Unblock', class: 'btn btn-info' %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+</div>
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

@@ -1,4 +1,6 @@
 class PrivateChatroom < ApplicationRecord
+  enum status: { pending: 0, active: 1, archived: 2 }
+
   belongs_to :sender, class_name: 'User'
   belongs_to :receiver, class_name: 'User'
   has_many :messages, as: :messageable
