@@ -1,22 +1,23 @@
+<!-- app/views/groupchats/index.html.erb -->
 <div class="container-fluid chatroom-container">
   <div class="row height-100">
-    <!-- Private Chatrooms Index -->
+    <!-- Groupchats Index -->
     <div class="col-4 private-chatrooms-index-container">
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <%= link_to "Groupchats", groupchats_path, class:"nav-link", id:"nav-home-tab", type:"button", role:"tab" %>
-          <%= link_to "Private Chatrooms", private_chatrooms_path, class:"nav-link active", id:"nav-home-tab", type:"button", role:"tab" %>
+          <%= link_to "Groupchats", groupchats_path, class:"nav-link active", id:"nav-home-tab", type:"button", role:"tab" %>
+          <%= link_to "Private Chatrooms", private_chatrooms_path, class:"nav-link", id:"nav-home-tab", type:"button", role:"tab" %>
         </div>
       </nav>
       <ul class="list-group my-3">
-        <% @private_chatrooms.each do |private_chatroom| %>
+        <% @group_chats_arr.each do |groupchat| %>
           <li class="list-group-item">
-            <%= link_to private_chatroom_path(private_chatroom), class: "d-flex align-items-center chatroom-link" do %>
+            <%= link_to groupchat_path(groupchat), class: "d-flex align-items-center chatroom-link" do %>
               <div class="chatroom-avatar">
                 <div class="avatar-img"></div>
               </div>
               <div class="flex-grow-1 ms-2">
-                <strong><%= private_chatroom.name %></strong>
+                <strong><%= groupchat.name %></strong>
               </div>
             <% end %>
           </li>
@@ -24,12 +25,12 @@
       </ul>
     </div>
 
-    <!-- Placeholder -->
+    <!-- Placeholder for Chatroom -->
     <div class="col-8 chatroom height-100 d-flex align-items-center justify-content-center">
       <div class="card text-center">
         <div class="card-body">
-          <h5 class="card-title">Select a private chat</h5>
-          <p class="card-text">to open a chatroom with a hobbyist.</p>
+          <h5 class="card-title">Select a groupchat</h5>
+          <p class="card-text">to open a chatroom with a group of hobbyists.</p>
         </div>
       </div>
     </div>

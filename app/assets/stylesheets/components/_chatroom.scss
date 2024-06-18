@@ -1,25 +1,34 @@
 @import "config/colors";
 
-.container.chatroom {
-  padding: 20px;
-  background-color: map-get($theme-colors, "light");
-  border-radius: 10px;
-  max-width: 800px;
-  margin: 0 auto;
-  color: map-get($theme-colors, "dark");
+.container-fluid.chatroom-container {
+  height: 100vh;
 }
 
-.container.chatroom h1 {
+.private-chatrooms-index-container {
+  border-right: 1px solid map-get($theme-colors, "secondary");
+  padding: 20px;
+  background-color: map-get($theme-colors, "light");
+}
+
+.chatroom {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px;
+  background-color: map-get($theme-colors, "light");
+}
+
+.chatroom h1 {
   text-align: center;
   margin-bottom: 20px;
   color: map-get($theme-colors, "dark");
 }
 
 .messages {
+  flex: 1;
   border: 1px solid map-get($theme-colors, "secondary");
   border-radius: 5px;
   padding: 10px;
-  height: 400px;
   overflow-y: scroll;
   background-color: map-get($theme-colors, "light");
   margin-bottom: 20px;
@@ -62,6 +71,11 @@
 .input {
   display: flex;
   align-items: center;
+  padding: 10px;
+  border-top: 1px solid map-get($theme-colors, "secondary");
+  background-color: map-get($theme-colors, "light");
+  position: sticky;
+  bottom: 0;
 }
 
 .input form {

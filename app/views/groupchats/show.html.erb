@@ -1,17 +1,44 @@
-<div class="container chatroom"
-  data-controller="groupchat-subscription"
-  data-groupchat-subscription-groupchat-id-value="<%= @groupchat.id %>">
+<!-- app/views/groupchats/show.html.erb -->
+<div class="container-fluid chatroom-container" data-controller="groupchat-subscription" data-groupchat-subscription-groupchat-id-value="<%= @groupchat.id %>">
+  <div class="row height-100">
+    <!-- Groupchats Index -->
+    <div class="col-4 private-chatrooms-index-container">
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <%= link_to "Groupchats", groupchats_path, class:"nav-link active", id:"nav-home-tab", type:"button", role:"tab" %>
+          <%= link_to "Private Chatrooms", private_chatrooms_path, class:"nav-link", id:"nav-home-tab", type:"button", role:"tab" %>
+        </div>
+      </nav>
+      <ul class="list-group my-3">
+        <% @groupchats.each do |groupchat| %>
+          <li class="list-group-item">
+            <%= link_to groupchat_path(groupchat), class: "d-flex align-items-center chatroom-link" do %>
+              <div class="chatroom-avatar">
+                <div class="avatar-img"></div>
+              </div>
+              <div class="flex-grow-1 ms-2">
+                <strong><%= groupchat.name %></strong>
+              </div>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
 
-  <h1>#<%= @groupchat.name %></h1>
-  <div class="messages" data-groupchat-subscription-target="messages">
-    <% @groupchat.messages.each do |message| %>
-      <%= render 'messages/message', message: message %>
-    <% end %>
-  </div>
-    <div class="input">
-    <%= simple_form_for [@groupchat, @message], html: { data: { action: "turbo:submit-end->groupchat-subscription#resetForm" }, class: "d-flex"} do |f|%>
-      <%= f.input :content, label: false, placeholder: "Message ##{@groupchat.name}", wrapper_html: {class: "flex-grow-1"} %>
-      <%= f.submit "Send", class: "btn btn-primary mb-3" %>
-    <% end %>
+    <!-- Active Groupchat -->
+    <div class="col-8 chatroom height-100">
+      <h1>#<%= @groupchat.name %></h1>
+      <div class="messages" data-groupchat-subscription-target="messages">
+        <% @groupchat.messages.each do |message| %>
+          <%= render 'messages/message', message: message %>
+        <% end %>
+      </div>
+      <div class="input">
+        <%= simple_form_for [@groupchat, @message], html: { data: { action: "turbo:submit-end->groupchat-subscription#resetForm" }, class: "d-flex"} do |f|%>
+          <%= f.input :content, label: false, placeholder: "Message ##{@groupchat.name}", wrapper_html: {class: "flex-grow-1"} %>
+          <%= f.submit "Send", class: "btn btn-primary mb-3" %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
