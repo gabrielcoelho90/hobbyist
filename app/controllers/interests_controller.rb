@@ -53,7 +53,27 @@ class InterestsController < ApplicationController
     end
   end
 
+  def destroy
+    respond_to do |format|
+      format.html {
+        set_interest
+        authorize @interest
+        @interest.destroy
+      }
+
+      format.json {
+        set_interest
+        authorize @interest
+        @interest.destroy
+      }
+    end
+  end
+
   private
+
+  def set_interest
+    @interest = Interest.find(params[:id])
+  end
 
   def interest_params
     params.require(:interest).permit(interestable_id: [])
