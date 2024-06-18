@@ -20,4 +20,8 @@ class User < ApplicationRecord
   def all_interestables
     communities | subcommunities
   end
+
+  def all_private_chats
+    private_chatrooms_as_receiver | private_chatrooms_as_sender
+  end
 end

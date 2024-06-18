@@ -40,6 +40,7 @@ class PrivateChatroomsController < ApplicationController
     authorize @private_chatroom
 
     @private_chatroom.update(private_chatroom_params)
+    #@private_chatroom.save
     redirect_to profile_path
   end
 
