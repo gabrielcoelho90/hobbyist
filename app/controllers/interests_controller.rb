@@ -1,6 +1,4 @@
 class InterestsController < ApplicationController
-  before_action :set_interest, only: %i[destroy]
-
   def new
     @interest = Interest.new
     authorize @interest
@@ -56,9 +54,19 @@ class InterestsController < ApplicationController
   end
 
   def destroy
-    authorize @interest
-    @interest.destroy
-    redirect_to profile_path
+    respond_to do |format|
+      format.html {
+        set_interest
+        authorize @interest
+        @interest.destroy
+      }
+
+      format.json {
+        set_interest
+        authorize @interest
+        @interest.destroy
+      }
+    end
   end
 
   private

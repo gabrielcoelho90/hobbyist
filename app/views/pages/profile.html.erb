@@ -35,34 +35,19 @@
         <div class="card-body" data-controller="profile-remove-interests">
           <div class="d-flex">
             <h3>Your Interests</h3>
-            <%#= link_to render('<i class="fa-solid fa-pen-to-square ms-2 text-secondary"></i>'), profile_path %>
-              <%#= link_to profile_path, data: { action: "click->profile_remove_interests#showIcons" },
-                   class: 'ms-2 text-secondary' do %>
-                <%#= icon('fa-solid', 'pen-to-square') %>
-              <%# end %>
               <button id="delete-interests-icon" class="btn p-0 border-0 text-secondary d-flex align-items-top ms-2"
-              data-action="click->profile-remove-interests#toggleIcons">
+                data-action="click->profile-remove-interests#toggleIcons">
                 <%= icon('fa-solid', 'pen-to-square') %>
               </button>
               <%= link_to profile_path, class: 'ms-2 text-secondary fs-5 d-none',
-                  data: { profile_remove_interests_target: "resetProfileEdit", action: "click->profile-remove-interests#toggleIcons"} do %>
+                  data: { profile_remove_interests_target: "resetProfileEdit", action: "click->profile-remove-interests#toggleIcons" } do %>
                 <%= icon('fa-solid', 'check') %>
               <% end %>
           </div>
           <div class="row">
             <div class="col-9">
-              <div class="d-flex flex-wrap">
-                <% current_user.interests.each do |interest| %>
-                  <div>
-                    <span class="badge rounded-pill bg-success m-1"><%= interest.interestable.name %></span>
-                    <%# <i class="fa-solid fa-trash-can delete-icon text-primary"></i> %>
-                    <%= link_to interest_path(interest), class: 'delete-icon text-primary d-none',
-                    data: { turbo_method: :delete, profile_remove_interests_target: "interestDelete"} do %>
-                      <%= icon('fa-solid', 'trash', class: 'fs-7') %>
-                    <% end %>
-                  </div>
-                <% end %>
-                <%= link_to '+Interests', new_interest_path, class: 'badge rounded-pill bg-new-interest m-1 border' %>
+              <div id="interests_div" class="d-flex flex-wrap" data-profile-remove-interests-target="interestsDiv">
+                <%= render partial: 'profile_interests', locals: { from_json: false }%>
               </div>
             </div>
             <div class="col-3 d-flex align-items-end justify-content-end">

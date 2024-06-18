@@ -1,0 +1,1 @@
+json.interest_pills_html @interest_pills_html

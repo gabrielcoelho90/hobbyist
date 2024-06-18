@@ -1,0 +1,12 @@
+<% current_user.interests.each do |interest| %>
+  <div>
+    <span class="badge rounded-pill bg-success m-1"><%= interest.interestable.name %></span>
+    <% none_tag = from_json ? '' : 'd-none' %>
+    <button id=<%= "interest_pill_#{interest.id}" %> class="btn p-0 border-0 delete-icon text-dark <%= none_tag %>"
+      data-action="click->profile-remove-interests#deleteInterest"
+      data-profile-remove-interests-target="interestDeleteIcon">
+      <%= icon('fa-solid', 'trash') %>
+    </button>
+  </div>
+<% end %>
+<%= link_to '+Interests', new_interest_path, class: 'badge rounded-pill bg-new-interest m-1 border' %>
