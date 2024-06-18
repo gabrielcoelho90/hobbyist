@@ -1,4 +1,6 @@
 class InterestsController < ApplicationController
+  before_action :set_interest, only: %i[destroy]
+
   def new
     @interest = Interest.new
     authorize @interest
@@ -53,7 +55,17 @@ class InterestsController < ApplicationController
     end
   end
 
+  def destroy
+    authorize @interest
+    @interest.destroy
+    redirect_to profile_path
+  end
+
   private
+
+  def set_interest
+    @interest = Interest.find(params[:id])
+  end
 
   def interest_params
     params.require(:interest).permit(interestable_id: [])

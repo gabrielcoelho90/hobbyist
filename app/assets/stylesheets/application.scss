@@ -20,6 +20,7 @@
 @import "pages/user_profile";
 @import "components/info_window";
 @import "components/private_chatroom";
+
 body {
   background-color: map-get($theme-colors, "light");
 }

@@ -76,4 +76,12 @@
     background-color: darken(map-get($theme-colors, "primary"), 10%);
     border-color: darken(map-get($theme-colors, "primary"), 10%);
   }
+
+  .delete-icon {
+    // display: none;
+    position: relative;
+    left: -15px;
+    top: -10px;
+    font-size: 0.8rem;
+  }
 }
