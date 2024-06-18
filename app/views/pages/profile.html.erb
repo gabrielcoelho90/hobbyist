@@ -5,6 +5,10 @@
     </div>
   </div>
 
+  <div>
+    <p>Friendships : <%= @friends %></p>
+  </div>
+
   <div class="row justify-content-center">
     <div class="col-12 text-center">
       <div class="d-flex align-items-center justify-content-center mx-auto">
@@ -137,6 +141,49 @@
       </div>
     <% end %>
 </div>
+
+<!-- Friendship request -->
+
+<h6 class="m-3"><strong>My Friends</strong></h6>
+
+  <div class="card mb-3">
+    <% active_friendships = current_user.all_friendships.select { |friendship| friendship.status == 'active' } %>
+    <% active_friendships.each do |friend| %>
+      <div class="card m-3">
+        <p><%= User.find(friend.receiver_id).name %></p>
+        <div class="d-flex">
+          <%#= link_to 'Chat', private_chatroom_path(chat), class: 'btn btn-dark rounded-pill' %>
+          <%= simple_form_for friend do |f| %>
+              <%= f.input :status, as: :hidden, input_html: { value: 'archived'} %>
+              <%= f.submit 'Block', class: 'btn btn-light' %>
+            <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+
+  <h6 class="m-3"><strong>Pending Friendships Requests</strong></h6>
+
+  <div class="card">
+    <% pending_requests = current_user.all_friendships.select { |friendship| friendship.status == 'pending' } %>
+    <% pending_requests.each do |request| %>
+      <div class="card m-3">
+          <p>Sender: <%= request.asker_id %></p>
+          <div class="d-flex">
+            <%= simple_form_for request do |f| %>
+              <%= f.input :status, as: :hidden, input_html: { value: 'active'} %>
+              <%= f.submit 'Accept', class: 'btn btn-info' %>
+            <% end %>
+
+            <%= simple_form_for request do |f| %>
+              <%= f.input :status, as: :hidden, input_html: { value: 'archived'} %>
+              <%= f.submit 'Reject', class: 'btn btn-light' %>
+            <% end %>
+          </div>
+      </div>
+    <% end %>
+  </div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
