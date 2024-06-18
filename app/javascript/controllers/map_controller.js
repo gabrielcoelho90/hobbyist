@@ -37,7 +37,10 @@ export default class extends Controller {
 
     this.markerArray.forEach((marker) => {
       const popup = new mapboxgl.Popup().setHTML(marker.info_window_html)
-      new mapboxgl.Marker()
+      const el = document.createElement('div');
+      console.log(el);
+      el.innerHTML = marker.user_marker_html
+      new mapboxgl.Marker(el)
         .setLngLat([ marker.lng, marker.lat ])
         .setPopup(popup)
         .addTo(this.map)
@@ -156,7 +159,6 @@ export default class extends Controller {
       console.log(this.geoJsonFormat());
       this.addHeatMapLayer();
       this.addCircleHeatMap();
-      this.cleanupMarkers();
     });
   }
 
@@ -194,13 +196,13 @@ export default class extends Controller {
             0,
             'rgba(236,222,239,0)',
             0.2,
-            'rgb(208,209,230)',
+            'rgb(144,238,144)',
             0.4,
-            'rgb(166,189,219)',
+            'rgb(60,179,113)',
             0.6,
-            'rgb(103,169,207)',
+            'rgb(46,139,87)',
             0.8,
-            'rgb(28,144,153)'
+            'rgb(34,139,34)'
           ],
           // increase radius as zoom increases
           'heatmap-radius': 50,
@@ -241,12 +243,12 @@ export default class extends Controller {
             type: 'exponential',
             stops: [
               [0, 'rgba(236,222,239,0)'],
-              [10, 'rgb(236,222,239)'],
-              [20, 'rgb(208,209,230)'],
-              [30, 'rgb(166,189,219)'],
-              [40, 'rgb(103,169,207)'],
-              [50, 'rgb(28,144,153)'],
-              [60, 'rgb(1,108,89)']
+              [10, 'rgb(144,238,144)'],
+              [20, 'rgb(60,179,113)'],
+              [30, 'rgb(46,139,87)'],
+              [40, 'rgb(34,139,34)'],
+              [50, 'rgb(0,100,0)'],
+              [60, 'rgb(0,64,0)']
             ]
           },
           'circle-stroke-color': 'white',
