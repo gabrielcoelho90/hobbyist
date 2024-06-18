@@ -17,11 +17,15 @@ class PrivateChatroomPolicy < ApplicationPolicy
   end
 
   def show?
-    user_is_participant?
+    user_is_participant? && record.status == 'active'
   end
 
   def create?
     true
+  end
+
+  def update?
+    record.receiver == user
   end
 
   private

@@ -4,10 +4,6 @@
       Placeholder
     </div>
     <h5 class="info-window-title"><strong><%= user.username %></strong></h5>
-    <div class="address-card mt-3">
-      <h6 class="address-title"><strong>Address</strong></h6>
-      <p class="info-window-text"><small><%= user.address %></small></p>
-    </div>
      <%= link_to "Message", private_chatrooms_path(receiver_id: user.id),
           class: "btn btn-primary mt-3 w-100 text-white",
           data: { turbo_method: :post } %>
