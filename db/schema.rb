@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_17_171610) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_18_145246) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,6 +46,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_17_171610) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "friendships", force: :cascade do |t|
+    t.bigint "asker_id"
+    t.bigint "receiver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["asker_id"], name: "index_friendships_on_asker_id"
+    t.index ["receiver_id"], name: "index_friendships_on_receiver_id"
   end
 
   create_table "groupchats", force: :cascade do |t|
@@ -116,6 +125,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_17_171610) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "friendships", "users", column: "asker_id"
+  add_foreign_key "friendships", "users", column: "receiver_id"
   add_foreign_key "interests", "users"
   add_foreign_key "messages", "users"
   add_foreign_key "private_chatrooms", "users", column: "receiver_id"
