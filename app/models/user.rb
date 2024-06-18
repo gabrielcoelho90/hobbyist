@@ -27,4 +27,8 @@ class User < ApplicationRecord
   def all_private_chats
     private_chatrooms_as_receiver | private_chatrooms_as_sender
   end
+
+  def all_friendships
+    friendships_as_asker | friendships_as_receiver
+  end
 end

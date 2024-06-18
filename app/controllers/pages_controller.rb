@@ -7,6 +7,8 @@ class PagesController < ApplicationController
   def profile
     @user = current_user
     @user_subcommunities = current_user.subcommunities
+    @friends = @user.all_friendships.count
+
   end
 
   def search
