@@ -31,20 +31,6 @@
   color: map-get($theme-colors, "dark");
 }
 
-.address-card {
-  background-color: map-get($theme-colors, "light");
-  border: 1px solid map-get($theme-colors, "accent2");
-  border-radius: 5px;
-  padding: 0.5rem;
-  text-align: left;
-}
-
-.address-title {
-  font-size: 1rem;
-  color: map-get($theme-colors, "dark");
-  margin-bottom: 0.5rem;
-}
-
 .info-window-text {
   font-size: 1rem;
   color: map-get($theme-colors, "dark");
