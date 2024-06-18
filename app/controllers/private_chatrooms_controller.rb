@@ -16,13 +16,9 @@ class PrivateChatroomsController < ApplicationController
     @receiver = User.find(receiver_params[:receiver_id])
     name = "Chat for #{@sender.username} and #{@receiver.username}"
 
-
-
     @chat = PrivateChatroom.new name:, sender: @sender, receiver: @receiver
     @chat = PrivateChatroom.find_by(sender: @sender, receiver: @receiver) unless @chat.save
     authorize @chat
-
-
     redirect_to @chat
   end
 
@@ -40,7 +36,6 @@ class PrivateChatroomsController < ApplicationController
     authorize @private_chatroom
 
     @private_chatroom.update(private_chatroom_params)
-    #@private_chatroom.save
     redirect_to profile_path
   end
 

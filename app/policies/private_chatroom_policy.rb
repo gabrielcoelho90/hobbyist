@@ -17,7 +17,7 @@ class PrivateChatroomPolicy < ApplicationPolicy
   end
 
   def show?
-    user_is_participant?
+    user_is_participant? && record.status == 'active'
   end
 
   def create?
