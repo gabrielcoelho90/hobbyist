@@ -20,4 +20,8 @@ class InterestPolicy < ApplicationPolicy
     new?
   end
 
+  def destroy?
+    record.user == user
+  end
+
 end

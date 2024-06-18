@@ -9,6 +9,21 @@ class PagesController < ApplicationController
     @user_subcommunities = current_user.subcommunities
     @friends = @user.all_friendships.count
 
+    respond_to do |format|
+      format.html {
+        @user = current_user
+        @user_subcommunities = current_user.subcommunities
+      }
+
+      format.json {
+        @from_json = true
+        @interest_pills_html = render_to_string(
+          partial: "pages/profile_interests",
+          formats: :html,
+          locals: { from_json: @from_json }
+        )
+      }
+    end
   end
 
   def search

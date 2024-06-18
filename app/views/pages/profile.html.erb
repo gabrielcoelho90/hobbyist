@@ -36,15 +36,22 @@
   <div class="row justify-content-center mb-4">
     <div class="col-6">
       <div class="profile-page-card card position-relative">
-        <div class="card-body">
-          <h3>Your Interests</h3>
+        <div class="card-body" data-controller="profile-remove-interests">
+          <div class="d-flex">
+            <h3>Your Interests</h3>
+              <button id="delete-interests-icon" class="btn p-0 border-0 text-secondary d-flex align-items-top ms-2"
+                data-action="click->profile-remove-interests#toggleIcons">
+                <%= icon('fa-solid', 'pen-to-square') %>
+              </button>
+              <%= link_to profile_path, class: 'ms-2 text-secondary fs-5 d-none',
+                  data: { profile_remove_interests_target: "resetProfileEdit", action: "click->profile-remove-interests#toggleIcons" } do %>
+                <%= icon('fa-solid', 'check') %>
+              <% end %>
+          </div>
           <div class="row">
             <div class="col-9">
-              <div class="d-flex flex-wrap">
-                <% current_user.interests.each do |interest| %>
-                  <span class="badge rounded-pill bg-success m-1"><%= interest.interestable.name %></span>
-                <% end %>
-                <%= link_to '+Interests', new_interest_path, class: 'badge rounded-pill bg-new-interest m-1 border' %>
+              <div id="interests_div" class="d-flex flex-wrap" data-profile-remove-interests-target="interestsDiv">
+                <%= render partial: 'profile_interests', locals: { from_json: false }%>
               </div>
             </div>
             <div class="col-3 d-flex align-items-end justify-content-end">
