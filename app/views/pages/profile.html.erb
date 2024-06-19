@@ -95,25 +95,6 @@
           </div>
         <% end %>
       </div>
-
-      <!-- Blocked Chats -->
-      <h6 class="mt-3 text-center text-primary"><strong>Blocked Chats</strong></h6>
-      <div class="card mb-3">
-        <% blocked_chats = current_user.private_chatrooms_as_receiver.select { |private_chatrooms| private_chatrooms.status == 'archived' } %>
-        <% blocked_chats.each do |chat| %>
-          <div class="card m-3 chat-card blocked-chat-card">
-            <div class="card-body">
-              <p><strong>Sender:</strong> <%= chat.sender.name %></p>
-              <div class="d-flex justify-content-between">
-                <%= simple_form_for chat do |f| %>
-                  <%= f.input :status, as: :hidden, input_html: { value: 'active'} %>
-                  <%= f.submit 'Unblock', class: 'btn btn-success' %>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
     </div>
 
     <!-- Right Column -->
