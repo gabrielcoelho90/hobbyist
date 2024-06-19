@@ -1,7 +1,11 @@
 <div class="info-window-card">
   <div class="info-window-body">
     <div class="profile-placeholder d-flex align-items-center justify-content-center mb-3">
-      Placeholder
+      <% if user.photo.attached? %>
+        <%= cl_image_tag user.photo.key, class:"profile-placeholder", alt: "Logo rendered as pin" %>
+      <% else %>
+        <%= image_tag "avatar_placeholder.png", class:"profile-placeholder", alt: "Logo rendered as pin" %>
+      <% end %>
     </div>
     <h5 class="info-window-title"><strong><%= user.username %></strong></h5>
      <%= link_to "Message", private_chatrooms_path(receiver_id: user.id),

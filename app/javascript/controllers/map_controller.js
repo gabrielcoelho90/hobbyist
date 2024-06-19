@@ -15,7 +15,8 @@ export default class extends Controller {
     this.insertMap()
     this.addMarkersToMap()
     this.addGeocoder()
-    this.addHeatMap()
+    // this.addHeatMap()
+    // this.cleanupMarkers()
   }
 
   insertMap() {
