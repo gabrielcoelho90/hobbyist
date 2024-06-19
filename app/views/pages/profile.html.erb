@@ -1,15 +1,15 @@
-<div class="container profile-page-container height-100 mb-3 mt-4">
+<div class="container profile-page-container mb-1 mt-4">
   <div class="row">
-    <div class="col-12 text-center mb-4">
-      <h1 class="display-4 text-primary">Welcome, <%= current_user.username %>!</h1>
+    <div class="col-12 text-center mb-3">
+      <h1 class="display-4 text-primary">Welcome, <%= current_user.name %>!</h1>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row mb-5">
     <!-- Left Column -->
     <div class="col-md-4">
       <!-- Tabs for Requests -->
-      <div class="d-flex justify-content-center mb-3">
+      <div class="d-flex justify-content-center mb-1">
         <ul class="nav nav-tabs flex-grow-1" id="requestsTabs" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="chat-requests-tab" data-bs-toggle="tab" data-bs-target="#chat-requests" type="button" role="tab" aria-controls="chat-requests" aria-selected="true">
@@ -32,7 +32,7 @@
               <div class="card m-3 chat-card pending-chat-card">
                 <div class="card-body">
                   <% if policy(chat).update? %>
-                    <p><strong>Sender:</strong> <%= chat.sender.name %></p>
+                    <p class="m-0"><strong>Sender:</strong> <%= chat.sender.name %></p>
                     <div class="d-flex justify-content-between">
                       <%= simple_form_for chat do |f| %>
                         <%= f.input :status, as: :hidden, input_html: { value: 'active'} %>
@@ -44,7 +44,7 @@
                       <% end %>
                     </div>
                   <% else %>
-                    <p>Receiver: <%= chat.receiver.name %></p>
+                    <p class="m-0">Receiver: <%= chat.receiver.name %></p>
                   <% end %>
                 </div>
               </div>
@@ -78,37 +78,39 @@
 
       <!-- Active Chats -->
       <h6 class="mt-3 text-center text-primary"><strong>Active Chats</strong></h6>
-      <div class="card mb-3">
-        <% active_bookings = current_user.all_private_chats.select { |private_chatrooms| private_chatrooms.status == 'active' } %>
-        <% active_bookings.each do |chat| %>
-          <div class="card m-3 chat-card">
-            <div class="card-body">
-              <% if current_user == chat.receiver %>
-                <p><strong>Sender:</strong> <%= chat.sender.name %></p>
-              <% else %>
-                <p><strong>Receiver:</strong> <%= chat.receiver.name %></p>
-              <% end %>
-              <div class="d-flex justify-content-between">
-                <%= link_to 'Chat', private_chatroom_path(chat), class: 'btn btn-dark' %>
-                <%= simple_form_for chat do |f| %>
-                  <%= f.input :status, as: :hidden, input_html: { value: 'archived'} %>
-                  <%= f.submit 'Block', class: 'btn btn-danger' %>
+      <div class="scrollable-cards">
+        <div class="card mb-3">
+          <% active_bookings = current_user.all_private_chats.select { |private_chatrooms| private_chatrooms.status == 'active' } %>
+          <% active_bookings.each do |chat| %>
+            <div class="card m-3 chat-card">
+              <div class="card-body">
+                <% if current_user == chat.receiver %>
+                  <p class="m-0"><strong>Sender:</strong> <%= chat.sender.name %></p>
+                <% else %>
+                  <p class="m-0"><strong>Receiver:</strong> <%= chat.receiver.name %></p>
                 <% end %>
+                <div class="d-flex justify-content-between align-items-center">
+                  <%= link_to 'Chat', private_chatroom_path(chat), class: 'btn btn-success d-flex align-items-center mt-3' %>
+                  <%= simple_form_for chat do |f| %>
+                    <%= f.input :status, as: :hidden, input_html: {value: 'archived'} %>
+                    <%= f.submit 'Block', class: 'btn btn-danger' %>
+                  <% end %>
+                </div>
               </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
 
     <!-- Right Column -->
     <div class="col-md-8">
       <!-- Profile Section -->
-      <div class="card shadow-sm profile-card mb-4">
+      <div class="card shadow-sm profile-card mb-1">
         <div class="card-body">
           <div class="row">
             <!-- Profile Info (1/3) -->
-            <div class="col-md-4 text-center">
+            <div class="col-md-4 text-center my-4">
               <div class="profile-picture-container mx-auto">
                 <% if current_user.photo.attached? %>
                   <%= cl_image_tag current_user.photo.key, height: 150, width: 150, crop: :fill, class: 'profile-page-photo rounded-circle' %>
@@ -118,8 +120,8 @@
                   </div>
                 <% end %>
               </div>
-              <h2 class="profile-username mt-2"><%= current_user.username %></h2>
-              <p class="profile-friends">Friendships: <%= @friends %></p>
+              <h2 class="profile-username mt-2"><strong><%= current_user.name %></strong></h2>
+              <p class="profile-friends"><%= @friends %> Friends</p>
               <div class="social-icons mt-2">
                 <i class="fab fa-twitter"></i>
                 <i class="fab fa-instagram"></i>
@@ -168,7 +170,7 @@
       </div>
 
       <!-- Interests Section -->
-      <div class="row justify-content-center mb-4">
+      <div class="row justify-content-center mb-1">
         <div class="col-12">
           <div class="profile-page-card card shadow-sm position-relative">
             <div class="card-body" data-controller="profile-remove-interests">
