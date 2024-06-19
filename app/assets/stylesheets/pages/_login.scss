@@ -1,0 +1,62 @@
+@import "../config/colors";
+
+.login-card {
+  background-color: map-get($theme-colors, "light");
+  border: 1px solid map-get($theme-colors, "secondary");
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    color: map-get($theme-colors, "primary");
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-inputs {
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      color: map-get($theme-colors, "dark");
+      font-weight: bold;
+    }
+
+    .form-control {
+      border: 1px solid map-get($theme-colors, "accent2");
+      border-radius: 5px;
+      padding: 0.75rem;
+      font-size: 1rem;
+      transition: border-color 0.3s ease-in-out;
+
+      &:focus {
+        border-color: map-get($theme-colors, "primary");
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .form-check-input {
+      margin-right: 0.5rem;
+    }
+
+    .form-check-label {
+      color: map-get($theme-colors, "dark");
+    }
+  }
+
+  .form-actions {
+    .btn {
+      background-color: map-get($theme-colors, "primary");
+      border-color: map-get($theme-colors, "primary");
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.25rem;
+      border-radius: 5px;
+      transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+
+      &:hover {
+        background-color: darken(map-get($theme-colors, "primary"), 10%);
+        border-color: darken(map-get($theme-colors, "primary"), 10%);
+      }
+    }
+  }
+}

@@ -119,8 +119,8 @@
                 <% if current_user.photo.attached? %>
                   <%= cl_image_tag current_user.photo.key, height: 150, width: 150, crop: :fill, class: 'profile-page-photo rounded-circle' %>
                 <% else %>
-                  <div class='profile-page-photo rounded-circle'>
-                    Profile Photo
+                  <div class="profile-picture-container mx-auto">
+                    <%= image_tag "avatar_placeholder.png", height: 150, width: 150, crop: :fill, class: 'profile-page-photo rounded-circle border', alt: "Profile picture" %>
                   </div>
                 <% end %>
               </div>
@@ -136,7 +136,7 @@
             <div class="col-md-8">
               <div class="card shadow-sm mb-3 profile-detail-card">
                 <div class="card-body">
-                  <h4>Description</h4>
+                  <h4>Who am I?</h4>
                   <p class="profile-bio"><%= current_user.description %></p>
                 </div>
               </div>

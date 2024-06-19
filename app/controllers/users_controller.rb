@@ -4,10 +4,15 @@ class UsersController < ApplicationController
   end
 
   def update
+    # user_params
+    description = user_params[:description]
+    current_user.description = description
     authorize current_user
+
     current_user.photo.attach(photo_params[:photo]) if photo_params[:photo].present?
-    current_user.update(user_params)
-    redirect_to profile_path
+
+    current_user.save
+    redirect_to profile_path #, status: :see_other
   end
 
   private
