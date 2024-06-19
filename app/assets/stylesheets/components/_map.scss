@@ -6,4 +6,7 @@
   background-color: transparent;
   text-align: center;
   font-family: "Open Sans", sans-serif;
+  .mapboxgl-popup-close-button {
+    top: 10px;
+  }
 }
