@@ -17,6 +17,6 @@ class FriendshipPolicy < ApplicationPolicy
   end
 
   def update?
-    true
+    record.receiver == user
   end
 end

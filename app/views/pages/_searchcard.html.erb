@@ -13,8 +13,15 @@
       <%# <button class="btn btn-primary ms-auto" >Message</button> %>
       <%= link_to "Message", private_chatrooms_path(receiver_id: user.id), class: 'btn btn-primary m-2 d-flex align-items-center',
           data: { turbo_method: :post } %>
-      <%= link_to "Add friend", friendships_path(receiver_id: user.id), class: 'btn btn-primary m-2 d-flex align-items-center',
+      <%#= link_to "Add friend", friendships_path(receiver_id: user.id), class: "btn btn-primary m-2 d-flex align-items-center" ,
           data: { turbo_method: :post } %>
+      <% if @my_friends.include?(user.id) %>
+        <% hide_addfriend_button = 'd-none' %>
+      <% else %>
+        <% hide_addfriend_button = '' %>
+      <% end %>
+      <a href=<%="/friendships?receiver_id=#{user.id}"%> class="btn btn-primary m-2 d-flex align-items-center <%= hide_addfriend_button %>",
+      data-turbo-method="post">Add friend</a>
     </div>
     <div class="user-card-footer">
       <div class="d-flex flex-wrap">
