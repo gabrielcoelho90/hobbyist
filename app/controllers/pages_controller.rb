@@ -5,9 +5,7 @@ class PagesController < ApplicationController
   end
 
   def profile
-    @user = current_user
-    @user_subcommunities = current_user.subcommunities
-    @friends = @user.all_friendships.count
+    @friends = current_user.all_friendships.count
 
     respond_to do |format|
       format.html {
@@ -27,6 +25,7 @@ class PagesController < ApplicationController
   end
 
   def search
+    friendship_exist?
     respond_to do |format|
       format.html {
         @form_interest = Interest.new
@@ -88,6 +87,16 @@ class PagesController < ApplicationController
         info_window_html: render_to_string(partial: "pages/info_window", formats: :html, locals: { user: }),
         user_marker_html: render_to_string(partial: "pages/user_marker", formats: :html)
       }
+    end
+  end
+
+  def friendship_exist?
+    @my_friends = []
+    @receivers = User.all.reject { |element| element == current_user }
+    @friendship = Friendship.new
+    @friendship.asker = current_user
+    @receivers.each do |receiver|
+      @my_friends << receiver.id if Friendship.where(asker_id: current_user.id, receiver_id: receiver.id).any?
     end
   end
 end

@@ -68,13 +68,12 @@
 
   .btn-primary {
     text-align: center;
-    height: 40px;
   }
 
   .find-hobbyists-btn {
     background-color: map-get($theme-colors, "primary");
     border-color: map-get($theme-colors, "primary");
-    color: #fff;
+    color: map-get($theme-colors, "light");
     padding: 0.1rem 0.5rem;
     font-size: 1rem;
     line-height: 1;
@@ -114,7 +113,7 @@
   .update-profile-btn {
     background-color: map-get($theme-colors, "primary");
     border-color: map-get($theme-colors, "primary");
-    color: #fff;
+    color: map-get($theme-colors, "light");
     padding: 0.5rem 1rem;
     font-size: 1rem;
     line-height: 1;
@@ -133,17 +132,17 @@
   .tabs-container {
     margin-top: 2rem;
     .nav-tabs {
-      border-bottom: 1px solid #dee2e6;
+      border-bottom: 1px solid map-get($theme-colors, "primary");
       .nav-item {
         .nav-link {
           border: 1px solid transparent;
           border-top-left-radius: 0.25rem;
           border-top-right-radius: 0.25rem;
           &:hover {
-            border-color: #e9ecef #e9ecef #dee2e6;
+            border-color: map-get($theme-colors, "primary") map-get($theme-colors, "primary") map-get($theme-colors, "secondary");
           }
           &.active {
-            color: #495057;
+            color: map-get($theme-colors, "secondary");
             background-color: #fff;
             border-color: #dee2e6 #dee2e6 #fff;
           }
@@ -162,7 +161,7 @@
       font-weight: bold;
     }
     .profile-friends {
-      font-size: 1.2rem;
+      font-size: 1rem;
       margin-top: 0.5rem;
     }
     .profile-description, .profile-address {
@@ -176,8 +175,8 @@
   }
 
   .chat-card, .friend-card, .pending-chat-card, .pending-friend-card, .blocked-chat-card {
-    margin-bottom: 1rem;
-    padding: 1rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
     background-color: map-get($theme-colors, "light");
     border: 1px solid map-get($theme-colors, "secondary");
     border-radius: 0.25rem;
@@ -221,6 +220,7 @@
       border-color: map-get($theme-colors, "primary");
       color: #fff;
       transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+      height: auto;
 
       &:hover {
         background-color: darken(map-get($theme-colors, "primary"), 10%);
@@ -232,5 +232,6 @@
   .scrollable-cards {
     max-height: 400px;
     overflow-y: auto;
+    border-bottom: 1px solid map-get($theme-colors, "primary");
   }
 }

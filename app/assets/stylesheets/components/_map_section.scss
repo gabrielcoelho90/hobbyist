@@ -1,4 +1,4 @@
-@import "../config/colors"; // Adjust the import path if necessary
+@import "../config/colors";
 
 .sticky-container {
   position: -webkit-sticky;
@@ -15,7 +15,6 @@
   width: 100%;
   height: 600px;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .main-search-bar {
@@ -29,6 +28,5 @@
   background-color: map-get($theme-colors, "light");
   padding: 1rem;
   border-radius: 10px;
-  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 1rem;
 }
