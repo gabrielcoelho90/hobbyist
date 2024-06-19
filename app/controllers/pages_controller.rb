@@ -5,6 +5,10 @@ class PagesController < ApplicationController
   end
 
   def profile
+    @user = current_user
+    @user_subcommunities = current_user.subcommunities
+    @friends = @user.all_friendships.count
+
     respond_to do |format|
       format.html {
         @user = current_user

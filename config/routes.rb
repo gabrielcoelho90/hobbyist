@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resources :groupchats, only: %i[index show] do
     resources :messages, only: :create
   end
-
+  resources :friendships, only: %i[index new create update]
   get "search", to: "pages#search", as: :search_page
 
   get "profile", to: "pages#profile"

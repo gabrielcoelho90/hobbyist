@@ -13,6 +13,8 @@
       <%# <button class="btn btn-primary ms-auto" >Message</button> %>
       <%= link_to "Message", private_chatrooms_path(receiver_id: user.id), class: 'btn btn-primary m-2 d-flex align-items-center',
           data: { turbo_method: :post } %>
+      <%= link_to "Add friend", friendships_path(receiver_id: user.id), class: 'btn btn-primary m-2 d-flex align-items-center',
+          data: { turbo_method: :post } %>
     </div>
     <div class="user-card-footer">
       <div class="d-flex flex-wrap">
