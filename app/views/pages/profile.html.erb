@@ -58,7 +58,11 @@
             <% pending_requests.each do |request| %>
               <div class="card m-3 friend-card pending-friend-card">
                 <div class="card-body">
-                  <p><strong>Sender:</strong> <%= request.asker_id %></p>
+                  <% if request.asker_id == current_user.id %>
+                    <p><strong>Sender:</strong> <%= request.receiver.name %></p>
+                  <% else %>
+                    <p><strong>Sender:</strong> <%= request.asker.name %></p>
+                  <% end %>
                   <div class="d-flex justify-content-between">
                     <%= simple_form_for request do |f| %>
                       <%= f.input :status, as: :hidden, input_html: { value: 'active'} %>
