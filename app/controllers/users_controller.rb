@@ -4,9 +4,9 @@ class UsersController < ApplicationController
   end
 
   def update
+    authorize current_user
     current_user.photo.attach(photo_params[:photo]) if photo_params[:photo].present?
     current_user.update(user_params)
-    authorize current_user
     redirect_to profile_path
   end
 
