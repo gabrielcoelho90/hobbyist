@@ -31,17 +31,21 @@
             <% pending_chats.each do |chat| %>
               <div class="card m-3 chat-card pending-chat-card">
                 <div class="card-body">
-                  <p><strong>Sender:</strong> <%= chat.sender.name %></p>
-                  <div class="d-flex justify-content-between">
-                    <%= simple_form_for chat do |f| %>
-                      <%= f.input :status, as: :hidden, input_html: { value: 'active'} %>
-                      <%= f.submit 'Accept', class: 'btn btn-success' %>
-                    <% end %>
-                    <%= simple_form_for chat do |f| %>
-                      <%= f.input :status, as: :hidden, input_html: { value: 'archived'} %>
-                      <%= f.submit 'Reject', class: 'btn btn-danger' %>
-                    <% end %>
-                  </div>
+                  <% if policy(chat).update? %>
+                    <p><strong>Sender:</strong> <%= chat.sender.name %></p>
+                    <div class="d-flex justify-content-between">
+                      <%= simple_form_for chat do |f| %>
+                        <%= f.input :status, as: :hidden, input_html: { value: 'active'} %>
+                        <%= f.submit 'Accept', class: 'btn btn-success' %>
+                      <% end %>
+                      <%= simple_form_for chat do |f| %>
+                        <%= f.input :status, as: :hidden, input_html: { value: 'archived'} %>
+                        <%= f.submit 'Reject', class: 'btn btn-danger' %>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    <p>Receiver: <%= chat.receiver.name %></p>
+                  <% end %>
                 </div>
               </div>
             <% end %>
