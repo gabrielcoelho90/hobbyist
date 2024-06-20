@@ -10,9 +10,8 @@ class PrivateChatroomsController < ApplicationController
   def show
     @private_chatroom = PrivateChatroom.find(params[:id])
     @message = Message.new
-    # raise
     authorize @private_chatroom
-    @private_chatrooms = PrivateChatroom.where(sender: current_user).or(PrivateChatroom.where(receiver: current_user))
+    @private_chatrooms = index
   end
 
   def create
@@ -25,13 +24,13 @@ class PrivateChatroomsController < ApplicationController
 
     unless @chat.save
       @chat = PrivateChatroom.find_chatroom(
-        lookup_sender: @sender,
-        lookup_receiver: @receiver
+        user_one: @sender,
+        user_two: @receiver
       )
-      # authorize @chat
+      authorize @chat
       # @chat.status = 'active'
       # @chat.save
-      # redirect_to @chat
+      redirect_to @chat
     end
   end
 

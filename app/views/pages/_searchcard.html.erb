@@ -1,4 +1,16 @@
 <% users.each do |user| %>
+  <% chatroom = PrivateChatroom.find_chatroom(
+        user_one: user,
+        user_two: current_user
+      ) %>
+  <% if chatroom.nil? %>
+    <% chat_flag = '' %>
+  <% elsif chatroom.status == 'pending' %>
+    <% chat_flag = 'disabled' %>
+  <% else %>
+    <% chat_flag = '' %>
+  <% end %>
+
   <div class="user-card mb-3">
     <div class="user-card-body d-flex p-3">
       <!-- Section 1: User Name, Profile Image, Social Icons -->
@@ -25,8 +37,15 @@
         <div class="bio-placeholder mb-2">
           <p class="user-card-bio fw-bold">"I am using hobbyist to find like-minded people. Let’s connect!"</p>
         </div>
-        <div class="action-buttons d-flex">
-          <%= link_to "Message", private_chatrooms_path(receiver_id: user.id), class: 'btn btn-primary me-2 flex-grow-1 d-flex align-items-center', data: { turbo_method: :post } %>
+        <div class="action-buttons d-flex" data-controller="action-buttons">
+          <% message = chat_flag=='' ? "Message" : "Chat request sent" %>
+          <%= link_to message, private_chatrooms_path(receiver_id: user.id),
+            class: "btn btn-primary me-2 flex-grow-1 d-flex align-items-center #{chat_flag}",
+            data: {
+                    turbo_method: :post,
+                    action: "click->action_buttons#messageButtonToggle",
+                    action_buttons_target: "messageButton"
+                  } %>
           <% @user_friendship = nil %>
           <% current_user.all_friendships.each do |friendship| %>
             <% keys = [:asker_id, :receiver_id] %>

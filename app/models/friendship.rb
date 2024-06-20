@@ -9,8 +9,8 @@ class Friendship < ApplicationRecord
   validates :asker, comparison: { other_than: :receiver, message: "cannot create friendship with self" }
 
   def self.find_friendship(options = {})
-    friendship_arr = Friendship.where(asker: options[:lookup_asker], receiver: options[:lookup_receiver]) |
-                     Friendship.where(asker: options[:lookup_receiver], receiver: options[:lookup_asker])
+    friendship_arr = Friendship.where(asker: options[:user_one], receiver: options[:user_two]) |
+                     Friendship.where(asker: options[:user_two], receiver: options[:user_one])
 
     friendship_arr.first
   end

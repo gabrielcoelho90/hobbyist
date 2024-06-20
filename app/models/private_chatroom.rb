@@ -10,8 +10,8 @@ class PrivateChatroom < ApplicationRecord
   validates :sender, comparison: { other_than: :receiver, message: "cannot create chat with self" }
 
   def self.find_chatroom(options = {})
-    chat_arr = PrivateChatroom.where(sender: options[:lookup_sender], receiver: options[:lookup_receiver]) |
-               PrivateChatroom.where(sender: options[:lookup_receiver], receiver: options[:lookup_sender])
+    chat_arr = PrivateChatroom.where(sender: options[:user_one], receiver: options[:user_two]) |
+               PrivateChatroom.where(sender: options[:user_two], receiver: options[:user_one])
 
     chat_arr.first
   end
