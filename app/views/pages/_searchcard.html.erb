@@ -14,6 +14,21 @@
     <% chat_type = 'link' %>
   <% end %>
 
+  <% friendship = Friendship.find_friendship(
+        user_one: user,
+        user_two: current_user
+      ) %>
+  <% if friendship.nil? %>
+    <% friend_flag = '' %>
+    <% friend_type = 'button' %>
+  <% elsif friendship.status == 'pending' %>
+    <% friend_flag = 'disabled' %>
+    <% friend_type = 'link' %>
+  <% else %>
+    <% friend_flag = '' %>
+    <% friend_type = 'link' %>
+  <% end %>
+
   <div class="user-card mb-3">
     <div class="user-card-body d-flex p-3">
       <!-- Section 1: User Name, Profile Image, Social Icons -->
@@ -41,14 +56,31 @@
           <p class="user-card-bio fw-bold">"I am using hobbyist to find like-minded people. Let's connect!"</p>
         </div>
         <div class="action-buttons d-flex" data-controller="action-buttons" data-action-buttons-receiver-id-value="<%= user.id %>">
-          <% message = chat_flag=='' ? "Message" : "Chat request sent" %>
-          <%= render partial: 'action_buttons',
+          <% chat_message = chat_flag=='' ? "Message" : "Chat request sent" %>
+          <% friend_message = friend_flag=='' ? "Add as Friend" : "Friend request sent" %>
+
+          <%# PrivateChatrooms button %>
+          <div class="action-buttons d-flex flex-grow-1" data-action-buttons-target="messageButton">
+            <%= render partial: 'message_button',
               locals: {
-                chat_type:,
-                message:,
                 user:,
+                chat_type:,
+                chat_message:,
                 chat_flag:
               } %>
+            </div>
+
+          <%# Friendship button %>
+          <div class="action-buttons d-flex flex-grow-1" data-action-buttons-target="friendshipButton">
+            <%= render partial: 'friendship_button',
+              locals: {
+                user:,
+                friend_type:,
+                friend_message:,
+                friend_flag:
+              } %>
+          </div>
+
         </div>
       </div>
     </div>

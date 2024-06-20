@@ -1,29 +1,17 @@
-<div class="action-buttons d-flex flex-grow-1" data-action-buttons-target= "messageButton">
+  <%# PrivateChatrooms button %>
   <% if chat_type == 'link'%>
-    <%= link_to message, private_chatrooms_path(receiver_id: user.id), class: "btn btn-primary me-2 flex-grow-1 d-flex align-items-center #{chat_flag}", data: { turbo_method: :post } %>
+    <%= link_to chat_message, private_chatrooms_path(receiver_id: user.id), class: "btn btn-primary me-2 flex-grow-1 d-flex align-items-center #{chat_flag}", data: { turbo_method: :post } %>
   <% else %>
     <button class="btn btn-primary me-2 flex-grow-1 d-flex align-items-center <%= chat_flag %>"
       data-action="click->action-buttons#messageButtonToggle"
-    ><%= message %></button>
+    ><%= chat_message %></button>
   <% end %>
 
-
-  <% @user_friendship = nil %>
-  <% current_user.all_friendships.each do |friendship| %>
-    <% keys = [:asker_id, :receiver_id] %>
-    <% if friendship.values_at(keys).include?(user.id) %>
-      <% @user_friendship = friendship %>
-    <% end %>
-  <% end %>
-  <% if @user_friendship.nil? %>
-    <a href=<%="/friendships?receiver_id=#{user.id}"%> class="btn btn-primary flex-grow-1 d-flex align-items-center", data-turbo-method="post"> Add Friend </a>
+  <%# Friendship button %>
+  <% if friend_type == 'link'%>
+    <%= link_to friend_message, friendships_path(receiver_id: user.id), class: "btn btn-primary me-2 flex-grow-1 d-flex align-items-center #{friend_flag}", data: { turbo_method: :post } %>
   <% else %>
-    <% if @user_friendship.active? %>
-      <% @hide_addfriend_btn = "d-none" %>
-    <% else %>
-      <% @hide_addfriend_btn = 'disabled' %>
-      <% @text = "Requested" %>
-    <% end %>
-    <a href=<%="/friendships?receiver_id=#{user.id}"%> class="btn btn-primary flex-grow-1 d-flex align-items-center <%= @hide_addfriend_btn%>", data-turbo-method="post"> <%= @text %> </a>
+    <button class="btn btn-primary me-2 flex-grow-1 d-flex align-items-center <%= friend_flag %>"
+      data-action="click->action-buttons#friendButtonToggle"
+    ><%= friend_message %></button>
   <% end %>
-</div>

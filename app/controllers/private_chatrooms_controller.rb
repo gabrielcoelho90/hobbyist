@@ -47,13 +47,13 @@ class PrivateChatroomsController < ApplicationController
         @chat.save
 
         # @from_json = true
-        @action_buttons_html = render_to_string(
-          partial: "pages/action_buttons",
+        @message_button_html = render_to_string(
+          partial: "pages/message_button",
           formats: :html,
           locals: {
-            chat_type: 'link',
-            message: "Chat request sent",
             user: @receiver,
+            chat_type: 'link',
+            chat_message: "Chat request sent",
             chat_flag: 'disabled'
           }
         )
