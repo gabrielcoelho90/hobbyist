@@ -1,0 +1,11 @@
+ meta_product_name: "Hobbyist"
+ meta_title: "Hobbyist - Now all you need is to want to pick up a hobby"
+ meta_description: "We realized that finding people to share hobbies with was a challenge for many.
+                    Whether you're looking to join a book club, find a running buddy, or connect with fellow gamers,
+                    it can be difficult to find like-minded individuals.
+                    This inspired us to create an app that bridges that gap,
+                    making it easier to find and connect with others who share your interests.
+                    Our app not only helps you discover new hobbies but also brings people together,
+                    fostering a sense of community and belonging."
+ meta_image: "logo.png" # should exist in `app/assets/images/`
+ twitter_account: "@product_twitter_account" # required for Twitter Cards

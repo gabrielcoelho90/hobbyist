@@ -28,21 +28,24 @@ export default class extends Controller {
 
   #insertMessageAndScrollDown(data) {
     const currentUserId = document.querySelector('meta[name="current-user-id"]').content;
-    // const messageElement = document.createElement("div");
+    const messageElement = document.createElement("div");
 
-    // messageElement.setAttribute("id", `message-${data.id}`);
-    // messageElement.setAttribute("class", `message ${data.user_id == currentUserId ? 'user' : 'other'}`);
-    // messageElement.innerHTML = `
-    //   <div class="bubble">
-    //     <small>
-    //       <strong>${data.username}</strong>
-    //       <i>${data.created_at}</i>
-    //     </small>
-    //     <p>${data.content}</p>
-    //   </div>
-    // `;
-    // this.messagesTarget.appendChild(messageElement);
-    this.messagesTarget.insertAdjacentHTML("beforeend",);
+    messageElement.setAttribute("id", `message-${data.id}`);
+    messageElement.setAttribute("class", `message ${data.user_id == currentUserId ? 'user' : 'other'}`);
+    messageElement.innerHTML = `
+      <div class="bubble">
+        <small>
+          <a href="/users/${data.user_id}" target="_blank">
+          <strong>
+            ${data.username}
+          </strong>
+          </a>
+          <i>${data.created_at}</i>
+        </small>
+        <p>${data.content}</p>
+      </div>
+    `;
+    this.messagesTarget.appendChild(messageElement);
     this.messagesTarget.scrollTo(0, this.messagesTarget.scrollHeight);
   }
 
