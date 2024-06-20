@@ -9,7 +9,7 @@
         <% end %>
       </div>
       <div class="flex-grow-1 ms-3">
-        <h5 class="user-card-title"><strong><%= user.username %></strong></h5>
+        <h5 class="user-card-title"><strong><%= user.name %></strong></h5>
         <% distance_between_user = Geocoder::Calculations.distance_between([current_user.latitude, current_user.longitude],
                                                          [user.latitude, user.longitude]).round(2) %>
         <p class="user-card-text">Distance: <%= distance_between_user %>Km</p>
@@ -17,14 +17,28 @@
       <%# <button class="btn btn-primary ms-auto" >Message</button> %>
         <%= link_to "Message", private_chatrooms_path(receiver_id: user.id), class: 'btn btn-primary m-2 d-flex align-items-center',
           data: { turbo_method: :post } %>
-      <!-- Check if friendship already exist to disable te "Add friend" button -->
-      <% if @my_friends.include?(user.id) %>
-        <% hide_addfriend_button = 'd-none' %>
-      <% else %>
-        <% hide_addfriend_button = '' %>
+      <!-- Check if friendship already exist to disable the "Add friend" button -->
+      <% @user_friendship = nil %>
+      <% current_user.all_friendships.each do |friendship| %>
+        <% keys = [:asker_id, :receiver_id] %>
+        <% if friendship.values_at(keys).include?(user.id)  %>
+          <% @user_friendship = friendship %>
+        <% end %>
       <% end %>
-      <a href=<%="/friendships?receiver_id=#{user.id}"%> class="btn btn-primary m-2 d-flex align-items-center <%= hide_addfriend_button %>",
-      data-turbo-method="post">Add friend</a>
+      <% if @user_friendship.nil? %>
+        <a href=<%="/friendships?receiver_id=#{user.id}"%> class="btn btn-primary m-2 d-flex align-items-center",
+        data-turbo-method="post"> Add Friend </a>
+      <% else %>
+        <% if @user_friendship.active? %>
+          <% @hide_addfriend_btn = "d-none" %>
+        <% else %>
+          <% @hide_addfriend_btn = 'disabled' %>
+          <% @text = "Requested" %>
+        <% end %>
+        <a href=<%="/friendships?receiver_id=#{user.id}"%> class="btn btn-primary m-2 d-flex align-items-center <%= @hide_addfriend_btn%>",
+        data-turbo-method="post"> <%= @text %> </a>
+      <% end %>
+      <%# raise %>
     </div>
     <div class="user-card-footer">
       <div class="d-flex flex-wrap">
