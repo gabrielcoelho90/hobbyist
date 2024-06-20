@@ -1,13 +1,16 @@
 class PrivateChatroomsController < ApplicationController
 
   def index
-    @private_chatrooms = PrivateChatroom.where(sender: current_user).or(PrivateChatroom.where(receiver: current_user))
+    @private_chatrooms = current_user.all_private_chats
     policy_scope @private_chatrooms
+
+    @active_chatrooms = current_user.active_instances(@private_chatrooms)
   end
 
   def show
     @private_chatroom = PrivateChatroom.find(params[:id])
     @message = Message.new
+    # raise
     authorize @private_chatroom
     @private_chatrooms = PrivateChatroom.where(sender: current_user).or(PrivateChatroom.where(receiver: current_user))
   end
@@ -18,8 +21,18 @@ class PrivateChatroomsController < ApplicationController
     name = "Chat for #{@sender.username} and #{@receiver.username}" # update to show profile image and name of receiver
 
     @chat = PrivateChatroom.new name:, sender: @sender, receiver: @receiver
-    @chat = PrivateChatroom.find_by(sender: @sender, receiver: @receiver) unless @chat.save
     authorize @chat
+
+    unless @chat.save
+      @chat = PrivateChatroom.find_chatroom(
+        lookup_sender: @sender,
+        lookup_receiver: @receiver
+      )
+      # authorize @chat
+      # @chat.status = 'active'
+      # @chat.save
+      # redirect_to @chat
+    end
   end
 
   def update
