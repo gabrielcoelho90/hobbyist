@@ -43,7 +43,7 @@ export default class extends Controller {
   }
 
   send(event) {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault()
       this.sendButtonTarget.click()
     }
