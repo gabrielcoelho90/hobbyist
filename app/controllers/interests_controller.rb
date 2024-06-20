@@ -10,7 +10,6 @@ class InterestsController < ApplicationController
     respond_to do |format|
       format.html {
         @interests_arr = interest_params[:interestable_id].compact_blank
-
         if @interests_arr.empty?
           @interest = Interest.new
           @interest.user = current_user
