@@ -42,11 +42,11 @@
                       <div class="d-flex justify-content-between">
                         <%= simple_form_for chat do |f| %>
                           <%= f.input :status, as: :hidden, input_html: { value: 'active'} %>
-                          <%= f.submit 'Accept', class: 'btn btn-success' %>
+                          <%= f.submit 'Accept', class: 'btn btn-success text-light fw-bold' %>
                         <% end %>
                         <%= simple_form_for chat do |f| %>
                           <%= f.input :status, as: :hidden, input_html: { value: 'archived'} %>
-                          <%= f.submit 'Reject', class: 'btn btn-danger' %>
+                          <%= f.submit 'Reject', class: 'btn btn-danger text-light fw-bold' %>
                         <% end %>
                       </div>
                   </div>
@@ -80,11 +80,11 @@
                       <div class="d-flex justify-content-between">
                         <%= simple_form_for friendship do |f| %>
                           <%= f.input :status, as: :hidden, input_html: { value: 'active'} %>
-                          <%= f.submit 'Accept', class: 'btn btn-success' %>
+                          <%= f.submit 'Accept', class: 'btn btn-success text-light fw-bold' %>
                         <% end %>
                         <%= simple_form_for friendship do |f| %>
                           <%= f.input :status, as: :hidden, input_html: { value: 'archived'} %>
-                          <%= f.submit 'Reject', class: 'btn btn-danger' %>
+                          <%= f.submit 'Reject', class: 'btn btn-danger text-light fw-bold' %>
                         <% end %>
                       </div>
                   </div>
