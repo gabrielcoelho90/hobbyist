@@ -23,6 +23,8 @@
 @import "pages/login";
 @import "pages/signup";
 @import "pages/forgotpassword";
+@import "pages/other_user_profile";
+
 body {
   background-color: map-get($theme-colors, "light");
 }
