@@ -5,10 +5,13 @@
       ) %>
   <% if chatroom.nil? %>
     <% chat_flag = '' %>
+    <% chat_type = 'button' %>
   <% elsif chatroom.status == 'pending' %>
     <% chat_flag = 'disabled' %>
+    <% chat_type = 'link' %>
   <% else %>
     <% chat_flag = '' %>
+    <% chat_type = 'link' %>
   <% end %>
 
   <div class="user-card mb-3">
@@ -35,35 +38,17 @@
       <!-- Section 2: Bio and Actions -->
       <div class="section-2 flex-grow-1 ms-3 d-flex flex-column justify-content-between">
         <div class="bio-placeholder mb-2">
-          <p class="user-card-bio fw-bold">"I am using hobbyist to find like-minded people. Let’s connect!"</p>
+          <p class="user-card-bio fw-bold">"I am using hobbyist to find like-minded people. Let's connect!"</p>
         </div>
-        <div class="action-buttons d-flex" data-controller="action-buttons">
+        <div class="action-buttons d-flex" data-controller="action-buttons" data-action-buttons-receiver-id-value="<%= user.id %>">
           <% message = chat_flag=='' ? "Message" : "Chat request sent" %>
-          <%= link_to message, private_chatrooms_path(receiver_id: user.id),
-            class: "btn btn-primary me-2 flex-grow-1 d-flex align-items-center #{chat_flag}",
-            data: {
-                    turbo_method: :post,
-                    action: "click->action_buttons#messageButtonToggle",
-                    action_buttons_target: "messageButton"
-                  } %>
-          <% @user_friendship = nil %>
-          <% current_user.all_friendships.each do |friendship| %>
-            <% keys = [:asker_id, :receiver_id] %>
-            <% if friendship.values_at(keys).include?(user.id) %>
-              <% @user_friendship = friendship %>
-            <% end %>
-          <% end %>
-          <% if @user_friendship.nil? %>
-            <a href=<%="/friendships?receiver_id=#{user.id}"%> class="btn btn-primary flex-grow-1 d-flex align-items-center", data-turbo-method="post"> Add Friend </a>
-          <% else %>
-            <% if @user_friendship.active? %>
-              <% @hide_addfriend_btn = "d-none" %>
-            <% else %>
-              <% @hide_addfriend_btn = 'disabled' %>
-              <% @text = "Requested" %>
-            <% end %>
-            <a href=<%="/friendships?receiver_id=#{user.id}"%> class="btn btn-primary flex-grow-1 d-flex align-items-center <%= @hide_addfriend_btn%>", data-turbo-method="post"> <%= @text %> </a>
-          <% end %>
+          <%= render partial: 'action_buttons',
+              locals: {
+                chat_type:,
+                message:,
+                user:,
+                chat_flag:
+              } %>
         </div>
       </div>
     </div>

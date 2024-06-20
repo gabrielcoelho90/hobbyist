@@ -15,22 +15,49 @@ class PrivateChatroomsController < ApplicationController
   end
 
   def create
-    @sender = current_user
-    @receiver = User.find(receiver_params[:receiver_id])
-    name = "Chat for #{@sender.username} and #{@receiver.username}" # update to show profile image and name of receiver
+    respond_to do |format|
+      format.html {
+        @sender = current_user
+        @receiver = User.find(receiver_params[:receiver_id])
+        name = "Chat for #{@sender.username} and #{@receiver.username}" # update to show profile image and name of receiver
 
-    @chat = PrivateChatroom.new name:, sender: @sender, receiver: @receiver
-    authorize @chat
+        @chat = PrivateChatroom.new name:, sender: @sender, receiver: @receiver
+        authorize @chat
 
-    unless @chat.save
-      @chat = PrivateChatroom.find_chatroom(
-        user_one: @sender,
-        user_two: @receiver
-      )
-      authorize @chat
-      # @chat.status = 'active'
-      # @chat.save
-      redirect_to @chat
+        unless @chat.save
+          @chat = PrivateChatroom.find_chatroom(
+            user_one: @sender,
+            user_two: @receiver
+          )
+          authorize @chat
+          # @chat.status = 'active'
+          # @chat.save
+          redirect_to @chat
+        end
+      }
+
+      format.json {
+        @sender = current_user
+        @receiver = User.find(receiver_params[:receiver_id])
+
+        name = "Chat for #{@sender.username} and #{@receiver.username}" # update to show profile image and name of receiver
+
+        @chat = PrivateChatroom.new name:, sender: @sender, receiver: @receiver
+        authorize @chat
+        @chat.save
+
+        # @from_json = true
+        @action_buttons_html = render_to_string(
+          partial: "pages/action_buttons",
+          formats: :html,
+          locals: {
+            chat_type: 'link',
+            message: "Chat request sent",
+            user: @receiver,
+            chat_flag: 'disabled'
+          }
+        )
+      }
     end
   end
 
