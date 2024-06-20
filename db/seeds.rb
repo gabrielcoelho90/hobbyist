@@ -1,12 +1,3 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
 addresses = [
   "Avenida Atlântica, 1702 - Copacabana",
   "Rua Barata Ribeiro, 216 - Copacabana",
@@ -34,15 +25,11 @@ addresses = [
   "Rua Bartolomeu Mitre, 570 - Leblon",
   "Rua Rainha Guilhermina, 320 - Leblon",
   "Rua General Artigas, 307 - Leblon",
-  "Praia de Botafogo, 340 - Botafogo",
-  "Rua São Clemente, 230 - Botafogo",
-  "Rua Voluntários da Pátria, 150 - Botafogo",
-  "Rua Mena Barreto, 24 - Botafogo",
-  "Rua Sorocaba, 77 - Botafogo",
-  "Rua da Passagem, 98 - Botafogo",
-  "Rua General Polidoro, 190 - Botafogo",
-  "Rua Bambina, 72 - Botafogo",
-  "Rua Lauro Muller, 116 - Botafogo",
+  "Praia de Botafogo, 340 - Botafogo, Rio de Janeiro",
+  "Rua Mena Barreto, 24 - Botafogo, Rio de Janeiro",
+  "Rua da Passagem, 98 - Botafogo, Rio de Janeiro",
+  "Rua Bambina, 72 - Botafogo, Rio de Janeiro",
+  "Rua Lauro Muller, 116 - Botafogo, Rio de Janeiro",
   "Rua Marques de Abrantes, 160 - Flamengo",
   "Rua Paissandu, 72 - Flamengo",
   "Rua Marquês de Pinedo, 15 - Flamengo",
@@ -79,54 +66,88 @@ interests = [
   }
 ]
 
-puts 'Cleaning user database'
-
+puts 'Cleaning user database...'
 User.destroy_all
+puts "Done!"
 
-puts 'Cleaning community database'
-
+puts 'Cleaning community database...'
 Community.destroy_all
+puts "Done!"
 
 n_users = addresses.count
-puts "Generating #{n_users} users"
+puts "Generating #{n_users} users..."
 
 i = 0
-
 n_users.times do
+  first_name  = Faker::Name.first_name
+  last_name   = Faker::Name.last_name
+  name        = "#{first_name} #{last_name}"
+  username = "#{first_name[0]}_#{last_name}"
+
   user = User.new(
-    name: Faker::Name.first_name,
-    email: Faker::Internet.email,
-    username: Faker::Internet.username,
+    name:,
+    email: Faker::Internet.email(name:, separators: ['_']),
+    username:,
     password: 123_456,
-    address: addresses[i]
+    address: addresses[i],
+    description: Faker::Lorem.paragraph_by_chars
   )
 
+  file = File.new("app/assets/images/seed_pictures/photo_#{i + 1}.jpg", "r")
+  user.photo.attach(io: file, filename: "photo_#{i + 1}.jpg", content_type: "image/jpg")
+
+  puts "Seeding #{user.name}, username: #{user.username}"
   user.save!
   i += 1
 end
+puts "Done!"
 
-puts 'Users generated'
+puts "First User e-mail: #{User.first.email}"
 
-puts 'Generating communities'
-
+puts 'Generating communities...'
 interests.each do |hash|
   community = Community.new name: hash[:community]
+  puts "Community #{community.name} generated"
   community.save!
   hash[:subcommunities].each do |subcommunity|
     sub = Subcommunity.new name: subcommunity, community: community
+    puts "Subcommunity #{subcommunity} generated in Community #{community.name}"
     sub.save!
     groupchat = Groupchat.new(name: subcommunity, groupchatable: sub)
     groupchat.save!
   end
 end
+puts "Done!"
 
-puts 'Generated communities'
-
+puts "Generating randomized interests..."
 User.all.each do |user|
   n = (1..5).to_a.sample
   sub_array = Subcommunity.all.sample(n)
   sub_array.each do |subcommunity|
     interest = Interest.new user: user, interestable: subcommunity
+    puts "Seeding interest in #{subcommunity.name} for user #{user.username}"
     interest.save!
   end
 end
+
+puts "Creating master user, Shia LaBeouf"
+master = User.new(
+  name: "Shia LaBeouf",
+  email: "la_buff@shia.com",
+  username: 'shia.laBUFF',
+  password: 123_456,
+  address: "Avenida Delfim Moreira 558, Leblon, Rio de Janeiro - Rio de Janeiro, 22441, Brasil",
+  description: "I'm DOING it!!"
+)
+
+file = File.new("app/assets/images/seed_pictures/master_user.jpg", "r")
+master.photo.attach(io: file, filename: "master_user.jpg", content_type: "image/jpg")
+master.save!
+
+subcommunity = Subcommunity.find_by(name: "Rock")
+interest = Interest.new user: master, interestable: subcommunity
+puts "Seeding interest in #{subcommunity.name} for master user"
+interest.save!
+puts "Done!"
+
+puts "Master User e-mail: #{master.email}"

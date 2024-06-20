@@ -20,6 +20,10 @@
 @import "pages/user_profile";
 @import "components/info_window";
 @import "components/private_chatroom";
+@import "pages/login";
+@import "pages/signup";
+@import "pages/forgotpassword";
+@import "pages/other_user_profile";
 
 body {
   background-color: map-get($theme-colors, "light");

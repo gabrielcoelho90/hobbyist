@@ -20,7 +20,6 @@ class PrivateChatroomsController < ApplicationController
     @chat = PrivateChatroom.new name:, sender: @sender, receiver: @receiver
     @chat = PrivateChatroom.find_by(sender: @sender, receiver: @receiver) unless @chat.save
     authorize @chat
-    redirect_to @chat
   end
 
   def update

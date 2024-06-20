@@ -6,7 +6,8 @@ class FriendshipsController < ApplicationController
     @friendship = Friendship.new
     @friendship.asker = current_user
     @friendship.receiver = User.find(params[:receiver_id])
-    @friendship.save
+    @existed_friendship = Friendship.where(asker_id: current_user.id, receiver_id: params[:receiver_id]).any?
+    @friendship.save unless @existed_friendship
     authorize @friendship
   end
 
