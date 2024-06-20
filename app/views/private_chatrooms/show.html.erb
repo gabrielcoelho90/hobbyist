@@ -13,7 +13,16 @@
           <li class="list-group-item">
             <%= link_to private_chatroom_path(private_chatroom), class: "d-flex align-items-center chatroom-link" do %>
               <div class="chatroom-avatar">
-                <div class="avatar-img"></div>
+                <% if current_user == private_chatroom.sender %>
+                  <% other_user = private_chatroom.receiver %>
+                <% else %>
+                  <% other_user = private_chatroom.sender %>
+                <% end %>
+                <% if other_user.photo.attached? %>
+                  <%= cl_image_tag other_user.photo.key, class: 'avatar-img' %>
+                <% else %>
+                  <%= image_tag "avatar_placeholder.png", class: 'avatar-img' %>
+                <% end %>
               </div>
               <div class="flex-grow-1 ms-2">
                 <strong><%= private_chatroom.name %></strong>
@@ -26,7 +35,26 @@
 
     <!-- Active Private Chatroom -->
     <div class="col-8 chatroom height-100">
-      <h1>#<%= @private_chatroom.name %></h1>
+      <div class="d-flex justify-content-start align-items-center my-3">
+        <div class="card chat-header d-flex align-items-center p-2">
+          <% if @private_chatroom.sender == current_user %>
+            <% other_user = @private_chatroom.receiver %>
+          <% else %>
+            <% other_user = @private_chatroom.sender %>
+          <% end %>
+
+          <div class="d-flex align-items-center">
+            <div class="profile-placeholder-container me-2">
+              <% if other_user.photo.attached? %>
+                <%= link_to cl_image_tag(other_user.photo.key, class: 'profile-placeholder small-placeholder'), user_path(other_user) %>
+              <% else %>
+                <%= link_to image_tag("avatar_placeholder.png", class: 'profile-placeholder small-placeholder'), user_path(other_user) %>
+              <% end %>
+            </div>
+            <h3 class="ms-2 mb-0">Chat with <%= other_user.username %></h3>
+          </div>
+        </div>
+      </div>
       <div class="messages" data-private-chatroom-subscription-target="messages">
         <% @private_chatroom.messages.each do |message| %>
           <%= render 'messages/message', message: message %>
@@ -35,7 +63,7 @@
       <div class="input">
         <%= simple_form_for [@private_chatroom, @message], html: { data: { action: "turbo:submit-end->private-chatroom-subscription#resetForm" }, class: "d-flex"} do |f|%>
           <%= f.input :content, label: false, placeholder: "Message ##{@private_chatroom.name}", wrapper_html: {class: "flex-grow-1"} %>
-          <%= f.submit "Send", class: "btn btn-primary mb-3" %>
+          <%= f.submit "Send", class: "btn btn-primary mb-3 send-btn flex-grow-0" %>
         <% end %>
       </div>
     </div>
