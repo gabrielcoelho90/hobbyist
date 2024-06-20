@@ -27,7 +27,10 @@
 
     <!-- Active Groupchat -->
     <div class="col-8 chatroom height-100">
-      <h1>#<%= @groupchat.name %></h1>
+      <div class="d-flex justify-content-between mb-3">
+        <h1 class="btn btn-outline-dark disabled col-4 rounded-4 m-0 fs-3"><strong><%= @groupchat.name %> Groupchat</strong></h1>
+        <%= link_to "Add #{@groupchat.name} to your interests", "#", class: "btn btn-outline-primary rounded-4 d-flex align-items-center" %>
+      </div>
       <div class="messages" data-groupchat-subscription-target="messages">
         <% @groupchat.messages.each do |message| %>
           <%= render 'messages/message', message: message %>
