@@ -1,9 +1,13 @@
+<% user_array = [message.user] %>
 <div id="message-<%= message.id %>" class="message <%= message.user == current_user ? 'user' : 'other' %>">
   <div class="bubble">
     <small>
-      <strong><%= message.user.username %></strong>
+      <strong>
+        <%= link_to message.user.username, users_path %>
+      </strong>
       <i><%= message.created_at.strftime("%a %b %e at %l:%M %p") %></i>
     </small>
     <p><%= message.content %></p>
   </div>
+
 </div>
