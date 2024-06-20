@@ -2,7 +2,7 @@
   <div class="bubble">
     <small>
       <strong><%= message.user.username %></strong>
-      <i><%= message.created_at.strftime("%a %b %e at %l:%M %p") %></i>
+      <i><%= message.created_at.in_time_zone.strftime("%a %b %e at %l:%M %p") %></i>
     </small>
     <p><%= message.content %></p>
   </div>
