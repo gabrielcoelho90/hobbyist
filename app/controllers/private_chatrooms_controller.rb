@@ -30,8 +30,8 @@ class PrivateChatroomsController < ApplicationController
             user_two: @receiver
           )
           authorize @chat
-          # @chat.status = 'active'
-          # @chat.save
+          @chat.status = 'active'
+          @chat.save
           redirect_to @chat
         end
       }

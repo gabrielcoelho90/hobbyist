@@ -6,12 +6,15 @@
   <% if chatroom.nil? %>
     <% chat_flag = '' %>
     <% chat_type = 'button' %>
+    <% chat_message = "Message" %>
   <% elsif chatroom.status == 'pending' %>
     <% chat_flag = 'disabled' %>
     <% chat_type = 'link' %>
+    <% chat_message = "Chat request sent" %>
   <% else %>
     <% chat_flag = '' %>
     <% chat_type = 'link' %>
+    <% chat_message = "Message" %>
   <% end %>
 
   <% friendship = Friendship.find_friendship(
@@ -21,12 +24,15 @@
   <% if friendship.nil? %>
     <% friend_flag = '' %>
     <% friend_type = 'button' %>
+    <% friend_message = "Add as Friend" %>
   <% elsif friendship.status == 'pending' %>
     <% friend_flag = 'disabled' %>
     <% friend_type = 'link' %>
+    <% friend_message = "Friend request sent" %>
   <% else %>
-    <% friend_flag = '' %>
+    <% friend_flag = 'disabled' %>
     <% friend_type = 'link' %>
+    <% friend_message = "Already friends!" %>
   <% end %>
 
   <div class="user-card mb-3">
@@ -56,8 +62,6 @@
           <p class="user-card-bio fw-bold">"I am using hobbyist to find like-minded people. Let's connect!"</p>
         </div>
         <div class="action-buttons d-flex" data-controller="action-buttons" data-action-buttons-receiver-id-value="<%= user.id %>">
-          <% chat_message = chat_flag=='' ? "Message" : "Chat request sent" %>
-          <% friend_message = friend_flag=='' ? "Add as Friend" : "Friend request sent" %>
 
           <%# PrivateChatrooms button %>
           <div class="action-buttons d-flex flex-grow-1" data-action-buttons-target="messageButton">
