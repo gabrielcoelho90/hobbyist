@@ -1,12 +1,3 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
 addresses = [
   "Avenida Atlântica, 1702 - Copacabana",
   "Rua Barata Ribeiro, 216 - Copacabana",
@@ -35,12 +26,8 @@ addresses = [
   "Rua Rainha Guilhermina, 320 - Leblon",
   "Rua General Artigas, 307 - Leblon",
   "Praia de Botafogo, 340 - Botafogo, Rio de Janeiro",
-  "Rua São Clemente, 230 - Botafogo, Rio de Janeiro",
-  "Rua Voluntários da Pátria, 150 - Botafogo, Rio de Janeiro",
   "Rua Mena Barreto, 24 - Botafogo, Rio de Janeiro",
-  "Rua Sorocaba, 77 - Botafogo, Rio de Janeiro",
   "Rua da Passagem, 98 - Botafogo, Rio de Janeiro",
-  "Rua General Polidoro, 190 - Botafogo, Rio de Janeiro",
   "Rua Bambina, 72 - Botafogo, Rio de Janeiro",
   "Rua Lauro Muller, 116 - Botafogo, Rio de Janeiro",
   "Rua Marques de Abrantes, 160 - Flamengo",
@@ -92,10 +79,15 @@ puts "Generating #{n_users} users..."
 
 i = 0
 n_users.times do
+  first_name  = Faker::Name.first_name
+  last_name   = Faker::Name.last_name
+  name        = "#{first_name} #{last_name}"
+  username = "#{first_name[0]}_#{last_name}"
+
   user = User.new(
-    name: Faker::Name.first_name,
-    email: Faker::Internet.email,
-    username: Faker::Internet.username,
+    name:,
+    email: Faker::Internet.email(name:, separators: ['_']),
+    username:,
     password: 123_456,
     address: addresses[i],
     description: Faker::Lorem.paragraph_by_chars
