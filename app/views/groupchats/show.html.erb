@@ -29,7 +29,12 @@
     <div class="col-8 chatroom height-100">
       <div class="d-flex justify-content-between mb-3">
         <h1 class="btn btn-outline-dark disabled col-4 rounded-4 m-0 fs-3"><strong><%= @groupchat.name %> Groupchat</strong></h1>
-        <%= link_to "Add #{@groupchat.name} to your interests", "#", class: "btn btn-outline-primary rounded-4 d-flex align-items-center" %>
+        <% if @groupchats.include?(@groupchat) %>
+          <% hide_groupchat_button = 'd-none' %>
+        <% else %>
+          <% hide_groupchat_button = '' %>
+        <% end %>
+        <%= link_to "Add #{@groupchat.name} to your interests", interests_path(interest: {interestable_id: [@groupchat.groupchatable_id]}), data: { turbo_method: :post }, class: "btn btn-outline-primary rounded-4 d-flex align-items-center #{hide_groupchat_button}" %>
       </div>
       <div class="messages" data-groupchat-subscription-target="messages">
         <% @groupchat.messages.each do |message| %>
@@ -37,9 +42,17 @@
         <% end %>
       </div>
       <div class="input">
+      <% disabled = true unless @groupchats.include?(@groupchat) %>
+      <% if @groupchats.include?(@groupchat) %>
+        <% disbled = false %>
+        <% message = "Message ##{@groupchat.name}" %>
+      <% else %>
+        <% disbled = true %>
+        <% message = "If you want to send a message in this group, please add #{@groupchat.name} to your interests!" %>
+      <% end %>
         <%= simple_form_for [@groupchat, @message], html: { data: { action: "turbo:submit-end->groupchat-subscription#resetForm" }, class: "d-flex"} do |f|%>
-          <%= f.input :content, label: false, placeholder: "Message ##{@groupchat.name}", wrapper_html: {class: "flex-grow-1"} %>
-          <%= f.submit "Send", class: "btn btn-primary mb-3" %>
+          <%= f.text_area :content, placeholder: message, class: "form-control mx-2", disabled: disabled,  data: { groupchat_subscription_target:"messageInput", action: "keydown->groupchat-subscription#send" }  %>
+          <%= f.submit "Send", class: "btn btn-primary mb-3", data: { groupchat_subscription_target:"sendButton" }, disabled: disabled %>
         <% end %>
       </div>
     </div>

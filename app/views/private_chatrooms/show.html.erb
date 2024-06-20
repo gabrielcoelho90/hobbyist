@@ -62,8 +62,8 @@
       </div>
       <div class="input">
         <%= simple_form_for [@private_chatroom, @message], html: { data: { action: "turbo:submit-end->private-chatroom-subscription#resetForm" }, class: "d-flex"} do |f|%>
-          <%= f.input :content, label: false, placeholder: "Message ##{@private_chatroom.name}", wrapper_html: {class: "flex-grow-1"} %>
-          <%= f.submit "Send", class: "btn btn-primary mb-3 send-btn flex-grow-0" %>
+          <%= f.text_area :content, placeholder: "Message ##{@private_chatroom.name}", class: "form-control mx-2", data: { private_chatroom_subscription_target:"messageInput", action: "keydown->private-chatroom-subscription#send"  } %>
+          <%= f.submit "Send", class: "btn btn-primary mb-3", data: { private_chatroom_subscription_target:"sendButton" } %>
         <% end %>
       </div>
     </div>
