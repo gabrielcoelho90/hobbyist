@@ -1,0 +1,65 @@
+<div class="container profile-page-container mb-1 mt-4">
+  <div class="row">
+    <div class="col-12 text-center mb-3">
+      <h1 class="display-4 text-primary"><%= @user.name %>'s Profile</h1>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <!-- Profile Section -->
+      <div class="card shadow-sm profile-card mb-1">
+        <div class="card-body">
+          <div class="row">
+            <!-- Profile Info (1/3) -->
+            <div class="col-md-4 text-center my-4">
+              <div class="profile-picture-container mx-auto">
+                <% if @user.photo.attached? %>
+                  <%= cl_image_tag @user.photo.key, height: 150, width: 150, crop: :fill, class: 'profile-page-photo rounded-circle' %>
+                <% else %>
+                  <%= image_tag "avatar_placeholder.png", height: 150, width: 150, crop: :fill, class: 'profile-page-photo rounded-circle border', alt: "Profile picture" %>
+                <% end %>
+              </div>
+              <h2 class="profile-username mt-2"><strong><%= @user.username %></strong></h2>
+              <p class="profile-friends"><%= @number_of_friends %> Friends</p>
+              <div class="social-icons mt-2">
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-linkedin"></i>
+              </div>
+            </div>
+            <!-- Profile Details (2/3) -->
+            <div class="col-md-8">
+              <div class="card shadow-sm mb-3 profile-detail-card">
+                <div class="card-body">
+                  <h4>Description</h4>
+                  <p class="profile-bio"><%= @user.description %></p>
+                </div>
+              </div>
+              <div class="card shadow-sm mb-3 profile-detail-card">
+                <div class="card-body">
+                  <h4>Address</h4>
+                  <p><%= @user.address %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interests Section -->
+      <div class="row justify-content-center mb-1">
+        <div class="col-12">
+          <div class="profile-page-card card shadow-sm position-relative">
+            <div class="card-body">
+              <h3 class="mb-3">Interests</h3>
+              <div class="d-flex flex-wrap" id="interests_div">
+                <%= render partial: 'users/other_user_interests', locals: { user: @user } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
