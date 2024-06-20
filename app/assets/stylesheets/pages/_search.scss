@@ -11,77 +11,56 @@ body {
   color: map-get($theme-colors, "light");
 }
 
-.profile-placeholder {
-  width: 10vh;
-  height: 10vh;
-  border-radius: 50%;
-  display: inline-block;
-  font-size: 14px;
-  text-align: center;
-  background-color: map-get($theme-colors, "secondary");
+.interests-form-header {
+  .interests-form-container {
+    border: 1px solid map-get($theme-colors, "accent2");
+    border-radius: 25px;
+    padding: 1rem;
+    background-color: map-get($theme-colors, "light");
+  }
 }
 
-.user-card {
+.btn-outline-primary {
+  color: map-get($theme-colors, "primary");
+  border-color: map-get($theme-colors, "primary");
+
+  &:hover {
+    background-color: map-get($theme-colors, "primary");
+    color: map-get($theme-colors, "light");
+  }
+}
+
+.accordion-button {
+  color: map-get($theme-colors, "dark");
+  background-color: map-get($theme-colors, "light");
+
+  &:not(.collapsed) {
+    color: map-get($theme-colors, "light");
+    background-color: map-get($theme-colors, "primary");
+  }
+}
+
+.accordion-item {
+  border: 1px solid map-get($theme-colors, "accent2");
+  border-radius: 5px;
+}
+
+.accordion-body {
+  background-color: map-get($theme-colors, "light");
+}
+
+.main-search-bar {
   background-color: map-get($theme-colors, "light");
   border: 1px solid map-get($theme-colors, "accent2");
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 25px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.user-card-title {
-  color: map-get($theme-colors, "dark");
-}
-
-.user-card-text {
-  color: map-get($theme-colors, "dark");
-}
-
-.user-card-footer {
-  background-color: map-get($theme-colors, "dark");
-  color: map-get($theme-colors, "light");
-  padding: 0.5rem;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
-  outline: 1px solid map-get($theme-colors, "accent2");
-}
-
-.badge-primary {
-  background-color: map-get($theme-colors, "primary");
-}
-
-.badge-success {
-  background-color: map-get($theme-colors, "success");
-}
-
-.btn-primary {
-  background-color: map-get($theme-colors, "primary");
-  border-color: map-get($theme-colors, "primary");
-  color: #fff;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  border-radius: 0.25rem;
-  display: inline-block;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
-  height: 50px;
-}
-
-.btn-primary:hover {
-  background-color: darken(map-get($theme-colors, "primary"), 10%);
-  border-color: darken(map-get($theme-colors, "primary"), 10%);
-}
-
-.btn-dark {
-  background-color: map-get($theme-colors, "dark");
-  border-color: map-get($theme-colors, "dark");
-  color: #fff;
-}
-
-.text-primary {
-  color: map-get($theme-colors, "primary") !important;
+.map-container {
+  height: 500px; /* Adjust the height as needed */
+  border-radius: 25px;
+  overflow: hidden;
 }
 
 .info-window-card {

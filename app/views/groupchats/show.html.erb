@@ -38,8 +38,8 @@
       </div>
       <div class="input">
         <%= simple_form_for [@groupchat, @message], html: { data: { action: "turbo:submit-end->groupchat-subscription#resetForm" }, class: "d-flex"} do |f|%>
-          <%= f.input :content, label: false, placeholder: "Message ##{@groupchat.name}", wrapper_html: {class: "flex-grow-1"} %>
-          <%= f.submit "Send", class: "btn btn-primary mb-3" %>
+          <%= f.text_area :content, placeholder: "Message ##{@groupchat.name}", class: "form-control mx-2",  data: { groupchat_subscription_target:"messageInput", action: "keydown->groupchat-subscription#send" }  %>
+          <%= f.submit "Send", class: "btn btn-primary mb-3", data: { groupchat_subscription_target:"sendButton" } %>
         <% end %>
       </div>
     </div>
