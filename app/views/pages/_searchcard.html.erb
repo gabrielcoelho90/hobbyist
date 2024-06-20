@@ -9,7 +9,7 @@
         <% end %>
       </div>
       <div class="flex-grow-1 ms-3">
-        <h5 class="user-card-title"><strong><%= user.name %></strong></h5>
+        <h5 class="user-card-title"><strong><%= user.username %></strong></h5>
         <% distance_between_user = Geocoder::Calculations.distance_between([current_user.latitude, current_user.longitude],
                                                          [user.latitude, user.longitude]).round(2) %>
         <p class="user-card-text">Distance: <%= distance_between_user %>Km</p>
@@ -38,7 +38,6 @@
         <a href=<%="/friendships?receiver_id=#{user.id}"%> class="btn btn-primary m-2 d-flex align-items-center <%= @hide_addfriend_btn%>",
         data-turbo-method="post"> <%= @text %> </a>
       <% end %>
-      <%# raise %>
     </div>
     <div class="user-card-footer">
       <div class="d-flex flex-wrap">
