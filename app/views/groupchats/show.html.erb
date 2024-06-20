@@ -34,7 +34,7 @@
         <% else %>
           <% hide_groupchat_button = '' %>
         <% end %>
-        <%= link_to "Add #{@groupchat.name} to your interests", "#", class: "btn btn-outline-primary rounded-4 d-flex align-items-center #{hide_groupchat_button}" %>
+        <%= link_to "Add #{@groupchat.name} to your interests", interests_path(interest: {interestable_id: [@groupchat.groupchatable_id]}), data: { turbo_method: :post }, class: "btn btn-outline-primary rounded-4 d-flex align-items-center #{hide_groupchat_button}" %>
       </div>
       <div class="messages" data-groupchat-subscription-target="messages">
         <% @groupchat.messages.each do |message| %>
@@ -48,7 +48,7 @@
         <% message = "Message ##{@groupchat.name}" %>
       <% else %>
         <% disbled = true %>
-        <% message = "If you want to send a message on this group, please add #{@groupchat.name} to your interests!" %>
+        <% message = "If you want to send a message in this group, please add #{@groupchat.name} to your interests!" %>
       <% end %>
         <%= simple_form_for [@groupchat, @message], html: { data: { action: "turbo:submit-end->groupchat-subscription#resetForm" }, class: "d-flex"} do |f|%>
           <%= f.text_area :content, placeholder: message, class: "form-control mx-2", disabled: disabled,  data: { groupchat_subscription_target:"messageInput", action: "keydown->groupchat-subscription#send" }  %>
