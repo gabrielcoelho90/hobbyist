@@ -42,9 +42,17 @@
         <% end %>
       </div>
       <div class="input">
+      <% disabled = true unless @groupchats.include?(@groupchat) %>
+      <% if @groupchats.include?(@groupchat) %>
+        <% disbled = false %>
+        <% message = "Message ##{@groupchat.name}" %>
+      <% else %>
+        <% disbled = true %>
+        <% message = "If you want to send a message on this group, please add it to your interests!" %>
+      <% end %>
         <%= simple_form_for [@groupchat, @message], html: { data: { action: "turbo:submit-end->groupchat-subscription#resetForm" }, class: "d-flex"} do |f|%>
-          <%= f.text_area :content, placeholder: "Message ##{@groupchat.name}", class: "form-control mx-2",  data: { groupchat_subscription_target:"messageInput", action: "keydown->groupchat-subscription#send" }  %>
-          <%= f.submit "Send", class: "btn btn-primary mb-3", data: { groupchat_subscription_target:"sendButton" } %>
+          <%= f.text_area :content, placeholder: message, class: "form-control mx-2", disabled: disabled,  data: { groupchat_subscription_target:"messageInput", action: "keydown->groupchat-subscription#send" }  %>
+          <%= f.submit "Send", class: "btn btn-primary mb-3", data: { groupchat_subscription_target:"sendButton" }, disabled: disabled %>
         <% end %>
       </div>
     </div>
