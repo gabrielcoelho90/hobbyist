@@ -29,7 +29,12 @@
     <div class="col-8 chatroom height-100">
       <div class="d-flex justify-content-between mb-3">
         <h1 class="btn btn-outline-dark disabled col-4 rounded-4 m-0 fs-3"><strong><%= @groupchat.name %> Groupchat</strong></h1>
-        <%= link_to "Add #{@groupchat.name} to your interests", "#", class: "btn btn-outline-primary rounded-4 d-flex align-items-center" %>
+        <% if @groupchats.include?(@groupchat) %>
+          <% hide_groupchat_button = 'd-none' %>
+        <% else %>
+          <% hide_groupchat_button = '' %>
+        <% end %>
+        <%= link_to "Add #{@groupchat.name} to your interests", "#", class: "btn btn-outline-primary rounded-4 d-flex align-items-center #{hide_groupchat_button}" %>
       </div>
       <div class="messages" data-groupchat-subscription-target="messages">
         <% @groupchat.messages.each do |message| %>
