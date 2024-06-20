@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   def show
-    raise
+    @user = User.find(params[:id])
+    authorize @user
+    @number_of_friends = @user.all_friendships.count
+    redirect_to profile_path if @user == current_user
   end
 
   def update
@@ -12,7 +15,7 @@ class UsersController < ApplicationController
     current_user.photo.attach(photo_params[:photo]) if photo_params[:photo].present?
 
     current_user.save
-    redirect_to profile_path #, status: :see_other
+    redirect_to profile_path
   end
 
   private
