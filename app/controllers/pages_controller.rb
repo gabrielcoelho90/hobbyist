@@ -5,12 +5,16 @@ class PagesController < ApplicationController
   end
 
   def profile
-    @friends = current_user.all_friendships.count
-
     respond_to do |format|
       format.html {
         @user = current_user
         @user_subcommunities = current_user.subcommunities
+
+        # Get Private Chats
+        user_private_chats
+
+        # Get Friendships
+        user_friendships
       }
 
       format.json {
@@ -98,5 +102,22 @@ class PagesController < ApplicationController
     @receivers.each do |receiver|
       @my_friends << receiver.id if Friendship.where(asker_id: current_user.id, receiver_id: receiver.id).any?
     end
+  end
+
+  def user_private_chats
+    @private_chats = current_user.all_private_chats
+    @active_private_chats = current_user.active_instances(@private_chats)
+
+    @pending_private_chats_sender = current_user.pending_requests_sender(@private_chats)
+    @pending_private_chats_receiver = current_user.pending_requests_receiver(@private_chats)
+  end
+
+  def user_friendships
+    @friendships = current_user.all_friendships
+    @active_friendships = current_user.active_instances(@friendships)
+    @number_of_friends = @active_friendships.count
+
+    @pending_friendships_sender = current_user.pending_requests_sender(@friendships)
+    @pending_friendships_receiver = current_user.pending_requests_receiver(@friendships)
   end
 end

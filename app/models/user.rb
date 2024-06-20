@@ -25,10 +25,27 @@ class User < ApplicationRecord
   end
 
   def all_private_chats
-    private_chatrooms_as_receiver | private_chatrooms_as_sender
+    private_chatrooms_as_sender | private_chatrooms_as_receiver
   end
 
   def all_friendships
     friendships_as_asker | friendships_as_receiver
+  end
+
+  # Receives an array with one of the 'all_models' methods above, and finds the active ones
+  def active_instances(all_instances_array)
+    all_instances_array.select { |element| element.status == 'active' }
+  end
+
+  # Receives an array with one of the 'all_models' methods above, and finds the pending requests
+  # to be approved with the user AS THE RECEIVER
+  def pending_requests_receiver(all_instances_array)
+    all_instances_array.select { |element| element.status == 'pending' && element.receiver == self }
+  end
+
+  # Receives an array with one of the 'all_models' methods above, and finds the pending requests
+  # to be approved with the user AS THE SENDER
+  def pending_requests_sender(all_instances_array)
+    all_instances_array.select { |element| element.status == 'pending' && element.receiver != self }
   end
 end
