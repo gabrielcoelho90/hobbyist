@@ -20,7 +20,7 @@ class User < ApplicationRecord
 
   has_one_attached :photo
 
-  validates :bio, length: { maximum: 50, too_long: "%<count> characters is the maximum allowed" }
+  validates :bio, length: { maximum: 75, too_long: "%<count> characters is the maximum allowed" }
 
   def all_interestables
     communities | subcommunities
