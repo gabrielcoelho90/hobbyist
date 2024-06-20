@@ -24,6 +24,7 @@
 @import "pages/signup";
 @import "pages/forgotpassword";
 @import "pages/other_user_profile";
+@import "components/searchcard";
 
 body {
   background-color: map-get($theme-colors, "light");

@@ -1,49 +1,63 @@
 <% users.each do |user| %>
   <div class="user-card mb-3">
     <div class="user-card-body d-flex p-3">
-      <div class="profile-placeholder d-flex align-items-center justify-content-center">
-        <% if user.photo.attached? %>
-          <%= cl_image_tag user.photo.key, class: 'profile-placeholder' %>
-        <% else %>
-          <%= image_tag "avatar_placeholder.png", class: 'profile-placeholder'%>
-        <% end %>
+      <!-- Section 1: User Name, Profile Image, Social Icons -->
+      <div class="section-1 d-flex flex-column justify-content-between">
+        <div class="user-info text-center">
+          <h5 class="user-card-title"><strong><%= user.username %></strong></h5>
+          <div class="profile-placeholder-container d-flex align-items-center justify-content-center mt-2 mb-2">
+            <% if user.photo.attached? %>
+              <%= link_to cl_image_tag(user.photo.key, class: 'profile-placeholder'), user_path(user) %>
+            <% else %>
+              <%= link_to image_tag("avatar_placeholder.png", class: 'profile-placeholder'), user_path(user) %>
+            <% end %>
+          </div>
+          <div class="social-icons mt-2">
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-linkedin"></i>
+          </div>
+        </div>
       </div>
-      <div class="flex-grow-1 ms-3">
-        <h5 class="user-card-title"><strong><%= user.username %></strong></h5>
-        <% distance_between_user = Geocoder::Calculations.distance_between([current_user.latitude, current_user.longitude],
-                                                         [user.latitude, user.longitude]).round(2) %>
-        <p class="user-card-text">Distance: <%= distance_between_user %>Km</p>
+
+      <!-- Section 2: Bio and Actions -->
+      <div class="section-2 flex-grow-1 ms-3 d-flex flex-column justify-content-between">
+        <div class="bio-placeholder mb-2">
+          <p class="user-card-bio fw-bold">"I am using hobbyist to find like-minded people. Let’s connect!"</p>
+        </div>
+        <div class="action-buttons d-flex">
+          <%= link_to "Message", private_chatrooms_path(receiver_id: user.id), class: 'btn btn-primary me-2 flex-grow-1 d-flex align-items-center', data: { turbo_method: :post } %>
+          <% @user_friendship = nil %>
+          <% current_user.all_friendships.each do |friendship| %>
+            <% keys = [:asker_id, :receiver_id] %>
+            <% if friendship.values_at(keys).include?(user.id) %>
+              <% @user_friendship = friendship %>
+            <% end %>
+          <% end %>
+          <% if @user_friendship.nil? %>
+            <a href=<%="/friendships?receiver_id=#{user.id}"%> class="btn btn-primary flex-grow-1 d-flex align-items-center", data-turbo-method="post"> Add Friend </a>
+          <% else %>
+            <% if @user_friendship.active? %>
+              <% @hide_addfriend_btn = "d-none" %>
+            <% else %>
+              <% @hide_addfriend_btn = 'disabled' %>
+              <% @text = "Requested" %>
+            <% end %>
+            <a href=<%="/friendships?receiver_id=#{user.id}"%> class="btn btn-primary flex-grow-1 d-flex align-items-center <%= @hide_addfriend_btn%>", data-turbo-method="post"> <%= @text %> </a>
+          <% end %>
+        </div>
       </div>
-      <%# <button class="btn btn-primary ms-auto" >Message</button> %>
-        <%= link_to "Message", private_chatrooms_path(receiver_id: user.id), class: 'btn btn-primary m-2 d-flex align-items-center',
-          data: { turbo_method: :post } %>
-      <!-- Check if friendship already exist to disable the "Add friend" button -->
-      <% @user_friendship = nil %>
-      <% current_user.all_friendships.each do |friendship| %>
-        <% keys = [:asker_id, :receiver_id] %>
-        <% if friendship.values_at(keys).include?(user.id)  %>
-          <% @user_friendship = friendship %>
-        <% end %>
-      <% end %>
-      <% if @user_friendship.nil? %>
-        <a href=<%="/friendships?receiver_id=#{user.id}"%> class="btn btn-primary m-2 d-flex align-items-center",
-        data-turbo-method="post"> Add Friend </a>
-      <% else %>
-        <% if @user_friendship.active? %>
-          <% @hide_addfriend_btn = "d-none" %>
-        <% else %>
-          <% @hide_addfriend_btn = 'disabled' %>
-          <% @text = "Requested" %>
-        <% end %>
-        <a href=<%="/friendships?receiver_id=#{user.id}"%> class="btn btn-primary m-2 d-flex align-items-center <%= @hide_addfriend_btn%>",
-        data-turbo-method="post"> <%= @text %> </a>
-      <% end %>
     </div>
-    <div class="user-card-footer">
-      <div class="d-flex flex-wrap">
+
+    <div class="user-card-footer d-flex justify-content-between align-items-center">
+      <div class="d-flex flex-wrap w-75">
         <% user.interests.each do |interest| %>
-          <span class="badge rounded-pill bg-success m-1"><%= interest.interestable.name %></span>
+          <%= link_to interest.interestable.name, groupchat_path(interest.interestable.id), class: "badge rounded-pill text-decoration-none bg-success m-1" %>
         <% end %>
+      </div>
+      <div class="d-flex align-items-end mx-2 flex-nowrap">
+        <% distance_between_user = Geocoder::Calculations.distance_between([current_user.latitude, current_user.longitude], [user.latitude, user.longitude]).round(2) %>
+        <p class="user-card-distance"><i class="fas fa-map-marker-alt ml-1"></i><strong><%= distance_between_user %> Km</strong></p>
       </div>
     </div>
   </div>

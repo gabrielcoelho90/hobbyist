@@ -12,8 +12,17 @@
         <% @private_chatrooms.each do |private_chatroom| %>
           <li class="list-group-item">
             <%= link_to private_chatroom_path(private_chatroom), class: "d-flex align-items-center chatroom-link" do %>
-              <div class="chatroom-avatar">
-                <div class="avatar-img"></div>
+             <div class="chatroom-avatar">
+                <% if current_user == private_chatroom.sender %>
+                  <% other_user = private_chatroom.receiver %>
+                <% else %>
+                  <% other_user = private_chatroom.sender %>
+                <% end %>
+                <% if other_user.photo.attached? %>
+                  <%= cl_image_tag other_user.photo.key, class: 'avatar-img' %>
+                <% else %>
+                  <%= image_tag "avatar_placeholder.png", class: 'avatar-img' %>
+                <% end %>
               </div>
               <div class="flex-grow-1 ms-2">
                 <strong><%= private_chatroom.name %></strong>

@@ -44,3 +44,52 @@
     }
   }
 }
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  background-color: $white;
+  border: 1px solid map-get($theme-colors, "accent2");
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  width: 33%;
+
+  .small-placeholder {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.profile-placeholder-container {
+  background-color: map-get($theme-colors, "dark");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 2.5px;
+}
+
+.profile-placeholder {
+  width: 12vh;
+  height: 12vh;
+  border-radius: 50%;
+  display: inline-block;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 0%;
+  border: 2px solid map-get($theme-colors, "light");
+}
+
+.small-placeholder {
+  width: 40px;
+  height: 40px;
+}
+
+.send-btn {
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  height: auto;
+  margin-left: 0.5rem;
+  flex: auto;
+}
