@@ -3,7 +3,7 @@
   <div class="bubble">
     <small>
       <strong>
-        <%= link_to message.user.username, users_path %>
+        <%= link_to message.user.username, user_path(message.user), target: "_blank" %>
       </strong>
       <i><%= message.created_at.strftime("%a %b %e at %l:%M %p") %></i>
     </small>
