@@ -1,9 +1,12 @@
 <div id="message-<%= message.id %>" class="message <%= message.user == current_user ? 'user' : 'other' %>">
   <div class="bubble">
     <small>
-      <strong><%= message.user.username %></strong>
+      <strong>
+        <%= link_to message.user.username, user_path(message.user), target: "_blank" %>
+      </strong>
       <i><%= message.created_at.in_time_zone.strftime("%a %b %e at %l:%M %p") %></i>
     </small>
     <p><%= message.content %></p>
   </div>
+
 </div>
