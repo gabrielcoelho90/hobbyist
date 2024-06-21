@@ -6,6 +6,7 @@
   border: 1px solid map-get($theme-colors, "accent2");
   border-radius: 25px;
   padding: 1rem;
+  min-width: 300px;
   max-width: 420px;
   max-height: 420px;
   margin: 0 auto;

@@ -2,7 +2,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     authorize @user
-    @number_of_friends = @user.all_friendships.count
+    @friendships = @user.all_friendships
+    @active_friendships = @user.active_instances(@friendships)
+    @number_of_friends = @active_friendships.count
     redirect_to profile_path if @user == current_user
   end
 

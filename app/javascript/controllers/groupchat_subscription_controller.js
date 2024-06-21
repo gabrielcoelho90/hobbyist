@@ -32,7 +32,7 @@ export default class extends Controller {
     messageElement.innerHTML = `
       <div class="bubble">
         <small>
-          <a href="/users/${data.user_id}" target="_blank">
+          <a href="/users/${data.user_id}" target="_blank" class="text-decoration-none text-light">
           <strong>
             ${data.username}
           </strong>

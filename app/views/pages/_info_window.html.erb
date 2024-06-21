@@ -1,3 +1,50 @@
+<% chatroom = PrivateChatroom.find_chatroom(
+      user_one: user,
+      user_two: current_user
+    ) %>
+<% if chatroom.nil? %>
+  <% chat_flag = '' %>
+  <% chat_type = 'button' %>
+  <% chat_message = "Message" %>
+<% elsif chatroom.status == 'pending' && current_user == chatroom.sender %>
+  <% chat_flag = 'disabled' %>
+  <% chat_type = 'link' %>
+  <% chat_message = "Chat request sent" %>
+<% elsif chatroom.status == 'pending' && current_user == chatroom.receiver %>
+  <% chat_flag = '' %>
+  <% chat_type = 'link' %>
+  <% chat_message = "Message" %>
+<% else %>
+  <% chat_flag = '' %>
+  <% chat_type = 'link' %>
+  <% chat_message = "Message" %>
+<% end %>
+
+<% friendship = Friendship.find_friendship(
+      user_one: user,
+      user_two: current_user
+    ) %>
+<% if friendship.nil? %>
+  <% friend_flag = '' %>
+  <% friend_type = 'button' %>
+  <% friend_message = "Add as Friend" %>
+<% elsif friendship.status == 'pending' && current_user == friendship.asker  %>
+  <% friend_flag = 'disabled' %>
+  <% friend_type = 'link' %>
+  <% friend_message = "Friend request sent" %>
+<% elsif friendship.status == 'pending' && current_user == friendship.receiver  %>
+  <% friend_flag = '' %>
+  <% friend_type = 'button' %>
+  <% friend_message = "Accept friend request?" %>
+<% else %>
+  <% friend_flag = 'disabled' %>
+  <% friend_type = 'link' %>
+  <% friend_message = "Already friends!" %>
+<% end %>
+
+
+
+
 <div class="info-window-card">
   <div class="info-window-body">
     <div class="profile-placeholder d-flex align-items-center justify-content-center mb-3">
@@ -7,10 +54,38 @@
         <%= image_tag "avatar_placeholder.png", class:"profile-placeholder", alt: "Logo rendered as pin" %>
       <% end %>
     </div>
-    <h5 class="info-window-title"><strong><%= user.username %></strong></h5>
-     <%= link_to "Message", private_chatrooms_path(receiver_id: user.id),
-          class: "btn btn-primary mt-3 w-100 text-white",
-          data: { turbo_method: :post } %>
+    <h5 class="info-window-title"><strong><%= user.username %> <%= user == current_user ? ' (You)' : '' %></strong></h5>
+    <% if user != current_user %>
+      <div class="action-buttons d-flex"
+          data-controller="action-buttons"
+          data-action-buttons-receiver-id-value="<%= user.id %>"
+          data-action-buttons-friendship-status-value="<%= friendship.nil? ? '' : friendship.status %>"
+          >
+
+        <%# PrivateChatrooms button %>
+        <div class="action-buttons d-flex flex-grow-1" data-action-buttons-target="messageButton">
+          <%= render partial: 'pages/message_button',
+            locals: {
+              user:,
+              chat_type:,
+              chat_message:,
+              chat_flag:
+            } %>
+          </div>
+
+        <%# Friendship button %>
+        <div class="action-buttons d-flex flex-grow-1" data-action-buttons-target="friendshipButton">
+          <%= render partial: 'pages/friendship_button',
+            locals: {
+              user:,
+              friend_type:,
+              friend_message:,
+              friend_flag:
+            } %>
+        </div>
+
+      </div>
+    <% end %>
     <div class="info-window-footer mt-3">
       <div class="d-flex flex-wrap justify-content-center">
         <% user.interests.each do |interest| %>

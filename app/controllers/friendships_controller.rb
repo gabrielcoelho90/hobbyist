@@ -19,35 +19,56 @@ class FriendshipsController < ApplicationController
         authorize @friendship
 
         unless @friendship.save
-          @friendship = Friendship.find_chatroom(
+          @friendship = Friendship.find_friendship(
             user_one: @asker,
             user_two: @receiver
           )
           authorize @friendship
-          # @friendship.status = 'active'
-          # @friendship.save
+          @friendship.status = 'active'
+          @friendship.save
         end
       }
 
       format.json {
         @asker = current_user
         @receiver = User.find(receiver_params[:receiver_id])
+        @friendship_status = receiver_params[:friendship_status]
 
-        @friendship = Friendship.new asker: @asker, receiver: @receiver
-        authorize @friendship
-        @friendship.save
+        if @friendship_status == 'pending'
+          @friendship = Friendship.find_friendship(
+            user_one: @asker,
+            user_two: @receiver
+          )
+          authorize @friendship
+          @friendship.status = 'active'
+          @friendship.save
 
-        # @from_json = true
-        @friendship_button_html = render_to_string(
-          partial: "pages/friendship_button",
-          formats: :html,
-          locals: {
-            user: @receiver,
-            friend_type: 'link',
-            friend_message: "Friend request sent",
-            friend_flag: 'disabled'
-          }
-        )
+          @friendship_button_html = render_to_string(
+            partial: "pages/friendship_button",
+            formats: :html,
+            locals: {
+              user: @receiver,
+              friend_type: 'link',
+              friend_message: "Already friends!",
+              friend_flag: 'disabled'
+            }
+          )
+        else
+          @friendship = Friendship.new asker: @asker, receiver: @receiver
+          authorize @friendship
+          @friendship.save
+
+          @friendship_button_html = render_to_string(
+            partial: "pages/friendship_button",
+            formats: :html,
+            locals: {
+              user: @receiver,
+              friend_type: 'link',
+              friend_message: "Friend request sent",
+              friend_flag: 'disabled'
+            }
+          )
+        end
       }
     end
   end
@@ -70,7 +91,7 @@ class FriendshipsController < ApplicationController
   private
 
   def receiver_params
-    params.permit(:receiver_id)
+    params.permit(:receiver_id, :friendship_status)
   end
 
   def friendship_params
