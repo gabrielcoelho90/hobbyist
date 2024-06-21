@@ -12,8 +12,8 @@ class User < ApplicationRecord
   has_many :private_chatrooms_as_sender, class_name: "PrivateChatroom", foreign_key: :sender_id, dependent: :destroy
   has_many :private_chatrooms_as_receiver, class_name: "PrivateChatroom", foreign_key: :receiver_id, dependent: :destroy
 
-  has_many :friendships_as_asker, class_name: "Friendship", foreign_key: :asker_id
-  has_many :friendships_as_receiver, class_name: "Friendship", foreign_key: :receiver_id
+  has_many :friendships_as_asker, class_name: "Friendship", foreign_key: :asker_id, dependent: :destroy
+  has_many :friendships_as_receiver, class_name: "Friendship", foreign_key: :receiver_id, dependent: :destroy
 
   geocoded_by :address
   after_validation :geocode, if: :will_save_change_to_address?
