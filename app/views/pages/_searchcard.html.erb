@@ -7,10 +7,14 @@
     <% chat_flag = '' %>
     <% chat_type = 'button' %>
     <% chat_message = "Message" %>
-  <% elsif chatroom.status == 'pending' %>
+  <% elsif chatroom.status == 'pending' && current_user == chatroom.sender %>
     <% chat_flag = 'disabled' %>
     <% chat_type = 'link' %>
     <% chat_message = "Chat request sent" %>
+  <% elsif chatroom.status == 'pending' && current_user == chatroom.receiver %>
+    <% chat_flag = '' %>
+    <% chat_type = 'link' %>
+    <% chat_message = "Message" %>
   <% else %>
     <% chat_flag = '' %>
     <% chat_type = 'link' %>
@@ -25,10 +29,14 @@
     <% friend_flag = '' %>
     <% friend_type = 'button' %>
     <% friend_message = "Add as Friend" %>
-  <% elsif friendship.status == 'pending' %>
+  <% elsif friendship.status == 'pending' && current_user == friendship.asker  %>
     <% friend_flag = 'disabled' %>
     <% friend_type = 'link' %>
     <% friend_message = "Friend request sent" %>
+  <% elsif friendship.status == 'pending' && current_user == friendship.receiver  %>
+    <% friend_flag = '' %>
+    <% friend_type = 'button' %>
+    <% friend_message = "Accept friend request?" %>
   <% else %>
     <% friend_flag = 'disabled' %>
     <% friend_type = 'link' %>
@@ -61,7 +69,11 @@
         <div class="bio-placeholder mb-2">
           <p class="user-card-bio fw-bold">"I am using hobbyist to find like-minded people. Let's connect!"</p>
         </div>
-        <div class="action-buttons d-flex" data-controller="action-buttons" data-action-buttons-receiver-id-value="<%= user.id %>">
+        <div class="action-buttons d-flex"
+             data-controller="action-buttons"
+             data-action-buttons-receiver-id-value="<%= user.id %>"
+             data-action-buttons-friendship-status-value="<%= friendship.nil? ? '' : friendship.status %>"
+             >
 
           <%# PrivateChatrooms button %>
           <div class="action-buttons d-flex flex-grow-1" data-action-buttons-target="messageButton">
@@ -92,7 +104,7 @@
     <div class="user-card-footer d-flex justify-content-between align-items-center">
       <div class="d-flex flex-wrap w-75">
         <% user.interests.each do |interest| %>
-          <%= link_to interest.interestable.name, groupchat_path(interest.interestable.id), class: "badge rounded-pill text-decoration-none bg-success m-1" %>
+          <%= link_to interest.interestable.name, groupchat_path(interest.interestable.groupchat), class: "badge rounded-pill text-decoration-none bg-success m-1" %>
         <% end %>
       </div>
       <div class="d-flex align-items-end mx-2 flex-nowrap">

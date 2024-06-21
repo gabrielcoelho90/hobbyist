@@ -1,3 +1,50 @@
+<% chatroom = PrivateChatroom.find_chatroom(
+      user_one: user,
+      user_two: current_user
+    ) %>
+<% if chatroom.nil? %>
+  <% chat_flag = '' %>
+  <% chat_type = 'button' %>
+  <% chat_message = "Message" %>
+<% elsif chatroom.status == 'pending' && current_user == chatroom.sender %>
+  <% chat_flag = 'disabled' %>
+  <% chat_type = 'link' %>
+  <% chat_message = "Chat request sent" %>
+<% elsif chatroom.status == 'pending' && current_user == chatroom.receiver %>
+  <% chat_flag = '' %>
+  <% chat_type = 'link' %>
+  <% chat_message = "Message" %>
+<% else %>
+  <% chat_flag = '' %>
+  <% chat_type = 'link' %>
+  <% chat_message = "Message" %>
+<% end %>
+
+<% friendship = Friendship.find_friendship(
+      user_one: user,
+      user_two: current_user
+    ) %>
+<% if friendship.nil? %>
+  <% friend_flag = '' %>
+  <% friend_type = 'button' %>
+  <% friend_message = "Add as Friend" %>
+<% elsif friendship.status == 'pending' && current_user == friendship.asker  %>
+  <% friend_flag = 'disabled' %>
+  <% friend_type = 'link' %>
+  <% friend_message = "Friend request sent" %>
+<% elsif friendship.status == 'pending' && current_user == friendship.receiver  %>
+  <% friend_flag = '' %>
+  <% friend_type = 'button' %>
+  <% friend_message = "Accept friend request?" %>
+<% else %>
+  <% friend_flag = 'disabled' %>
+  <% friend_type = 'link' %>
+  <% friend_message = "Already friends!" %>
+<% end %>
+
+
+
+
 <div class="info-window-card">
   <div class="info-window-body">
     <div class="profile-placeholder d-flex align-items-center justify-content-center mb-3">

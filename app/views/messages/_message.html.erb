@@ -2,7 +2,7 @@
   <div class="bubble">
     <small>
       <strong>
-        <%= link_to message.user.username, user_path(message.user), target: "_blank" %>
+        <%= link_to message.user.username, user_path(message.user), target: "_blank", class: "text-decoration-none text-light" %>
       </strong>
       <i><%= message.created_at.in_time_zone.strftime("%a %b %e at %l:%M %p") %></i>
     </small>

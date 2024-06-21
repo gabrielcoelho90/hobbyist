@@ -4,7 +4,8 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ['messageButton', 'friendshipButton']
   static values = {
-    receiverId: Number
+    receiverId: Number,
+    friendshipStatus: String
   }
 
   connect() {
@@ -12,7 +13,7 @@ export default class extends Controller {
 
   messageButtonToggle() {
     const token =  document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    const url = `private_chatrooms?receiver_id=${this.receiverIdValue}`
+    const url = `/private_chatrooms?receiver_id=${this.receiverIdValue}`
     const options = {
       method: 'POST',
       headers: {
@@ -24,14 +25,18 @@ export default class extends Controller {
     fetch(url, options)
       .then(response => response.json())
       .then((data) => {
-        console.log(data);
         this.messageButtonTarget.innerHTML = data.message_button_html
       })
   }
 
   friendButtonToggle() {
+    let friendshipUrl = ''
+    if (this.friendshipStatusValue === 'pending') {
+      friendshipUrl = `&friendship_status=pending`
+    }
+
     const token =  document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    const url = `friendships?receiver_id=${this.receiverIdValue}`
+    const url = `/friendships?receiver_id=${this.receiverIdValue}${friendshipUrl}`
     const options = {
       method: 'POST',
       headers: {
@@ -43,7 +48,6 @@ export default class extends Controller {
     fetch(url, options)
       .then(response => response.json())
       .then((data) => {
-        console.log(data);
         this.friendshipButtonTarget.innerHTML = data.friendship_button_html
       })
   }
