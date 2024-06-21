@@ -54,10 +54,38 @@
         <%= image_tag "avatar_placeholder.png", class:"profile-placeholder", alt: "Logo rendered as pin" %>
       <% end %>
     </div>
-    <h5 class="info-window-title"><strong><%= user.username %></strong></h5>
-     <%= link_to "Message", private_chatrooms_path(receiver_id: user.id),
-          class: "btn btn-primary mt-3 w-100 text-white",
-          data: { turbo_method: :post } %>
+    <h5 class="info-window-title"><strong><%= user.username %> <%= user == current_user ? ' (You)' : '' %></strong></h5>
+    <% if user != current_user %>
+      <div class="action-buttons d-flex"
+          data-controller="action-buttons"
+          data-action-buttons-receiver-id-value="<%= user.id %>"
+          data-action-buttons-friendship-status-value="<%= friendship.nil? ? '' : friendship.status %>"
+          >
+
+        <%# PrivateChatrooms button %>
+        <div class="action-buttons d-flex flex-grow-1" data-action-buttons-target="messageButton">
+          <%= render partial: 'pages/message_button',
+            locals: {
+              user:,
+              chat_type:,
+              chat_message:,
+              chat_flag:
+            } %>
+          </div>
+
+        <%# Friendship button %>
+        <div class="action-buttons d-flex flex-grow-1" data-action-buttons-target="friendshipButton">
+          <%= render partial: 'pages/friendship_button',
+            locals: {
+              user:,
+              friend_type:,
+              friend_message:,
+              friend_flag:
+            } %>
+        </div>
+
+      </div>
+    <% end %>
     <div class="info-window-footer mt-3">
       <div class="d-flex flex-wrap justify-content-center">
         <% user.interests.each do |interest| %>
