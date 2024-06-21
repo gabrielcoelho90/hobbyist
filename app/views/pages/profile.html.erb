@@ -29,11 +29,9 @@
 
         <!-- Chat Requests -->
         <div class="tab-pane fade show active" id="chat-requests" role="tabpanel" aria-labelledby="chat-requests-tab">
-
           <!-- Pending Chats -->
           <div class="scrollable-cards">
             <div class="card mb-3">
-
               <!-- Pending Chats as Receiver-->
               <% @pending_private_chats_receiver.each do |chat| %>
                 <div class="card m-3 chat-card pending-chat-card">
@@ -63,15 +61,12 @@
               <% end %>
             </div>
           </div>
-
         </div>
 
         <!-- Friend Requests -->
         <div class="tab-pane fade" id="friend-requests" role="tabpanel" aria-labelledby="friend-requests-tab">
-
           <div class="scrollable-cards">
             <div class="card mb-3">
-
               <!-- Pending Friendship Requests as Receiver-->
               <% @pending_friendships_receiver.each do |friendship| %>
                 <div class="card m-3 friend-card pending-friend-card">
@@ -101,9 +96,7 @@
               <% end %>
             </div>
           </div>
-
         </div>
-
       </div>
     </div>
 
@@ -136,19 +129,25 @@
             <div class="col-md-8">
               <div class="card shadow-sm mb-3 profile-detail-card">
                 <div class="card-body">
-                  <h4>Who am I?</h4>
-                  <p class="profile-bio"><%= current_user.description %></p>
+                  <h4>Bio</h4>
+                  <p class="profile-bio"><%= current_user.bio.present? ? current_user.bio : "Hello! My name is #{current_user.name} and I'm using hobby to meet new, like-minded friends!" %></p>
                 </div>
               </div>
               <div class="card shadow-sm mb-3 profile-detail-card">
                 <div class="card-body">
-                  <h4>Address</h4>
-                  <p><%= current_user.address %></p>
+                  <h4>Who am I?</h4>
+                  <p class="profile-description"><%= current_user.description %></p>
                 </div>
               </div>
-              <!-- Update Profile Button -->
-              <div class="text-end">
-                <button type="button" class="btn btn-primary update-profile-btn" data-bs-toggle="modal" data-bs-target="#profileModal">
+              <!-- Update Profile Button and Address -->
+              <div class="d-flex justify-content-between">
+                <div class="card shadow-sm profile-detail-card address-card">
+                  <div class="card-body-small text-primary">
+                    <h6>Address</h6>
+                    <p class="small-text"><%= current_user.address %></p>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary update-profile-btn align-self-end ms-2" data-bs-toggle="modal" data-bs-target="#profileModal">
                   Update Profile
                 </button>
               </div>
@@ -211,6 +210,7 @@
       <div class="modal-body">
         <%= simple_form_for current_user, html: { multipart: true } do |f| %>
           <%= f.input :photo, as: :file, input_html: { class: 'form-control' } %>
+          <%= f.input :bio, input_html: { class: 'form-control' } %>
           <%= f.input :description, input_html: { class: 'form-control' } %>
           <!-- For now, use placeholder icons -->
           <p>Twitter: <i class="fab fa-twitter"></i></p>

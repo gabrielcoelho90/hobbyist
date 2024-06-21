@@ -164,7 +164,7 @@
       font-size: 1rem;
       margin-top: 0.5rem;
     }
-    .profile-description, .profile-address {
+    .profile-description, .profile-bio {
       margin-top: 1rem;
     }
     .update-profile-btn {
@@ -172,6 +172,14 @@
       display: block;
       width: 100%;
     }
+  }
+
+  .address-card {
+    font-size: 0.8rem;
+  }
+
+  .small-text {
+    font-size: 0.75rem;
   }
 
   .chat-card, .friend-card, .pending-chat-card, .pending-friend-card, .blocked-chat-card {
@@ -189,6 +197,11 @@
 
   .chat-card .card-body, .friend-card .card-body, .pending-chat-card .card-body, .blocked-chat-card .card-body {
     padding: 1rem;
+  }
+
+  .card-body-small{
+    padding: 0.25rem;
+    margin-left: 0.5rem;
   }
 
   .nav-buttons-card .btn {
