@@ -25,11 +25,11 @@ addresses = [
   "Rua Bartolomeu Mitre, 570 - Leblon",
   "Rua Rainha Guilhermina, 320 - Leblon",
   "Rua General Artigas, 307 - Leblon",
-  "Praia de Botafogo, 340 - Botafogo, Rio de Janeiro",
-  "Rua Mena Barreto, 24 - Botafogo, Rio de Janeiro",
-  "Rua da Passagem, 98 - Botafogo, Rio de Janeiro",
-  "Rua Bambina, 72 - Botafogo, Rio de Janeiro",
-  "Rua Lauro Muller, 116 - Botafogo, Rio de Janeiro",
+  "Rua Vinícius De Moraes 25, Ipanema, Rio de Janeiro - Rio de Janeiro, 22420, Brasil",
+  "Rua Prudente De Morais 1215, Ipanema, Rio de Janeiro - Rio de Janeiro, 22420, Brasil",
+  "Rua Visconde De Pirajá 280, Ipanema, Rio de Janeiro - Rio de Janeiro, 22410, Brasil",
+  "Rua Garcia D'ávila 65, Ipanema, Rio de Janeiro - Rio de Janeiro, 22421, Brasil",
+  "Rua Farme De Amoedo 41, Ipanema, Rio de Janeiro - Rio de Janeiro, 22420, Brasil",
   "Rua Marques de Abrantes, 160 - Flamengo",
   "Rua Paissandu, 72 - Flamengo",
   "Rua Marquês de Pinedo, 15 - Flamengo",
@@ -79,7 +79,18 @@ puts "Generating #{n_users} users..."
 
 i = 0
 n_users.times do
-  first_name  = Faker::Name.first_name
+  if File.exist?("app/assets/images/seed_pictures/men/photo_#{i + 1}.jpg")
+    gender = 'men'
+  else
+    gender = 'women'
+  end
+
+  if gender == 'men'
+    first_name  = Faker::Name.male_first_name
+  else
+    first_name  = Faker::Name.female_first_name
+  end
+
   last_name   = Faker::Name.last_name
   name        = "#{first_name} #{last_name}"
   username = "#{first_name[0]}_#{last_name}"
@@ -93,7 +104,7 @@ n_users.times do
     description: Faker::Lorem.paragraph_by_chars
   )
 
-  file = File.new("app/assets/images/seed_pictures/photo_#{i + 1}.jpg", "r")
+  file = File.new("app/assets/images/seed_pictures/#{gender}/photo_#{i + 1}.jpg", "r")
   user.photo.attach(io: file, filename: "photo_#{i + 1}.jpg", content_type: "image/jpg")
 
   puts "Seeding #{user.name}, username: #{user.username}"
@@ -130,24 +141,24 @@ User.all.each do |user|
   end
 end
 
-puts "Creating master user, Shia LaBeouf"
-master = User.new(
-  name: "Shia LaBeouf",
-  email: "la_buff@shia.com",
-  username: 'shia.laBUFF',
-  password: 123_456,
-  address: "Avenida Delfim Moreira 558, Leblon, Rio de Janeiro - Rio de Janeiro, 22441, Brasil",
-  description: "I'm DOING it!!"
-)
+# puts "Creating master user, Shia LaBeouf"
+# master = User.new(
+#   name: "Shia LaBeouf",
+#   email: "la_buff@shia.com",
+#   username: 'shia.laBUFF',
+#   password: 123_456,
+#   address: "Avenida Delfim Moreira 558, Leblon, Rio de Janeiro - Rio de Janeiro, 22441, Brasil",
+#   description: "I'm DOING it!!"
+# )
 
-file = File.new("app/assets/images/seed_pictures/master_user.jpg", "r")
-master.photo.attach(io: file, filename: "master_user.jpg", content_type: "image/jpg")
-master.save!
+# file = File.new("app/assets/images/seed_pictures/master_user.jpg", "r")
+# master.photo.attach(io: file, filename: "master_user.jpg", content_type: "image/jpg")
+# master.save!
 
-subcommunity = Subcommunity.find_by(name: "Rock")
-interest = Interest.new user: master, interestable: subcommunity
-puts "Seeding interest in #{subcommunity.name} for master user"
-interest.save!
-puts "Done!"
+# subcommunity = Subcommunity.find_by(name: "Rock")
+# interest = Interest.new user: master, interestable: subcommunity
+# puts "Seeding interest in #{subcommunity.name} for master user"
+# interest.save!
+# puts "Done!"
 
-puts "Master User e-mail: #{master.email}"
+# puts "Master User e-mail: #{master.email}"
