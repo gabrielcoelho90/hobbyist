@@ -1,0 +1,1 @@
+json.friendship_button_html @friendship_button_html

@@ -12,8 +12,8 @@ class User < ApplicationRecord
   has_many :private_chatrooms_as_sender, class_name: "PrivateChatroom", foreign_key: :sender_id, dependent: :destroy
   has_many :private_chatrooms_as_receiver, class_name: "PrivateChatroom", foreign_key: :receiver_id, dependent: :destroy
 
-  has_many :friendships_as_asker, class_name: "Friendship", foreign_key: :asker_id
-  has_many :friendships_as_receiver, class_name: "Friendship", foreign_key: :receiver_id
+  has_many :friendships_as_asker, class_name: "Friendship", foreign_key: :asker_id, dependent: :destroy
+  has_many :friendships_as_receiver, class_name: "Friendship", foreign_key: :receiver_id, dependent: :destroy
 
   geocoded_by :address
   after_validation :geocode, if: :will_save_change_to_address?
@@ -27,11 +27,11 @@ class User < ApplicationRecord
   end
 
   def all_private_chats
-    private_chatrooms_as_sender | private_chatrooms_as_receiver
+    PrivateChatroom.where(sender: self).or(PrivateChatroom.where(receiver: self)).order(:id)
   end
 
   def all_friendships
-    friendships_as_asker | friendships_as_receiver
+    Friendship.where(asker: self).or(Friendship.where(receiver: self)).order(:id)
   end
 
   # Receives an array with one of the 'all_models' methods above, and finds the active ones

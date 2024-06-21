@@ -1,4 +1,40 @@
 <% users.each do |user| %>
+  <% chatroom = PrivateChatroom.find_chatroom(
+        user_one: user,
+        user_two: current_user
+      ) %>
+  <% if chatroom.nil? %>
+    <% chat_flag = '' %>
+    <% chat_type = 'button' %>
+    <% chat_message = "Message" %>
+  <% elsif chatroom.status == 'pending' %>
+    <% chat_flag = 'disabled' %>
+    <% chat_type = 'link' %>
+    <% chat_message = "Chat request sent" %>
+  <% else %>
+    <% chat_flag = '' %>
+    <% chat_type = 'link' %>
+    <% chat_message = "Message" %>
+  <% end %>
+
+  <% friendship = Friendship.find_friendship(
+        user_one: user,
+        user_two: current_user
+      ) %>
+  <% if friendship.nil? %>
+    <% friend_flag = '' %>
+    <% friend_type = 'button' %>
+    <% friend_message = "Add as Friend" %>
+  <% elsif friendship.status == 'pending' %>
+    <% friend_flag = 'disabled' %>
+    <% friend_type = 'link' %>
+    <% friend_message = "Friend request sent" %>
+  <% else %>
+    <% friend_flag = 'disabled' %>
+    <% friend_type = 'link' %>
+    <% friend_message = "Already friends!" %>
+  <% end %>
+
   <div class="user-card mb-3">
     <div class="user-card-body d-flex p-3">
       <!-- Section 1: User Name, Profile Image, Social Icons -->
@@ -23,28 +59,32 @@
       <!-- Section 2: Bio and Actions -->
       <div class="section-2 flex-grow-1 ms-3 d-flex flex-column justify-content-between">
         <div class="bio-placeholder mb-2">
-          <p class="user-card-bio fw-bold">"I am using hobbyist to find like-minded people. Let’s connect!"</p>
+          <p class="user-card-bio fw-bold">"I am using hobbyist to find like-minded people. Let's connect!"</p>
         </div>
-        <div class="action-buttons d-flex">
-          <%= link_to "Message", private_chatrooms_path(receiver_id: user.id), class: 'btn btn-primary me-2 flex-grow-1 d-flex align-items-center', data: { turbo_method: :post } %>
-          <% @user_friendship = nil %>
-          <% current_user.all_friendships.each do |friendship| %>
-            <% keys = [:asker_id, :receiver_id] %>
-            <% if friendship.values_at(keys).include?(user.id) %>
-              <% @user_friendship = friendship %>
-            <% end %>
-          <% end %>
-          <% if @user_friendship.nil? %>
-            <a href=<%="/friendships?receiver_id=#{user.id}"%> class="btn btn-primary flex-grow-1 d-flex align-items-center", data-turbo-method="post"> Add Friend </a>
-          <% else %>
-            <% if @user_friendship.active? %>
-              <% @hide_addfriend_btn = "d-none" %>
-            <% else %>
-              <% @hide_addfriend_btn = 'disabled' %>
-              <% @text = "Requested" %>
-            <% end %>
-            <a href=<%="/friendships?receiver_id=#{user.id}"%> class="btn btn-primary flex-grow-1 d-flex align-items-center <%= @hide_addfriend_btn%>", data-turbo-method="post"> <%= @text %> </a>
-          <% end %>
+        <div class="action-buttons d-flex" data-controller="action-buttons" data-action-buttons-receiver-id-value="<%= user.id %>">
+
+          <%# PrivateChatrooms button %>
+          <div class="action-buttons d-flex flex-grow-1" data-action-buttons-target="messageButton">
+            <%= render partial: 'message_button',
+              locals: {
+                user:,
+                chat_type:,
+                chat_message:,
+                chat_flag:
+              } %>
+            </div>
+
+          <%# Friendship button %>
+          <div class="action-buttons d-flex flex-grow-1" data-action-buttons-target="friendshipButton">
+            <%= render partial: 'friendship_button',
+              locals: {
+                user:,
+                friend_type:,
+                friend_message:,
+                friend_flag:
+              } %>
+          </div>
+
         </div>
       </div>
     </div>
@@ -52,7 +92,7 @@
     <div class="user-card-footer d-flex justify-content-between align-items-center">
       <div class="d-flex flex-wrap w-75">
         <% user.interests.each do |interest| %>
-          <%= link_to interest.interestable.name, groupchat_path(interest.interestable.id), class: "badge rounded-pill text-decoration-none bg-success m-1" %>
+          <%= link_to interest.interestable.name, groupchat_path(interest.interestable.groupchat), class: "badge rounded-pill text-decoration-none bg-success m-1" %>
         <% end %>
       </div>
       <div class="d-flex align-items-end mx-2 flex-nowrap">

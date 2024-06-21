@@ -9,7 +9,7 @@
         </div>
       </nav>
       <ul class="list-group my-3">
-        <% @private_chatrooms.each do |private_chatroom| %>
+        <% @active_chatrooms.each do |private_chatroom| %>
           <li class="list-group-item">
             <%= link_to private_chatroom_path(private_chatroom), class: "d-flex align-items-center chatroom-link" do %>
              <div class="chatroom-avatar">

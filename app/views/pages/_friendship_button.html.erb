@@ -1,0 +1,7 @@
+  <% if friend_type == 'link'%>
+    <%= link_to friend_message, friendships_path(receiver_id: user.id), class: "btn btn-primary me-2 flex-grow-1 d-flex align-items-center #{friend_flag}", data: { turbo_method: :post } %>
+  <% else %>
+    <button class="btn btn-primary me-2 flex-grow-1 d-flex align-items-center <%= friend_flag %>"
+      data-action="click->action-buttons#friendButtonToggle"
+    ><%= friend_message %></button>
+  <% end %>

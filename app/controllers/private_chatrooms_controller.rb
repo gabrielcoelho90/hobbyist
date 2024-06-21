@@ -1,25 +1,64 @@
 class PrivateChatroomsController < ApplicationController
 
   def index
-    @private_chatrooms = PrivateChatroom.where(sender: current_user).or(PrivateChatroom.where(receiver: current_user))
+    @private_chatrooms = current_user.all_private_chats
     policy_scope @private_chatrooms
+
+    @active_chatrooms = current_user.active_instances(@private_chatrooms)
   end
 
   def show
     @private_chatroom = PrivateChatroom.find(params[:id])
     @message = Message.new
     authorize @private_chatroom
-    @private_chatrooms = PrivateChatroom.where(sender: current_user).or(PrivateChatroom.where(receiver: current_user))
+    @private_chatrooms = index
   end
 
   def create
-    @sender = current_user
-    @receiver = User.find(receiver_params[:receiver_id])
-    name = "Chat for #{@sender.username} and #{@receiver.username}" # update to show profile image and name of receiver
+    respond_to do |format|
+      format.html {
+        @sender = current_user
+        @receiver = User.find(receiver_params[:receiver_id])
+        name = "Chat for #{@sender.username} and #{@receiver.username}" # update to show profile image and name of receiver
 
-    @chat = PrivateChatroom.new name:, sender: @sender, receiver: @receiver
-    @chat = PrivateChatroom.find_by(sender: @sender, receiver: @receiver) unless @chat.save
-    authorize @chat
+        @chat = PrivateChatroom.new name:, sender: @sender, receiver: @receiver
+        authorize @chat
+
+        unless @chat.save
+          @chat = PrivateChatroom.find_chatroom(
+            user_one: @sender,
+            user_two: @receiver
+          )
+          authorize @chat
+          @chat.status = 'active'
+          @chat.save
+          redirect_to @chat
+        end
+      }
+
+      format.json {
+        @sender = current_user
+        @receiver = User.find(receiver_params[:receiver_id])
+
+        name = "Chat for #{@sender.username} and #{@receiver.username}" # update to show profile image and name of receiver
+
+        @chat = PrivateChatroom.new name:, sender: @sender, receiver: @receiver
+        authorize @chat
+        @chat.save
+
+        # @from_json = true
+        @message_button_html = render_to_string(
+          partial: "pages/message_button",
+          formats: :html,
+          locals: {
+            user: @receiver,
+            chat_type: 'link',
+            chat_message: "Chat request sent",
+            chat_flag: 'disabled'
+          }
+        )
+      }
+    end
   end
 
   def update
